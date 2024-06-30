@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.UpdateWarning"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="300" Width="500">
+
+    <Grid>
+        <Grid>
+            <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Visible" Source="https://i.imgur.com/z7C10ZG.gif"/>
+            <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="2" Visibility="Visible"/>
+            <TextBlock Name="VersionName" Text="-" Width="480" Height="50" FontSize="36" Margin="10" VerticalAlignment="Top"/>
+            <GridView SelectionMode="None" CanDrag="False" Margin="10,55,10,105" ShowsScrollingPlaceholders="False">
+                <StackPanel Spacing="5" Width="500">
+                    <TextBlock Text="Changelog" FontSize="22"/>
+                    <TextBlock Name="ChangelogBlock" TextWrapping="Wrap" Text="-" FontSize="16"/>
+                </StackPanel>
+            </GridView>
+            <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
+                <Button Name="UpdateBtn" Height="45" Width="480" VerticalAlignment="Top" Content="Update" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

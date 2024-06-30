@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ActiveDebugProfile>CompanionDisplayWinUI (Unpackaged)</ActiveDebugProfile>
+    <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
+    <PackageRegistrationPath>\\25.1.22.96\Users\Tomás\Desktop\DebugShit</PackageRegistrationPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Page Update="AllWidgets.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="AccentOverride.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <None Update="App.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <Page Update="SmallDataSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FanSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="FactorSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PowerSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="VoltageSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ClockSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="LoadSensors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TemperatureSensor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IndividualComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetSensors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetPhotoWidgetSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetPhoto.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="UpdateWarning.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetPhoneIndividual.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TimeWidgetWidgetSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MediaPlayerWidgetWidgetSettings.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IndividualMonitor.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetMonitorBrightness.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MonitorBrightness.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MusixmatchIntegrationProto.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="NumPadWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="NORC_WidgetApps.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MediaPlayerWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TimeWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="BlankPage3.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="BlankPage2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="BlankPage1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="NORC_WidgetPhone.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <None Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Update="Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+</Project>

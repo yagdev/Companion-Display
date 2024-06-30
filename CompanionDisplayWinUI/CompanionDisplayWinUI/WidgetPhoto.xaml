@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.WidgetPhoto"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="300" Width="500" Loaded="Page_Loaded">
+
+    <Grid>
+        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Grid.RowSpan="2" Opacity="0.3"/>
+        <TextBlock Name="NoDevices" Text="No image.&#x0a;Right click and press edit to add an image." FontSize="40" TextWrapping="Wrap" HorizontalTextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,0,50,0" Opacity="0.5" IsHitTestVisible="False" Visibility="Collapsed"/>
+        <FlipView Name="FlipViewImages"  Width="500" Height="300" SelectionChanged="FlipViewImages_SelectionChanged"/>
+    </Grid>
+</Page>

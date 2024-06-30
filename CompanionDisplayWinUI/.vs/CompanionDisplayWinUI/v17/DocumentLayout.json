@@ -1,0 +1,1342 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dinis\\AppData\\Local\\Temp\\.vsdbgsrc\\5cc2fc1f146b0515cdf759fd6d87c0a1151008450d0955af7c46a811ef5b8eaf\\MainWindow.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage3.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage3.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\fansensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\fansensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\companiondisplaywinui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\companiondisplaywinui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\fansensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\fansensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\globals.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\factorsensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\factorsensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\assets\\storelogo.png||{58961B49-13E0-48C0-9258-13CBC4D40279}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\assets\\storelogo.png||{58961B49-13E0-48C0-9258-13CBC4D40279}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\companiondisplaywinui.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\companiondisplaywinui.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphoto.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphoto.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphotowidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphotowidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\timewidgetwidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\timewidgetwidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetsensors.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetsensors.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mediaplayerwidgetwidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mediaplayerwidgetwidgetsettings.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mediaplayerwidgetwidgetsettings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mediaplayerwidgetwidgetsettings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphotowidgetsettings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphotowidgetsettings.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\obj\\x64\\debug\\net8.0-windows10.0.19041.0\\widgetphotowidgetsettings.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:companiondisplaywinui\\obj\\x64\\debug\\net8.0-windows10.0.19041.0\\widgetphotowidgetsettings.g.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage3.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage3.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphoneindividual.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphoneindividual.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphoto.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphoto.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetmonitorbrightness.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetmonitorbrightness.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\timewidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\timewidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\individualmonitor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\individualmonitor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage1.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage1.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetmonitorbrightness.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetmonitorbrightness.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\monitorbrightness.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\monitorbrightness.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\individualmonitor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\individualmonitor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mediaplayerwidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mediaplayerwidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\individualcomponent.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\individualcomponent.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\loadsensors.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\loadsensors.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\smalldatasensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\smalldatasensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\temperaturesensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\temperaturesensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\updatewarning.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\updatewarning.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\temperaturesensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\temperaturesensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\powersensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\powersensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\norc_widgetapps.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\norc_widgetapps.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\norc_widgetapps.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\norc_widgetapps.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\hardwaresensorsfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\hardwaresensorsfunction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\smalldatasensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\smalldatasensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\powersensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\powersensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\voltagesensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\voltagesensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\loadsensors.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\loadsensors.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\clocksensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\clocksensor.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\clocksensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\clocksensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\voltagesensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\voltagesensor.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\playerspotify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\playerspotify.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mediaplayerwidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mediaplayerwidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\winformshelper\\winformshelper.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|solutionrelative:winformshelper\\winformshelper.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetsensors.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetsensors.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\individualcomponent.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\individualcomponent.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\package.appxmanifest||{4D47164B-07B6-4A52-A855-728D6A2E2AA3}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\package.appxmanifest||{4D47164B-07B6-4A52-A855-728D6A2E2AA3}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\allwidgets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\allwidgets.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\apppicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\apppicker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\widgetphoneindividual.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\widgetphoneindividual.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage1.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage1.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\winformshelper\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|solutionrelative:winformshelper\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\winformshelper\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{53730EDB-344F-4F46-B0B3-801B631B6B0E}|WinFormsHelper\\WinFormsHelper.csproj|solutionrelative:winformshelper\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\app1.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\app1.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\8.0.202\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.FrameworkReferenceResolution.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\dinis\\.nuget\\packages\\microsoft.windowsappsdk\\1.6.240531000-experimental1\\buildTransitive\\Microsoft.WindowsAppSDK.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\app.manifest||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\updatewarning.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\updatewarning.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\numpadwidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\numpadwidget.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\norc_widgetphone.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\norc_widgetphone.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage2.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage2.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\timewidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\timewidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\blankpage2.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\blankpage2.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\numpadwidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\numpadwidget.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\monitorbrightness.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\monitorbrightness.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\norc_widgetphone.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\norc_widgetphone.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\properties\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\properties\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\allwidgets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\allwidgets.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\properties\\publishprofiles\\win10-x64.pubxml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\properties\\publishprofiles\\win10-x64.pubxml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\properties\\publishprofiles\\win10-arm64.pubxml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\properties\\publishprofiles\\win10-arm64.pubxml||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\companiondisplaywinui\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BE53E2CA-EB2D-4833-9F0E-127BF00DEBD8}|CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj|solutionrelative:companiondisplaywinui\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 13,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "LoadSensors.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\LoadSensors.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\LoadSensors.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\LoadSensors.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\LoadSensors.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T03:59:45.005Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:98759673:0:{83107a3e-496a-485e-b455-16ddb978e55e}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{dcc4ea97-1c0c-482b-b205-e541c0df9728}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:2:0:{dcc4ea97-1c0c-482b-b205-e541c0df9728}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:5:0:{dcc4ea97-1c0c-482b-b205-e541c0df9728}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cf577b8c-4134-11d2-83e5-00c04f9902c1}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{dcc4ea97-1c0c-482b-b205-e541c0df9728}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{dcc4ea97-1c0c-482b-b205-e541c0df9728}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FactorSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FactorSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\FactorSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FactorSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\FactorSensor.xaml.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAhwB0AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T03:54:07.956Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StoreLogo.png",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Assets\\StoreLogo.png",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Assets\\StoreLogo.png",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Assets\\StoreLogo.png",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Assets\\StoreLogo.png",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2024-06-30T03:53:06.329Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\AppData\\Local\\Temp\\.vsdbgsrc\\5cc2fc1f146b0515cdf759fd6d87c0a1151008450d0955af7c46a811ef5b8eaf\\MainWindow.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5cc2fc1f146b0515cdf759fd6d87c0a1151008450d0955af7c46a811ef5b8eaf\\MainWindow.cs",
+              "ToolTip": "C:\\Users\\dinis\\AppData\\Local\\Temp\\.vsdbgsrc\\5cc2fc1f146b0515cdf759fd6d87c0a1151008450d0955af7c46a811ef5b8eaf\\MainWindow.cs [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5cc2fc1f146b0515cdf759fd6d87c0a1151008450d0955af7c46a811ef5b8eaf\\MainWindow.cs [Read Only]",
+              "ViewState": "AQIAABEBAAAAAAAAAAAAAB0BAAACAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T03:52:46.181Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BlankPage3.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage3.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage3.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage3.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage3.xaml",
+              "ViewState": "AQIAAEcAAAAAAAAAAAAAAFEAAABdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:38:20.224Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FanSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FanSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\FanSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FanSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\FanSensor.xaml.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAvwB0AAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-30T03:54:38.985Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MainWindow.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAFEAAAAAAAAAAAAqwGQAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:38:03.155Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FanSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FanSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\FanSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\FanSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\FanSensor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-30T03:54:36.007Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CompanionDisplayWinUI.csproj",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "RelativeToolTip": "CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAAAEcAAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-22T16:41:20.625Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "WidgetPhotoWidgetSettings.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml.cs",
+              "ViewState": "AQIAADgAAAAAAAAAAAAgwEcAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T04:52:03.962Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TimeWidgetWidgetSettings.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidgetWidgetSettings.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\TimeWidgetWidgetSettings.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidgetWidgetSettings.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\TimeWidgetWidgetSettings.xaml.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAqwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T05:27:31.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Globals.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Globals.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Globals.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Globals.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Globals.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAAzAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T03:44:05.578Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "WidgetPhotoWidgetSettings.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhotoWidgetSettings.xaml",
+              "ViewState": "AQIAAAkAAAAAAAAAAADwvxoAAACoAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-20T04:39:52.812Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CompanionDisplayWinUI",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "RelativeToolTip": "CompanionDisplayWinUI\\CompanionDisplayWinUI.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-20T03:06:27.478Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "WidgetPhoto.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoto.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhoto.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoto.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhoto.xaml.cs",
+              "ViewState": "AQIAADwAAAAAAAAAAAAYwEMAAAA6AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T04:50:46.673Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "WidgetSensors.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetSensors.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetSensors.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetSensors.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetSensors.xaml.cs",
+              "ViewState": "AQIAAD8AAAAAAAAAAAAAAD8AAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T03:15:07.726Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "MediaPlayerWidgetWidgetSettings.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAADwvy0AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T05:17:16.165Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MediaPlayerWidgetWidgetSettings.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MediaPlayerWidgetWidgetSettings.xaml",
+              "ViewState": "AQIAAAUAAAAAAAAAAAAAABQAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:27:41.031Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "WidgetPhoto.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoto.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhoto.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoto.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhoto.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-20T04:17:30.1Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "BlankPage3.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage3.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage3.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage3.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage3.xaml.cs",
+              "ViewState": "AQIAALMAAAAAAAAAAAAYwJ8AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T05:00:16.155Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "WidgetPhoneIndividual.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml.cs",
+              "ViewState": "AQIAAFUAAAAAAAAAAAAAAFwAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T03:14:07.444Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "WidgetPhotoWidgetSettings.g.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\WidgetPhotoWidgetSettings.g.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\WidgetPhotoWidgetSettings.g.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\WidgetPhotoWidgetSettings.g.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\WidgetPhotoWidgetSettings.g.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFYAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T04:51:48.404Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "WidgetMonitorBrightness.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:26:49.097Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "TimeWidget.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidget.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\TimeWidget.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidget.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\TimeWidget.xaml.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAA9wEcAAAAQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T04:34:16.063Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "IndividualMonitor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualMonitor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\IndividualMonitor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualMonitor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\IndividualMonitor.xaml.cs",
+              "ViewState": "AQIAAEcAAAAAAAAAAAAmwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T22:26:47.729Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "BlankPage1.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage1.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage1.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage1.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage1.xaml.cs",
+              "ViewState": "AQIAAFcAAAAAAAAAAAASwGoAAABpAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T22:26:42.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "WidgetMonitorBrightness.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetMonitorBrightness.xaml",
+              "ViewState": "AQIAAAMAAAAAAAAAAADwvwsAAAATAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:26:49.515Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "MonitorBrightness.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MonitorBrightness.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MonitorBrightness.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MonitorBrightness.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MonitorBrightness.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwkAAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:26:50.422Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "IndividualMonitor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualMonitor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\IndividualMonitor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualMonitor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\IndividualMonitor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-20T04:51:02.907Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "MediaPlayerWidget.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidget.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MediaPlayerWidget.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidget.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MediaPlayerWidget.xaml",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAAwBAAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:06:27.653Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "IndividualComponent.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualComponent.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\IndividualComponent.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualComponent.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\IndividualComponent.xaml.cs",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAAAF8AAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T05:15:02.483Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "SmallDataSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\SmallDataSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\SmallDataSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\SmallDataSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\SmallDataSensor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvxAAAABnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T04:25:40.481Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "TemperatureSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TemperatureSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\TemperatureSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TemperatureSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\TemperatureSensor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABDAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T03:45:15.134Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "TemperatureSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TemperatureSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\TemperatureSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TemperatureSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\TemperatureSensor.xaml.cs",
+              "ViewState": "AQIAAD4AAAAAAAAAAAAxwE8AAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T04:06:03.23Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "UpdateWarning.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\UpdateWarning.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\UpdateWarning.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\UpdateWarning.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\UpdateWarning.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T18:09:09.028Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "PowerSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PowerSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\PowerSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PowerSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\PowerSensor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvxAAAABmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T04:20:29.403Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "HardwareSensorsFunction.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\HardwareSensorsFunction.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\HardwareSensorsFunction.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\HardwareSensorsFunction.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\HardwareSensorsFunction.cs",
+              "ViewState": "AQIAACAAAAAAAAAAAAAcwDEAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T20:17:51.161Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "NORC_WidgetApps.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetApps.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NORC_WidgetApps.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetApps.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NORC_WidgetApps.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:29:10.001Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "SmallDataSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\SmallDataSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\SmallDataSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\SmallDataSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\SmallDataSensor.xaml.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAUwEwAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T05:39:35.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "NORC_WidgetApps.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetApps.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NORC_WidgetApps.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetApps.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NORC_WidgetApps.xaml.cs",
+              "ViewState": "AQIAAAEBAAAAAAAAAAAYwCcBAAA7AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T04:30:18.721Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "VoltageSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\VoltageSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\VoltageSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\VoltageSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\VoltageSensor.xaml.cs",
+              "ViewState": "AQIAADoAAAAAAAAAAAAYwEwAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T05:43:45.223Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "PowerSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PowerSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\PowerSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PowerSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\PowerSensor.xaml.cs",
+              "ViewState": "AQIAADMAAAAAAAAAAAAmwEwAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T05:44:00.039Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "LoadSensors.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\LoadSensors.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\LoadSensors.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\LoadSensors.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\LoadSensors.xaml.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAxwFAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T04:15:51.433Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "ClockSensor.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\ClockSensor.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\ClockSensor.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\ClockSensor.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\ClockSensor.xaml.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAxwFEAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T05:44:35.574Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "ClockSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\ClockSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\ClockSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\ClockSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\ClockSensor.xaml",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAYwAsAAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T04:15:32.18Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 45,
+              "Title": "VoltageSensor.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\VoltageSensor.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\VoltageSensor.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\VoltageSensor.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\VoltageSensor.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T04:17:11.904Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 47,
+              "Title": "App.g.i.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\obj\\x64\\Debug\\net8.0-windows10.0.19041.0\\App.g.i.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAIwEkAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T05:40:02.421Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 46,
+              "Title": "PlayerSpotify.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PlayerSpotify.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\PlayerSpotify.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\PlayerSpotify.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\PlayerSpotify.cs",
+              "ViewState": "AQIAACECAAAAAAAAAAAAADECAAA2AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-25T21:11:58.916Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 50,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\App.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\App.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\App.xaml.cs",
+              "ViewState": "AQIAAIAAAAAAAAAAAAAowAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T16:01:10.689Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 48,
+              "Title": "MediaPlayerWidget.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidget.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MediaPlayerWidget.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MediaPlayerWidget.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MediaPlayerWidget.xaml.cs",
+              "ViewState": "AQIAAIkAAAAAAAAAAAAkwKMAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:23:36.497Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 49,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MainWindow.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MainWindow.xaml",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAYwBYAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:37:21.774Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 51,
+              "Title": "WinFormsHelper.csproj",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\WinFormsHelper.csproj",
+              "RelativeDocumentMoniker": "WinFormsHelper\\WinFormsHelper.csproj",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\WinFormsHelper.csproj",
+              "RelativeToolTip": "WinFormsHelper\\WinFormsHelper.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-22T17:57:01.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 52,
+              "Title": "WidgetSensors.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetSensors.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetSensors.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetSensors.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetSensors.xaml",
+              "ViewState": "AQIAAAMAAAAAAAAAAADwvwwAAACFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T03:10:02.704Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 53,
+              "Title": "IndividualComponent.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualComponent.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\IndividualComponent.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\IndividualComponent.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\IndividualComponent.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAABCAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T03:20:56.598Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 54,
+              "Title": "Package.appxmanifest",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Package.appxmanifest",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Package.appxmanifest",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Package.appxmanifest",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Package.appxmanifest",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001793|",
+              "WhenOpened": "2024-06-25T04:49:05.678Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 55,
+              "Title": "AllWidgets.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AllWidgets.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\AllWidgets.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AllWidgets.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\AllWidgets.xaml.cs",
+              "ViewState": "AQIAACgAAAAAAAAAAAAowAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T03:07:20.503Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 56,
+              "Title": "AppPicker.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AppPicker.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\AppPicker.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AppPicker.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\AppPicker.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAMwBIAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T21:37:36.791Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 57,
+              "Title": "WidgetPhoneIndividual.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\WidgetPhoneIndividual.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:30:46.336Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 58,
+              "Title": "BlankPage1.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage1.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage1.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage1.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage1.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:37:16.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 62,
+              "Title": "Microsoft.NET.Sdk.FrameworkReferenceResolution.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.FrameworkReferenceResolution.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.202\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.FrameworkReferenceResolution.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\8.0.202\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.FrameworkReferenceResolution.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.202\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Sdk.FrameworkReferenceResolution.targets",
+              "ViewState": "AQIAANcBAAAAAAAAAAAWwOQBAAAmAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-06-22T16:47:26.626Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 61,
+              "Title": "app1.manifest",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\app1.manifest",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\app1.manifest",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\app1.manifest",
+              "RelativeToolTip": "CompanionDisplayWinUI\\app1.manifest",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2024-06-22T05:09:38.71Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 59,
+              "Title": "app.manifest",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\app.manifest",
+              "RelativeDocumentMoniker": "WinFormsHelper\\app.manifest",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\app.manifest",
+              "RelativeToolTip": "WinFormsHelper\\app.manifest",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvxIAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2024-06-22T17:57:28.183Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 60,
+              "Title": "Class1.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\Class1.cs",
+              "RelativeDocumentMoniker": "WinFormsHelper\\Class1.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\WinFormsHelper\\Class1.cs",
+              "RelativeToolTip": "WinFormsHelper\\Class1.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-22T17:58:50.801Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 63,
+              "Title": "Microsoft.WindowsAppSDK.targets",
+              "DocumentMoniker": "C:\\Users\\dinis\\.nuget\\packages\\microsoft.windowsappsdk\\1.6.240531000-experimental1\\buildTransitive\\Microsoft.WindowsAppSDK.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\.nuget\\packages\\microsoft.windowsappsdk\\1.6.240531000-experimental1\\buildTransitive\\Microsoft.WindowsAppSDK.targets",
+              "ToolTip": "C:\\Users\\dinis\\.nuget\\packages\\microsoft.windowsappsdk\\1.6.240531000-experimental1\\buildTransitive\\Microsoft.WindowsAppSDK.targets",
+              "RelativeToolTip": "..\\..\\..\\.nuget\\packages\\microsoft.windowsappsdk\\1.6.240531000-experimental1\\buildTransitive\\Microsoft.WindowsAppSDK.targets",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAWwFMAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-06-22T16:46:13.15Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 64,
+              "Title": "app.manifest",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\app.manifest",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\app.manifest",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\app.manifest",
+              "RelativeToolTip": "CompanionDisplayWinUI\\app.manifest",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001203|",
+              "WhenOpened": "2024-06-20T03:06:13.055Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 65,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\App.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\App.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\App.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\App.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-20T05:04:26.348Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 66,
+              "Title": "UpdateWarning.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\UpdateWarning.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\UpdateWarning.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\UpdateWarning.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\UpdateWarning.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-22T05:46:19.992Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 67,
+              "Title": "NumPadWidget.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NumPadWidget.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NumPadWidget.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NumPadWidget.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NumPadWidget.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-21T05:27:24.903Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 68,
+              "Title": "NORC_WidgetPhone.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetPhone.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NORC_WidgetPhone.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetPhone.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NORC_WidgetPhone.xaml.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAuwHAAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T22:28:00.522Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 69,
+              "Title": "BlankPage2.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage2.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage2.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage2.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage2.xaml.cs",
+              "ViewState": "AQIAAHUAAAAAAAAAAAAIwIsAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T03:24:54.203Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 70,
+              "Title": "TimeWidget.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidget.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\TimeWidget.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\TimeWidget.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\TimeWidget.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvw4AAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:29:29.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 71,
+              "Title": "BlankPage2.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage2.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\BlankPage2.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\BlankPage2.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\BlankPage2.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:38:14.431Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 72,
+              "Title": "NumPadWidget.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NumPadWidget.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NumPadWidget.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NumPadWidget.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NumPadWidget.xaml",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-20T04:51:05.618Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 73,
+              "Title": "MonitorBrightness.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MonitorBrightness.xaml.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\MonitorBrightness.xaml.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\MonitorBrightness.xaml.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\MonitorBrightness.xaml.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T22:26:50.875Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 74,
+              "Title": "NORC_WidgetPhone.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetPhone.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\NORC_WidgetPhone.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\NORC_WidgetPhone.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\NORC_WidgetPhone.xaml",
+              "ViewState": "AQIAAAkAAAAAAAAAAADwvw0AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T22:28:01.127Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 76,
+              "Title": "AllWidgets.xaml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AllWidgets.xaml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\AllWidgets.xaml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\AllWidgets.xaml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\AllWidgets.xaml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwwAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T21:51:46.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 75,
+              "Title": "Resources.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\Resources.Designer.cs",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Properties\\Resources.Designer.cs",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\Resources.Designer.cs",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Properties\\Resources.Designer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-20T03:07:12.859Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 77,
+              "Title": "Resources.resx",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\Resources.resx",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Properties\\Resources.resx",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\Resources.resx",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Properties\\Resources.resx",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2024-06-20T03:06:52.471Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 78,
+              "Title": "win10-x64.pubxml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-x64.pubxml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-x64.pubxml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-x64.pubxml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-x64.pubxml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-06-20T03:06:50.052Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 79,
+              "Title": "win10-arm64.pubxml",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-arm64.pubxml",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-arm64.pubxml",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-arm64.pubxml",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Properties\\PublishProfiles\\win10-arm64.pubxml",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
+              "WhenOpened": "2024-06-20T03:06:49.284Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 80,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "CompanionDisplayWinUI\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\dinis\\source\\repos\\CompanionDisplayWinUI\\CompanionDisplayWinUI\\Properties\\launchSettings.json",
+              "RelativeToolTip": "CompanionDisplayWinUI\\Properties\\launchSettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAADwvwAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-06-20T03:06:45.567Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

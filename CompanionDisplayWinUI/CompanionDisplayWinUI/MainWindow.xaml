@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CompanionDisplayWinUI.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Closed="Window_Closed">
+    <Window.SystemBackdrop>
+        <DesktopAcrylicBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid Name="GridMain" Background="#00FFFFFF">
+        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Collapsed" />
+        <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="2" Visibility="Collapsed"/>
+        <MediaPlayerElement Name="BackgroundVideo"  AutoPlay="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ElementSoundMode="Off" Visibility="Collapsed" Stretch="UniformToFill"/>
+        <NavigationView x:Name="nvSample" SelectionChanged="NavigationView_SelectionChanged" PaneDisplayMode="Auto" SelectedItem="{x:Bind HomeItem, Mode=OneWay}" IsBackButtonVisible="Collapsed">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1" Name="HomeItem"/>
+                <NavigationViewItem Icon="Globe" Content="Internet" Tag="SamplePage2" />
+            </NavigationView.MenuItems>
+            <Grid>
+                <HyperlinkButton Name="FullScreenBtn" Content="&#xe740;" FontFamily="Segoe Fluent Icons" Width="50" Height="35" Margin="5,5,0,0" VerticalAlignment="Top" Click="HyperlinkButton_Click"/>
+                <Frame x:Name="contentFrame" Margin="0,45,0,0" CacheSize="0" CacheMode="BitmapCache" IsEnabledChanged="contentFrame_IsEnabledChanged"/>
+            </Grid>
+            
+        </NavigationView>
+        
+    </Grid>
+</Window>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.IndividualComponent"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Height="300" Width="500" Loaded="Page_Loaded">
+
+    <Grid Margin="10">
+        <TextBlock Name="ComponentType" Text="-" FontSize="30"/>
+        <ScrollViewer Margin="0,45,0,0">
+            <StackPanel Name="ComponentSensorStack" Padding="10" Spacing="2">
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

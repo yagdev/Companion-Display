@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.BlankPage3"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <ScrollViewer Name="MainScroll" Padding="10,0,10,0">
+        <StackPanel Spacing="10">
+            <TextBlock Text="Settings" FontSize="28" Padding="0" FontFamily="Segoe Variable Display" FontWeight="SemiBold"/>
+            <Expander HorizontalAlignment="Stretch"
+     IsExpanded="False"
+     ExpandDirection="Down"
+     VerticalAlignment="Top"
+     HorizontalContentAlignment="Stretch"
+     Header="Theme">
+                <Expander.Content>
+                    <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Spacing="20">
+                        <Grid>
+                            <TextBlock Text="Color Scheme" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                            <ComboBox Name="ColorSchemeSelect" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged" PlaceholderText="System Automatic" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                                <x:String>System Automatic</x:String>
+                                <x:String>Dark</x:String>
+                                <x:String>Light</x:String>
+                            </ComboBox>
+                        </Grid>
+                        <Grid>
+                            <TextBlock Text="Accent Color" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                            <ComboBox Name="AccentSelect" SelectionChanged="ComboBox_SelectionChanged_1" PlaceholderText="System Automatic" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                                <x:String>System Automatic</x:String>
+                                <x:String>Custom</x:String>
+                            </ComboBox>
+                        </Grid>
+                        <Grid>
+                            <StackPanel>
+                                <Expander HorizontalAlignment="Stretch" Header="Custom Color">
+                                    <StackPanel>
+                                        <ColorPicker Name="AccentColorPicker"/>
+                                        <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                                    </StackPanel>
+                                </Expander>
+                            </StackPanel>
+                        </Grid>
+                        <Grid>
+                            <TextBlock Text="Background " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                            <ComboBox Name="BackdropSelect" SelectionChanged="ComboBox_SelectionChanged_2" PlaceholderText="Acrylic" HorizontalAlignment="Right"  VerticalAlignment="Top" SelectedIndex="1">
+                                <x:String>Acrylic</x:String>
+                                <x:String>Mica</x:String>
+                                <x:String>Image</x:String>
+                                <!--<x:String>Solid Color</x:String>-->
+                            </ComboBox>
+                        </Grid>
+                        <Expander HorizontalAlignment="Stretch" Header="Custom" HorizontalContentAlignment="Stretch">
+                            <StackPanel HorizontalAlignment="Stretch" Spacing="10">
+                                <Grid>
+                                    <TextBlock HorizontalAlignment="Left" Text="Background Image" VerticalAlignment="Center"/>
+                                    <TextBox Name="BackgroundLink" Margin="0,0,110,0" Width="300" HorizontalAlignment="Right" PlaceholderText="Media URL" VerticalAlignment="Center" LostFocus="BackgroundLink_LostFocus"/>
+                                    <Button HorizontalAlignment="Right" Content="Select Image" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                                </Grid>
+                                <Grid>
+                                    <TextBlock Text="Blur" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                                    <ToggleSwitch Name="ImageBlurToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ImageBlurToggle_Toggled" Margin="0,0,-110,0"/>
+                                </Grid>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Expander.Content>
+            </Expander>
+            <Expander HorizontalAlignment="Stretch" Header="Behavior" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="20">
+                    <Grid>
+                        <TextBlock Text="Stop app from stealing focus" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ToggleSwitch Name="FocusToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ToggleSwitch_Toggled" Margin="0,0,-110,0"/>
+                    </Grid>
+                </StackPanel>
+            </Expander>
+            <Expander HorizontalAlignment="Stretch" Header="About &amp; Updates" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="20">
+                    <Image Source="https://i.imgur.com/Llq7YZA.png" Height="100" Margin="0,-10,0,0"/>
+                    <TextBlock Text="Companion Display" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,-20,0,0"/>
+                    <Grid>
+                        <TextBlock Text="Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBlock Name="VersionString" Text="-" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Update" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button Name="UpdateBtn" IsEnabled="False" Content="Checking for updates..." HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_3"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Made with ❤︎ by YAG-dev" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_2"/>
+                    </Grid>
+                </StackPanel>
+            </Expander>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

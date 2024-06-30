@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.WidgetPhotoWidgetSettings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Grid>
+        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+        <Grid>
+            <TextBlock Text="Photo Gallery Settings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
+            <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,105">
+                <TextBox Name="DirectoryTextBox" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Directory / File" Padding="12"/>
+                <Button Height="45" Width="480" Content="Select File" Click="Button_Click_2"/>
+                <Button Height="45" Width="480" Content="Select Folder" Click="Button_Click_3"/>
+                <Grid HorizontalAlignment="Stretch" Width="490">
+                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+                    <TextBlock HorizontalAlignment="Left" Text="Smart Flip" Margin="10,0" VerticalAlignment="Center"/>
+                    <ToggleSwitch Name="SmartFlipToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="SmartFlipToggle_Toggled" Margin="0,0,-90,0"/>
+                </Grid>
+            </GridView>
+            <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
+                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Cancel" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Save" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Page>

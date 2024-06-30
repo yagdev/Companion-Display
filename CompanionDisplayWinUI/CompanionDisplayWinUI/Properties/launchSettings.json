@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "CompanionDisplayWinUI (Package)": {
+      "commandName": "MsixPackage",
+      "remoteDebugEnabled": false,
+      "remoteDebugMachine": "25.1.22.96",
+      "authenticationMode": "Windows",
+      "alwaysReinstallApp": false
+    },
+    "CompanionDisplayWinUI (Unpackaged)": {
+      "commandName": "Project",
+      "remoteDebugEnabled": false,
+      "remoteDebugMachine": "25.1.22.96",
+      "authenticationMode": "Windows"
+    }
+  }
+}
