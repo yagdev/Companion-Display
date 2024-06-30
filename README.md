@@ -9,7 +9,7 @@ It's really simple! Download the latest release and open CompanionDisplayWinUI.e
 To add Widgets simply tap the + button and choose a widget. Currently there are the following Widgets available:
 ### Date & Time
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/e1ae5fcf-872a-4ee1-8476-37f143772bfc)
-##3 Media controls with Spotify & Discord integration for synced lyrics
+### Media controls with Spotify & Discord integration for synced lyrics
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/610aa0c9-5334-45ba-b26d-74d15d2bdf12)
 ### Launchpad
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/cb25992c-2238-4bb5-867b-ec7f8a9d9539)
