@@ -3,7 +3,9 @@ Companion Display is an app designed to give life to a secondary monitor or old 
 ![CompanionDisplay](https://github.com/yagdev/Companion-Display/assets/53407061/9e9dfc31-f0f6-4a6c-aff6-2722d5ac6e07)
 
 ## How can I set up Companion Display?
-It's really simple! Download the latest release and open CompanionDisplayWinUI.exe. It works on Windows 10 x64 (Build 1809 and later) and Windows 11.
+It's really simple! Download the latest release here:
+https://github.com/yagdev/Companion-Display/releases
+Open CompanionDisplayWinUI.exe. It works on Windows 10 x64 (Build 1809 and later) and Windows 11.
 If you use Windows 10, I recommend you install the Segoe Fluent Icons font as the app will not display icons correctly on Windows 10 without it. Another thing that does not work on Windows 10 builds is the Mica Backdrop.
 
 ## Getting started with Widgets
