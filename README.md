@@ -7,21 +7,21 @@ It's really simple! Download the latest release and open CompanionDisplayWinUI.e
 
 ## Getting started with Widgets
 To add Widgets simply tap the + button and choose a widget. Currently there are the following Widgets available:
-· Date & Time
+### Date & Time
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/e1ae5fcf-872a-4ee1-8476-37f143772bfc)
-· Media controls with Spotify & Discord integration for synced lyrics
+##3 Media controls with Spotify & Discord integration for synced lyrics
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/610aa0c9-5334-45ba-b26d-74d15d2bdf12)
-· Launchpad
+### Launchpad
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/cb25992c-2238-4bb5-867b-ec7f8a9d9539)
-· Image Slideshow
+### Image Slideshow
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/e14409e6-f7e5-4a1a-a336-3590dcbae7bc)
-· Hardware Monitor
+### Hardware Monitor
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/4c38aa0f-16af-43a4-a219-9f197bbbe60d)
-· Monitor brightness controls
+### Monitor brightness controls
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/4e160220-1a50-4a8d-a45a-dcd213a1e008)
-· Android control widget with Battery info, Brightness controls and shutdown/restart controls
+### Android control widget with Battery info, Brightness controls and shutdown/restart controls
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/c73dcff6-49eb-4225-806d-e7b806fff960)
-· Virtual Numpad
+### Virtual Numpad
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/9e3903c3-d212-4712-881f-6bad3804e206)
 
 ## Widget Configuration:
