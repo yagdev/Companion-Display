@@ -56,6 +56,9 @@ namespace CompanionDisplayWinUI
                 Globals.Wallpaper = readerconfig.ReadLine();
                 Globals.Blur = bool.Parse(readerconfig.ReadLine());
                 Globals.StealFocus = bool.Parse(readerconfig.ReadLine());
+                Globals.BackgroundColorR = int.Parse(readerconfig.ReadLine());
+                Globals.BackgroundColorG = int.Parse(readerconfig.ReadLine());
+                Globals.BackgroundColorB = int.Parse(readerconfig.ReadLine());
             }
             catch (Exception ex)
             {

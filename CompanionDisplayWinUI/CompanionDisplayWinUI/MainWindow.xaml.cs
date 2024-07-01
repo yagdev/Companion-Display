@@ -23,6 +23,8 @@ using Windows.Foundation;
 using static CompanionDisplayWinUI.MediaPlayerWidget;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
+using Windows.Media.Control;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -94,6 +96,65 @@ namespace CompanionDisplayWinUI
         {
             Environment.Exit(0);
         }
+        string AlbumCoverCache = "", SongTitleCache = "";
+        int SongCoverStarted = 0;
+        private async void SongCoverBackground()
+        {
+            if (Globals.IsSpotify == true && Globals.SongName != SongTitleCache)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    try
+                    {
+                        BackgroundImage.Source = new BitmapImage(new Uri(Globals.SongBackground));
+                        AlbumCoverCache = Globals.SongBackground;
+                        SongTitleCache = Globals.SongName;
+                    }
+                    catch (Exception ex)
+                    {
+                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                    }
+                });
+            }
+            else
+            {
+                try
+                {
+                    GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                    GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
+                    if(SongTitleCache != songInfo.Title)
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            try
+                            {
+                                BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
+                                AlbumCoverCache = "";
+                                SongTitleCache = songInfo.Title;
+                            }
+                            catch (Exception e)
+                            {
+
+                            }
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                }
+            }
+            Thread.Sleep(1000);
+            if(Globals.Backdrop == 3)
+            {
+                Thread thread = new(SongCoverBackground);
+                thread.Start();
+            }
+            else
+            {
+                SongCoverStarted = 0;
+            }
+        }
         private async void UpdateUI()
         {
             try
@@ -103,18 +164,19 @@ namespace CompanionDisplayWinUI
                     case (0):
                         DispatcherQueue.TryEnqueue(() =>
                         {
+                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0,0,0,0));
                             SystemBackdrop = new DesktopAcrylicBackdrop();
                             BackgroundImage.Visibility = Visibility.Collapsed;
                             ImageOptionalBlur.Visibility = Visibility.Collapsed;
                             BackgroundVideo.Visibility = Visibility.Collapsed;
                             BackgroundImage.Source = null;
                             BackgroundVideo.Source = null;
-
                         });
                         break;
                     case (1):
                         DispatcherQueue.TryEnqueue(() =>
                         {
+                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
                             SystemBackdrop = new MicaBackdrop();
                             BackgroundImage.Visibility = Visibility.Collapsed;
                             ImageOptionalBlur.Visibility = Visibility.Collapsed;
@@ -126,6 +188,7 @@ namespace CompanionDisplayWinUI
                     case (2):
                         DispatcherQueue.TryEnqueue(() =>
                         {
+                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
                             SystemBackdrop = null;
                             if (Globals.Blur == true)
                             {
@@ -214,12 +277,40 @@ namespace CompanionDisplayWinUI
                     case (3):
                         DispatcherQueue.TryEnqueue(() =>
                         {
+                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                            SystemBackdrop = null;
+                            BackgroundImage.Visibility = Visibility.Visible;
+                            if (Globals.Blur == true)
+                            {
+                                ImageOptionalBlur.Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                ImageOptionalBlur.Visibility = Visibility.Collapsed;
+                            }
+                            BackgroundVideo.Visibility = Visibility.Collapsed;
+                        });
+                        if(SongCoverStarted == 0)
+                        {
+                            SongCoverStarted = 1;
+                            Thread thread = new(SongCoverBackground);
+                            thread.Start();
+                        }
+                        break;
+                    case (4):
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
                             BackgroundImage.Visibility = Visibility.Collapsed;
                             ImageOptionalBlur.Visibility = Visibility.Collapsed;
                             BackgroundVideo.Visibility = Visibility.Collapsed;
-                            BackgroundImage.Source = null;
-                            BackgroundVideo.Source = null;
+                            GridMain.Background = new SolidColorBrush(Color.FromArgb(255, (byte)Globals.BackgroundColorR, (byte)Globals.BackgroundColorG, (byte)Globals.BackgroundColorB));
                         });
+                        if (SongCoverStarted == 0)
+                        {
+                            SongCoverStarted = 1;
+                            Thread thread = new(SongCoverBackground);
+                            thread.Start();
+                        }
                         break;
                 }
             }

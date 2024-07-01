@@ -12,7 +12,7 @@ namespace CompanionDisplayWinUI
     static class Globals
     {
         // Runtime variables
-        public static string Version = "24.6-BETA_1";
+        public static string Version = "24.7-BETA_1.1";
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";
         public static string DiscordID = "";
@@ -47,6 +47,9 @@ namespace CompanionDisplayWinUI
         public static int ColorSchemeSelectAccentR = 0;
         public static int ColorSchemeSelectAccentG = 0;
         public static int ColorSchemeSelectAccentB = 0;
+        public static int BackgroundColorR = 0;
+        public static int BackgroundColorG = 0;
+        public static int BackgroundColorB = 0;
         public static int InjectCustomAccent = 0;
         public static int Backdrop = 0;
         public static string BackgroundLink = "";

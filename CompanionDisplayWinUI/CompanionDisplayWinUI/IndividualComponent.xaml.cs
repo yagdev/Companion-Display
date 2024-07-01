@@ -88,6 +88,14 @@ namespace CompanionDisplayWinUI
                                 }
                             }
                         }
+                        if (ComponentSensorStack.Children.Count == 1)
+                        {
+                            NoSensorsWarning.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            NoSensorsWarning.Visibility = Visibility.Collapsed;
+                        }
                     }
                     catch { }
                     foreach (ISensor sensor in hardware.Sensors)
@@ -131,6 +139,14 @@ namespace CompanionDisplayWinUI
                                 break;
 
                         }
+                    }
+                    if(ComponentSensorStack.Children.Count == 1)
+                    {
+                        NoSensorsWarning.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        NoSensorsWarning.Visibility = Visibility.Collapsed;
                     }
                 }
                 catch { }

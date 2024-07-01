@@ -8,6 +8,9 @@
     <RemoteDeploymentType>CopyToDevice</RemoteDeploymentType>
     <PackageRegistrationPath>\\25.1.22.96\Users\Tomás\Desktop\DebugShit</PackageRegistrationPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
   <ItemGroup>
     <Page Update="AllWidgets.xaml">
       <SubType>Designer</SubType>

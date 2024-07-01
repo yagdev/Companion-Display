@@ -141,9 +141,6 @@ namespace CompanionDisplayWinUI
                     case "Image":
                         Globals.Backdrop = 2;
                         break;
-                    case "Solid Color":
-                        Globals.Backdrop = 3;
-                        break;
                 }
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
@@ -194,7 +191,7 @@ namespace CompanionDisplayWinUI
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus;
+                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB;
                 File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
             });
         }
@@ -246,6 +243,20 @@ namespace CompanionDisplayWinUI
                 cmd.StartInfo.CreateNoWindow = true;
                 cmd.StartInfo.Arguments = "/C mkdir Update & MOVE * Update/ & cd Update & move CompanionDisplayWinUI.exe.WebView2 ../ & move Config ../ & move release.zip ../ & cd .. & tar -xf release.zip & del /f /q release.zip & taskkill /f /im CompanionDisplayWinUI.exe & timeout 1 & rmdir /s /q Update & CompanionDisplayWinUI.exe";
                 cmd.Start();
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                Globals.BackgroundColorR = BackgroundColorPicker.Color.R;
+                Globals.BackgroundColorG = BackgroundColorPicker.Color.G;
+                Globals.BackgroundColorB = BackgroundColorPicker.Color.B;
+                Thread thread = new Thread(Save_Settings);
+                thread.Start();
+                mainframe.IsEnabled = false;
+                mainframe.IsEnabled = true;
             }
         }
     }

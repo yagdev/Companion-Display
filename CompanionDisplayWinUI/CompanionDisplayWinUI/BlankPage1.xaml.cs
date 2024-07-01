@@ -130,6 +130,9 @@ namespace CompanionDisplayWinUI
                 Globals.IsAllApps = true;
                 var frame = this.Parent as Frame;
                 frame.Navigate(typeof(AllWidgets));
+                var gridparent = frame.Parent as Grid;
+                var navviewparent = gridparent.Parent as NavigationView;
+                navviewparent.SelectedItem = null;
             }
             catch
             {
@@ -297,29 +300,38 @@ namespace CompanionDisplayWinUI
                 button.DropCompleted += Button_DropCompleted;
                 BasicGridView.Items.Add(button);
             });
-            WebClient client = new WebClient();
-            string reply = client.DownloadString(Globals.UpdateString);
-            if (reply == Globals.Version)
+            try
             {
-                Globals.IsUpdateAvailable = false;
-            }
-            else
-            {
-                Globals.IsUpdateAvailable = true;
-            }
-            if (Globals.IsUpdateAvailable == true)
-            {
-                DispatcherQueue.TryEnqueue(() =>
+                WebClient client = new WebClient();
+                string reply = client.DownloadString(Globals.UpdateString);
+                if (reply == Globals.Version)
                 {
-                    Frame frame = new()
+                    Globals.IsUpdateAvailable = false;
+                }
+                else
+                {
+                    Globals.IsUpdateAvailable = true;
+                }
+                if (Globals.IsUpdateAvailable == true)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        Name = "UpdateWidget1",
-                    };
-                    frame.RightTapped += Frame_RightTapped;
-                    BasicGridView.Items.Add(frame);
-                    frame.Navigate(typeof(UpdateWarning));
-                });
+                        Frame frame = new()
+                        {
+                            Name = "UpdateWidget1",
+                        };
+                        frame.RightTapped += Frame_RightTapped;
+                        BasicGridView.Items.Add(frame);
+                        frame.Navigate(typeof(UpdateWarning));
+
+                    });
+                }
             }
+            catch
+            {
+
+            }
+            
         }
 
         private void BasicGridView_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)

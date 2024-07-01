@@ -50,7 +50,8 @@
                                 <x:String>Acrylic</x:String>
                                 <x:String>Mica</x:String>
                                 <x:String>Image</x:String>
-                                <!--<x:String>Solid Color</x:String>-->
+                                <x:String>Album Cover</x:String>
+                                <x:String>Solid Color</x:String>
                             </ComboBox>
                         </Grid>
                         <Expander HorizontalAlignment="Stretch" Header="Custom" HorizontalContentAlignment="Stretch">
@@ -64,6 +65,12 @@
                                     <TextBlock Text="Blur" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,0"/>
                                     <ToggleSwitch Name="ImageBlurToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ImageBlurToggle_Toggled" Margin="0,0,-110,0"/>
                                 </Grid>
+                                <Expander HorizontalAlignment="Stretch" Header="Custom Color">
+                                    <StackPanel>
+                                        <ColorPicker Name="BackgroundColorPicker"/>
+                                        <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_4"/>
+                                    </StackPanel>
+                                </Expander>
                             </StackPanel>
                         </Expander>
                     </StackPanel>

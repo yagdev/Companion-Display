@@ -66,6 +66,7 @@ namespace CompanionDisplayWinUI
                     }
                     image.Source = bitmapImage;
                     image.Stretch = Stretch.UniformToFill;
+                    image.Name = path;
                     FlipViewImages.Items.Add(image);
                 });
             }
@@ -161,8 +162,15 @@ namespace CompanionDisplayWinUI
 
         private void FlipViewImages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var senderImage = (sender as FlipView).SelectedItem as Image;
-            Globals.bitmapImage.UriSource = new System.Uri(senderImage.Name);
+            try
+            {
+                var senderImage = (sender as FlipView).SelectedItem as Image;
+                Globals.bitmapImage.UriSource = new System.Uri(senderImage.Name);
+            }
+            catch
+            {
+
+            }
         }
     }
 }
