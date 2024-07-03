@@ -1,3 +1,4 @@
+using EmbedIO.Sessions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -37,7 +38,7 @@ namespace CompanionDisplayWinUI
             Thread thread0 = new(StartUI);
             thread0.Start();
         }
-        public bool CleanUp = false;
+        public bool CleanUp = false, IsDragging = false;
         internal static class Helper
         {
             internal static BitmapImage GetThumbnail(IRandomAccessStreamReference Thumbnail)
@@ -77,7 +78,6 @@ namespace CompanionDisplayWinUI
             }
             catch (Exception ex)
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
         }
 
@@ -89,7 +89,6 @@ namespace CompanionDisplayWinUI
             }
             catch (Exception ex)
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
         }
 
@@ -138,6 +137,28 @@ namespace CompanionDisplayWinUI
             Thread thread0 = new(UpdateUI);
             thread0.Start();
         }
+
+        private void SongProgressBar_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
+        {
+            IsDragging = true;
+        }
+
+        private async void Grid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+        {
+            try
+            {
+                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
+                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                IsDragging = false;
+                SongProgressBar.IsFocusEngaged = false;
+            }
+            catch (Exception ex)
+            {
+                IsDragging = false;
+            }
+        }
         private async void UpdateUI()
         {
             try
@@ -157,14 +178,17 @@ namespace CompanionDisplayWinUI
                     {
                         SpotifyLogo.Visibility = Visibility.Collapsed;
                     }
-                    try
+                    if (IsDragging == false)
                     {
-                        SongProgressBar.Value = Globals.SongProgress;
-                    }
-                    catch (Exception ex)
-                    {
-                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                        SongProgressBar.Value = 0;
+                        try
+                        {
+                            SongProgressBar.Value = Globals.SongProgress;
+                        }
+                        catch (Exception ex)
+                        {
+                            //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                            SongProgressBar.Value = 0;
+                        }
                     }
                 });
                 try
@@ -184,7 +208,6 @@ namespace CompanionDisplayWinUI
             }
             catch (Exception ex)
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
             if (Globals.SongBackground != AlbumCoverCache)
             {
@@ -217,11 +240,10 @@ namespace CompanionDisplayWinUI
                                 {
                                     AlbumCoverImg.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
                                     AlbumCoverCache = "";
-                                    SongTitleCache = Globals.SongName;
+                                    SongTitleCache = songInfo.Title;
                                 }
                                 catch (Exception e)
                                 {
-                                    //File.AppendAllText("ErrorLog.crlh", e.Message); 
                                     SongTitle.Text = e.Message; 
                                 }
                             });
@@ -229,7 +251,6 @@ namespace CompanionDisplayWinUI
                     }
                     catch (Exception ex)
                     {
-                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
                     }
                 }
             }
@@ -254,7 +275,7 @@ namespace CompanionDisplayWinUI
             {
                 //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
-            
+            if(!CleanUp)
             {
                 Thread.Sleep(1000);
                 Thread thread0 = new(UpdateUI);

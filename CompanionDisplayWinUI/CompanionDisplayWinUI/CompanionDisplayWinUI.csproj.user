@@ -21,6 +21,9 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="SpotifyPlayer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SmallDataSensor.xaml">
       <SubType>Designer</SubType>
     </Page>

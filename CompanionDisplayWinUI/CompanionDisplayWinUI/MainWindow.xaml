@@ -18,12 +18,14 @@
         <MediaPlayerElement Name="BackgroundVideo"  AutoPlay="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ElementSoundMode="Off" Visibility="Collapsed" Stretch="UniformToFill"/>
         <NavigationView x:Name="nvSample" SelectionChanged="NavigationView_SelectionChanged" PaneDisplayMode="Auto" SelectedItem="{x:Bind HomeItem, Mode=OneWay}" IsBackButtonVisible="Collapsed">
             <NavigationView.MenuItems>
+                <HyperlinkButton Name="FullScreenBtn" Content="&#xe740;" FontFamily="Segoe Fluent Icons" Margin="-30, -10,-22,-10" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="HyperlinkButton_Click" />
                 <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1" Name="HomeItem"/>
                 <NavigationViewItem Icon="Globe" Content="Internet" Tag="SamplePage2" />
+                <NavigationViewItem Icon="MusicInfo" Content="Spotify" Tag="SamplePage3" />
             </NavigationView.MenuItems>
             <Grid>
-                <HyperlinkButton Name="FullScreenBtn" Content="&#xe740;" FontFamily="Segoe Fluent Icons" Width="50" Height="35" Margin="5,5,0,0" VerticalAlignment="Top" Click="HyperlinkButton_Click"/>
                 <Frame x:Name="contentFrame" Margin="0,45,0,0" CacheSize="0" CacheMode="BitmapCache" IsEnabledChanged="contentFrame_IsEnabledChanged"/>
+                <WebView2 Name="SpotifyBuiltin" Grid.Row="2" Loaded="SpotifyBuiltin_Loaded"/>
             </Grid>
             
         </NavigationView>

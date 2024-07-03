@@ -67,9 +67,11 @@ namespace CompanionDisplayWinUI
                     case "Musixmatch":
                         contentFrame.Navigate(typeof(MusixmatchIntegrationProto));
                         SetWindowLong(hWnd, -20, 256);
+                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
                         break;
                     case "SamplePage1":
                         contentFrame.Navigate(typeof(BlankPage1));
+                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
                         if (Globals.StealFocus)
                         {
                             SetWindowLong(hWnd, -20, GetWindowLong(hWnd, -20) | 134480128);
@@ -77,15 +79,17 @@ namespace CompanionDisplayWinUI
                         break;
                     case "SamplePage2":
                         contentFrame.Navigate(typeof(BlankPage2));
+                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
                         SetWindowLong(hWnd, -20, 256);
                         break;
                     case "SamplePage3":
-                        contentFrame.Navigate(typeof(BlankPage3));
+                        SpotifyBuiltin.Visibility = Visibility.Visible;
                         SetWindowLong(hWnd, -20, 256);
                         break;
                     case "Settings":
                         SetWindowLong(hWnd, -20, 256);
                         contentFrame.Navigate(typeof(BlankPage3));
+                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
                         break;
                 }
             }
@@ -106,6 +110,8 @@ namespace CompanionDisplayWinUI
                 {
                     try
                     {
+                        BitmapImage bitmapImage = new();
+                        bitmapImage.UriSource = new Uri(Globals.SongBackground);
                         BackgroundImage.Source = new BitmapImage(new Uri(Globals.SongBackground));
                         AlbumCoverCache = Globals.SongBackground;
                         SongTitleCache = Globals.SongName;
@@ -118,30 +124,33 @@ namespace CompanionDisplayWinUI
             }
             else
             {
-                try
+                if(Globals.IsSpotify == false)
                 {
-                    GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                    GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
-                    if(SongTitleCache != songInfo.Title)
+                    try
                     {
-                        DispatcherQueue.TryEnqueue(() =>
+                        GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                        GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
+                        if (SongTitleCache != songInfo.Title)
                         {
-                            try
+                            DispatcherQueue.TryEnqueue(() =>
                             {
-                                BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
-                                AlbumCoverCache = "";
-                                SongTitleCache = songInfo.Title;
-                            }
-                            catch (Exception e)
-                            {
+                                try
+                                {
+                                    BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
+                                    AlbumCoverCache = "";
+                                    SongTitleCache = songInfo.Title;
+                                }
+                                catch (Exception e)
+                                {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                    catch (Exception ex)
+                    {
+                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                    }
                 }
             }
             Thread.Sleep(1000);
@@ -326,6 +335,13 @@ namespace CompanionDisplayWinUI
             thread.Start();
         }
         private AppWindow _appWindow;
+
+        private async void SpotifyBuiltin_Loaded(object sender, RoutedEventArgs e)
+        {
+            await SpotifyBuiltin.EnsureCoreWebView2Async(null);
+            SpotifyBuiltin.CoreWebView2.Navigate("https://open.spotify.com");
+        }
+
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)

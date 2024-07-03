@@ -12,7 +12,7 @@ namespace CompanionDisplayWinUI
     static class Globals
     {
         // Runtime variables
-        public static string Version = "24.7-BETA_1.1";
+        public static string Version = "24.7-BETA_2";
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";
         public static string DiscordID = "";
@@ -35,7 +35,6 @@ namespace CompanionDisplayWinUI
         public static bool ImageFailed = false;
         public static string LastWebPage = "";
         public static string CurrentHW = "";
-        public static BitmapImage bitmapImage = new BitmapImage();
         // App config files
         public static string RefreshTokenPath = "Config/RefreshToken.crlh";
         public static string RefreshToken2Path = "Config/RefreshToken2.crlh";

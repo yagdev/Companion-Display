@@ -88,9 +88,9 @@ namespace CompanionDisplayWinUI
                 NumpadDot.Content = ".";
             });
             }
-            
+            if(CleanUp == false)
             {
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
                 Thread thread = new(UpdateUI);
                 thread.Start();
             }

@@ -33,6 +33,7 @@ namespace CompanionDisplayWinUI
         private readonly HttpClient client2 = new(new SocketsHttpHandler
         {
             ConnectTimeout = TimeSpan.FromSeconds(5.0),
+            KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
             EnableMultipleHttp2Connections = false
         });
         private readonly PlayerCurrentlyPlayingRequest request2 = new();
@@ -53,12 +54,12 @@ namespace CompanionDisplayWinUI
                 {
                     Console.WriteLine("Received Update! {0}", e.Presence);
                 };
+                startshit = 1;
                 client.Initialize();
                 Thread thread2 = new(RefreshToken);
                 thread2.Start();
                 Thread thread = new(Initialize);
                 thread.Start();
-                startshit = 1;
             }
             catch (Exception ex)
             {
@@ -131,7 +132,6 @@ namespace CompanionDisplayWinUI
             }
             catch (Exception ex)
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
             try
             {
@@ -139,8 +139,6 @@ namespace CompanionDisplayWinUI
                 GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
                 if (TitleSongOffline != songInfo.Title)
                 {
-                    string fullname = new FileInfo("runtimes/cover.png").FullName;
-                    Globals.SongBackground = fullname;
                     Globals.BackgroundChanged = true;
                     TitleSongOffline = songInfo.Title;
                 }

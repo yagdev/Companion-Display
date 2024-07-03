@@ -77,10 +77,10 @@ namespace CompanionDisplayWinUI
                         TempProgress.Value = LoadValue;
                     });
                 }
-                Thread.Sleep(3000);
             }
             if (CleanUp == false)
             {
+                Thread.Sleep(3000);
                 Thread thread = new(UpdateUI);
                 thread.Start();
             }

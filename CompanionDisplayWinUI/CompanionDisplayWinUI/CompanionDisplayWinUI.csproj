@@ -42,6 +42,7 @@
     <None Remove="NumPadWidget.xaml" />
     <None Remove="PowerSensor.xaml" />
     <None Remove="SmallDataSensor.xaml" />
+    <None Remove="SpotifyPlayer.xaml" />
     <None Remove="TemperatureSensor.xaml" />
     <None Remove="TimeWidget.xaml" />
     <None Remove="TimeWidgetWidgetSettings.xaml" />
@@ -160,6 +161,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="SpotifyPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="SmallDataSensor.xaml">

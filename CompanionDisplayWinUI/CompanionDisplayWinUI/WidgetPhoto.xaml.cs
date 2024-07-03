@@ -104,6 +104,7 @@ namespace CompanionDisplayWinUI
             Thread thread = new(SmartFlip);
             thread.Start();
         }
+        private BitmapImage bitmapImage = new BitmapImage();
         public void SmartFlip()
         {
             Random random = new Random();
@@ -139,7 +140,7 @@ namespace CompanionDisplayWinUI
             {
                 var senderImage = sender as Image;
                 senderImage.Stretch = Stretch.UniformToFill;
-                senderImage.Source = Globals.bitmapImage;
+                senderImage.Source = bitmapImage;
             }
             catch
             {
@@ -165,7 +166,7 @@ namespace CompanionDisplayWinUI
             try
             {
                 var senderImage = (sender as FlipView).SelectedItem as Image;
-                Globals.bitmapImage.UriSource = new System.Uri(senderImage.Name);
+                bitmapImage.UriSource = new System.Uri(senderImage.Name);
             }
             catch
             {

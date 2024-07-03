@@ -74,10 +74,10 @@ namespace CompanionDisplayWinUI
                         LoadPercent.Text = LoadValue2;
                     });
                 }
-                Thread.Sleep(3000);
             }
             if (CleanUp == false)
             {
+                Thread.Sleep(3000);
                 Thread thread = new(UpdateUI);
                 thread.Start();
             }
