@@ -5,6 +5,7 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -144,6 +145,16 @@ namespace CompanionDisplayWinUI
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             
+        }
+
+        private async void WebView_Loaded(object sender, RoutedEventArgs e)
+        {
+            var environmentOptions = new CoreWebView2EnvironmentOptions();
+            environmentOptions.AreBrowserExtensionsEnabled = true;
+            CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", userDataFolder: null, environmentOptions);
+            await WebView.EnsureCoreWebView2Async(environment);
+            WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.57.2_0")); 
+            WebView.Source = new Uri("https://www.google.com/");
         }
     }
 }

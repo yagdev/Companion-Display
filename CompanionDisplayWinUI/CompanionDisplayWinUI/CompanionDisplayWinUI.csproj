@@ -77,7 +77,7 @@
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
     <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre295" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240531000-experimental1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="MimeMapping" Version="3.0.1" />
     <PackageReference Include="NAudio" Version="2.2.1" />

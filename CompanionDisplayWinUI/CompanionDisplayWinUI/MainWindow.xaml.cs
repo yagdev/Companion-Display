@@ -25,6 +25,8 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Windows.Media.Control;
 using Windows.UI;
+using Microsoft.Web.WebView2.Core;
+using Windows.UI.WebUI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -335,11 +337,14 @@ namespace CompanionDisplayWinUI
             thread.Start();
         }
         private AppWindow _appWindow;
-
         private async void SpotifyBuiltin_Loaded(object sender, RoutedEventArgs e)
         {
-            await SpotifyBuiltin.EnsureCoreWebView2Async(null);
-            SpotifyBuiltin.CoreWebView2.Navigate("https://open.spotify.com");
+            var environmentOptions = new CoreWebView2EnvironmentOptions();
+            environmentOptions.AreBrowserExtensionsEnabled = true;
+            CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, environmentOptions);
+            await SpotifyBuiltin.EnsureCoreWebView2Async(environment);
+            await SpotifyBuiltin.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.57.2_0"));
+            SpotifyBuiltin.Source = new Uri("https://open.spotify.com/");
         }
 
         private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
