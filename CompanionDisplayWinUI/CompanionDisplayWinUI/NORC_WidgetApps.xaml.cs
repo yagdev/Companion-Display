@@ -281,6 +281,7 @@ namespace CompanionDisplayWinUI
                 FontSize = 32,
                 AllowDrop = true,
             };
+            EmptyApps.Visibility = Visibility.Collapsed;
             button.Click += Button_Click_1;
             button2.Click += Button_Click;
             BasicGridView.Items.Add(button);
@@ -301,6 +302,14 @@ namespace CompanionDisplayWinUI
                     var childControl3 = (Microsoft.UI.Xaml.Controls.Button)grid.FindName(grid.Name.Replace("Grid", ""));
                     childControl3.IsHitTestVisible = true;
                 }
+            }
+            if(BasicGridView.Items.Count == 0)
+            {
+                EmptyApps.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                EmptyApps.Visibility = Visibility.Collapsed;
             }
         }
 

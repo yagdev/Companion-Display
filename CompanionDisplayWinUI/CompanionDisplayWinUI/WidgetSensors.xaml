@@ -10,6 +10,7 @@
 
     <Grid>
         <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+		<TextBlock Name="NoDevices" Text="No hardware detected." FontSize="40" TextWrapping="Wrap" HorizontalTextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,0,50,0" Opacity="0.5" IsHitTestVisible="False" Visibility="Visible"/>
         <FlipView Name="FlipViewHW"  Width="500" Height="300" Background="Transparent" SelectionChanged="FlipViewHW_SelectionChanged">
         </FlipView>
     </Grid>

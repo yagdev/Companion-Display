@@ -28,10 +28,10 @@ namespace CompanionDisplayWinUI
         public VoltageSensor()
         {
             this.InitializeComponent();
-            CleanUp = false;
         }
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            CleanUp = false;
             var parent = this.Parent as Frame;
             if (parent != null)
             {
@@ -42,13 +42,13 @@ namespace CompanionDisplayWinUI
                 thread.Start();
             }
         }
+        ISensor sensor1;
+        public string LoadValue2;
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             CleanUp = true;
         }
         public bool CleanUp = false;
-        ISensor sensor1;
-        public string LoadValue2;
         private void UpdateUI()
         {
             if (sensor1 != null)
@@ -66,7 +66,7 @@ namespace CompanionDisplayWinUI
                 {
                     try
                     {
-                        LoadValue2 = (Math.Round((double)(sensor1.Value * 100)) / 100) + " V";
+                        LoadValue2 = ((Math.Round((float)(sensor1.Value)*100)) / 100) + " V";
                     }
                     catch { }
                     DispatcherQueue.TryEnqueue(() =>

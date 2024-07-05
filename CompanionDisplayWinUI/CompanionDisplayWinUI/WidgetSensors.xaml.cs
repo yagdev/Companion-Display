@@ -44,6 +44,7 @@ namespace CompanionDisplayWinUI
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
+                    NoDevices.Visibility = Visibility.Collapsed;
                     foreach (IHardware hardware in hardwareSensorsFunction.computer.Hardware)
                     {
                         Frame frame = new();
