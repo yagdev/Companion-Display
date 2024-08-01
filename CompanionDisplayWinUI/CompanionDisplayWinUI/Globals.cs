@@ -14,7 +14,7 @@ namespace CompanionDisplayWinUI
     {
         // Runtime variables
         public static bool IsAdmin = false;
-        public static string Version = "24.8";
+        public static string Version = "24.8.1";
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";
         public static string UpdateZipBeta = "https://www.dropbox.com/scl/fi/8h4099g1nstwe1f208so2/release.zip?rlkey=82gxpdb44ifafe26kn0pt3of4&st=neai1gxx&dl=1";

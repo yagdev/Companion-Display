@@ -47,11 +47,11 @@ namespace CompanionDisplayWinUI
         }
         private void UpdateUI()
         {
-            DispatcherQueue.TryEnqueue(() =>
+            try
             {
-                try
+                using (device)
                 {
-                    using (device)
+                    DispatcherQueue.TryEnqueue(() =>
                     {
                         SessionController.Children.Clear();
                         Frame frame0 = new()
@@ -72,13 +72,13 @@ namespace CompanionDisplayWinUI
                             SessionController.Children.Add(frame);
                             LastCount++;
                         }
-                    }
+                    });
                 }
-                catch
-                {
-                    LastCount = -1;
-                }
-            });
+            }
+            catch
+            {
+                LastCount = -1;
+            }
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
