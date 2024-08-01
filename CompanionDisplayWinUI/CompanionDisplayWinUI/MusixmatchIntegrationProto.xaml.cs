@@ -52,110 +52,60 @@ namespace CompanionDisplayWinUI
         public MusixmatchIntegrationProto()
         {
             this.InitializeComponent();
-            LoadMonitorNames();
         }
-        private List<PHYSICAL_MONITOR> physicalMonitors = new List<PHYSICAL_MONITOR>();
-
-        private void LoadMonitorNames()
+        private static TabViewItem CreateNewTVI(string header, string dataContext)
         {
-            physicalMonitors = new List<PHYSICAL_MONITOR>();
-
-            // Enumerate all monitors
-            EnumDisplayMonitors(IntPtr.Zero, IntPtr.Zero, MonitorEnum, IntPtr.Zero);
-
-            foreach (var monitor in physicalMonitors)
+            var newTab = new TabViewItem()
             {
-                MonitorComboBox.Items.Add(monitor.szPhysicalMonitorDescription);
-            }
-
-            if (MonitorComboBox.Items.Count > 0)
-            {
-                MonitorComboBox.SelectedIndex = 0;
-            }
-        }
-
-        private bool MonitorEnum(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData)
-        {
-            uint monitorCount = 0;
-            GetNumberOfPhysicalMonitorsFromHMONITOR(hMonitor, ref monitorCount);
-
-            if (monitorCount > 0)
-            {
-                PHYSICAL_MONITOR[] physicalMonitorArray = new PHYSICAL_MONITOR[monitorCount];
-                if (GetPhysicalMonitorsFromHMONITOR(hMonitor, monitorCount, physicalMonitorArray))
+                IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource()
                 {
-                    physicalMonitors.AddRange(physicalMonitorArray);
+                    Symbol = Symbol.Placeholder
+                },
+                Header = header,
+                Content = new BlankPage2()
+                {
+                    DataContext = dataContext
                 }
-            }
+            };
 
-            return true; // Continue enumeration
+            return newTab;
         }
-
-        private void BrightnessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
-            int brightness = (int)e.NewValue;
-            BrightnessValueText.Text = $"Brightness: {brightness}";
-
-            if (MonitorComboBox.SelectedIndex >= 0)
+            var tab = CreateNewTVI("New Item", "New Item");
+            sender.TabItems.Add(tab);
+            sender.SelectedItem = tab;
+        }
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            var tab = args.Tab;
+            var tabitself = tab.Content as BlankPage2;
+            tabitself.ClearBrowser();
+            try
             {
-                var selectedMonitor = physicalMonitors[MonitorComboBox.SelectedIndex];
-                SetMonitorBrightness(selectedMonitor.hPhysicalMonitor, (uint)brightness);
+                if(sender.SelectedItem as BlankPage2 == tabitself)
+                {
+                    if(sender.SelectedIndex == 1)
+                    {
+                        try
+                        {
+                            sender.SelectedIndex++;
+                        }
+                        catch
+                        {
+                            sender.SelectedIndex = -1;
+                        }
+                    } 
+                    if(sender.SelectedIndex >= 2)
+                    {
+                        sender.SelectedIndex--;
+                    }
+                   
+                }
+                sender.TabItems.Remove(args.Tab);
             }
-        }
-
-        private void LogError(string message)
-        {
-            // Implement your logging here. For example:
-            Console.WriteLine($"{message}");
-            // Optionally log to a file or monitoring system
-        }
-
-        ~MusixmatchIntegrationProto()
-        {
-            DestroyPhysicalMonitors();
-        }
-
-        private void DestroyPhysicalMonitors()
-        {
-            if (physicalMonitors != null && physicalMonitors.Count > 0)
-            {
-                PHYSICAL_MONITOR[] monitorArray = physicalMonitors.ToArray();
-                DestroyPhysicalMonitors((uint)monitorArray.Length, monitorArray);
-            }
-        }
-
-        [DllImport("user32.dll")]
-        private static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, IntPtr dwData);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private static extern bool GetNumberOfPhysicalMonitorsFromHMONITOR(IntPtr hMonitor, ref uint pdwNumberOfPhysicalMonitors);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private static extern bool GetPhysicalMonitorsFromHMONITOR(IntPtr hMonitor, uint dwPhysicalMonitorArraySize, [Out] PHYSICAL_MONITOR[] pPhysicalMonitorArray);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private static extern bool SetMonitorBrightness(IntPtr hMonitor, uint dwNewBrightness);
-
-        [DllImport("dxva2.dll", SetLastError = true)]
-        private static extern bool DestroyPhysicalMonitors(uint dwPhysicalMonitorArraySize, [In] PHYSICAL_MONITOR[] pPhysicalMonitorArray);
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private struct PHYSICAL_MONITOR
-        {
-            public IntPtr hPhysicalMonitor;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
-            public string szPhysicalMonitorDescription;
-        }
-
-        private delegate bool MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref RECT lprcMonitor, IntPtr dwData);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int left;
-            public int top;
-            public int right;
-            public int bottom;
+            catch { }
+            
         }
     }
 }

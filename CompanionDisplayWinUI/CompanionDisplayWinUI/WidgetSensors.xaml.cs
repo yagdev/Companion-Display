@@ -29,15 +29,19 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-
+        private bool FTU = true;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            Thread thread = new(UpdateUI);
-            thread.Start();
+            if (FTU)
+            {
+                Thread thread = new(UpdateUI);
+                thread.Start();
+                FTU = false;
+            }
         }
         private void UpdateUI()
         {
-            HardwareSensorsFunction hardwareSensorsFunction = new HardwareSensorsFunction();
+            HardwareSensorsFunction hardwareSensorsFunction = new();
             hardwareSensorsFunction.Init();
         start:
             if (hardwareSensorsFunction.computer.Hardware.Count != 0)
@@ -47,9 +51,11 @@ namespace CompanionDisplayWinUI
                     NoDevices.Visibility = Visibility.Collapsed;
                     foreach (IHardware hardware in hardwareSensorsFunction.computer.Hardware)
                     {
-                        Frame frame = new();
-                        frame.Tag = hardware;
-                        frame.Name = hardware.Name;
+                        Frame frame = new()
+                        {
+                            Tag = hardware,
+                            Name = hardware.Name
+                        };
                         FlipViewHW.Items.Add(frame);
                         frame.Navigate(typeof(IndividualComponent));
                     }
@@ -62,13 +68,13 @@ namespace CompanionDisplayWinUI
             }
             DispatcherQueue.TryEnqueue(() =>
             {
-                Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Name;
+                Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as Hardware;
             });
         }
 
         private void FlipViewHW_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Name;
+            Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as Hardware;
         }
     }
 }

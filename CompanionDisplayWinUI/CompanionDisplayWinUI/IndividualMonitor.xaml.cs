@@ -28,35 +28,39 @@ namespace CompanionDisplayWinUI
         public IndividualMonitor()
         {
             this.InitializeComponent();
-            this.Loaded += OnPageLoaded;
         }
         private List<PHYSICAL_MONITOR> physicalMonitors = new List<PHYSICAL_MONITOR>();
+        private bool FTU = true;
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-            Frame parentFrame = GetParentFrame();
-            if (parentFrame != null)
+            if (FTU)
             {
-                if(parentFrame.Name.Length > 14)
+                FTU = false;
+                Frame parentFrame = GetParentFrame();
+                if (parentFrame != null)
                 {
-                    MonitorName.Text = parentFrame.Name.Remove(10, parentFrame.Name.Length - 10) + "..." ;
+                    if (parentFrame.Name.Length > 14)
+                    {
+                        MonitorName.Text = parentFrame.Name.Remove(10, parentFrame.Name.Length - 10) + "...";
+                    }
+                    else
+                    {
+                        MonitorName.Text = parentFrame.Name;
+                    }
+                    GetMonitorBrightness(nint.Parse(parentFrame.Tag as string), out uint minBrightness, out uint currentBrightness, out uint maxBrightness);
+                    MonitorBrightness.Value = currentBrightness;
+                    MonitorBrightness.Maximum = maxBrightness;
+                    MonitorBrightness.Minimum = minBrightness;
+                    if (maxBrightness <= 0)
+                    {
+                        var GridElementMain = parentFrame.Parent as GridView;
+                        GridElementMain.Items.Remove(parentFrame);
+                    }
                 }
                 else
                 {
-                    MonitorName.Text = parentFrame.Name;
+                    // Handle the case where the parent is not a Frame
                 }
-                GetMonitorBrightness(nint.Parse(parentFrame.Tag as string), out uint minBrightness, out uint currentBrightness, out uint maxBrightness);
-                MonitorBrightness.Value = currentBrightness;
-                MonitorBrightness.Maximum = maxBrightness;
-                MonitorBrightness.Minimum = minBrightness;
-                if(maxBrightness <= 0)
-                {
-                    var GridElementMain = parentFrame.Parent as GridView;
-                    GridElementMain.Items.Remove(parentFrame);
-                }
-            }
-            else
-            {
-                // Handle the case where the parent is not a Frame
             }
         }
         public Frame GetParentFrame()
@@ -88,6 +92,11 @@ namespace CompanionDisplayWinUI
             public IntPtr hPhysicalMonitor;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string szPhysicalMonitorDescription;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

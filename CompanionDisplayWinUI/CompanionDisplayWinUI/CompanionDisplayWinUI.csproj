@@ -8,7 +8,6 @@
     <ApplicationManifest>app1.manifest</ApplicationManifest>
     <Platforms>x86;x64;ARM64</Platforms>
     <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
     <UseWinUI>true</UseWinUI>
 	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <EnableMsixTooling>true</EnableMsixTooling>
@@ -23,13 +22,16 @@
   <ItemGroup>
     <None Remove="AccentOverride.xaml" />
     <None Remove="AllWidgets.xaml" />
+    <None Remove="AudioDevice.xaml" />
     <None Remove="BlankPage1.xaml" />
     <None Remove="BlankPage2.xaml" />
     <None Remove="BlankPage3.xaml" />
+    <None Remove="BrowserTab.xaml" />
     <None Remove="ClockSensor.xaml" />
     <None Remove="CompanionDisplay.png" />
     <None Remove="FactorSensor.xaml" />
     <None Remove="FanSensor.xaml" />
+    <None Remove="IndividualAudioControl.xaml" />
     <None Remove="IndividualComponent.xaml" />
     <None Remove="IndividualMonitor.xaml" />
     <None Remove="LoadSensors.xaml" />
@@ -39,6 +41,7 @@
     <None Remove="MusixmatchIntegrationProto.xaml" />
     <None Remove="NORC_WidgetApps.xaml" />
     <None Remove="NORC_WidgetPhone.xaml" />
+    <None Remove="NotesWidget.xaml" />
     <None Remove="NumPadWidget.xaml" />
     <None Remove="PowerSensor.xaml" />
     <None Remove="SmallDataSensor.xaml" />
@@ -48,6 +51,7 @@
     <None Remove="TimeWidgetWidgetSettings.xaml" />
     <None Remove="UpdateWarning.xaml" />
     <None Remove="VoltageSensor.xaml" />
+    <None Remove="WidgetAudioControl.xaml" />
     <None Remove="WidgetMonitorBrightness.xaml" />
     <None Remove="WidgetPhoneIndividual.xaml" />
     <None Remove="WidgetPhoto.xaml" />
@@ -75,15 +79,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CoreAudio" Version="1.37.0" />
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre295" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre308" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <PackageReference Include="MimeMapping" Version="3.0.1" />
     <PackageReference Include="NAudio" Version="2.2.1" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
     <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.1.1" />
-    <PackageReference Include="System.Management" Version="9.0.0-preview.5.24306.7" />
+    <PackageReference Include="System.Management" Version="9.0.0-preview.6.24327.7" />
     <PackageReference Include="WindowsDisplayAPI" Version="1.3.0.13" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -264,6 +269,54 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="AllWidgets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="BrowserTab.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="BrowserTab.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="NotesWidget.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="NotesWidget.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomAdditionalCompileInputs Remove="WidgetAudioControl.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Remove="WidgetAudioControl.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="WSHControllerLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>563dc060-b09a-11d2-a24d-00104bd35090</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="IWshRuntimeLibrary">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>0</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>f935dc20-1cf0-11d0-adb9-00c04fd58a0b</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="AudioDevice.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="IndividualAudioControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

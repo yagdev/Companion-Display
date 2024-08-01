@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Margin="0,35,0,0">
         <TextBlock Text="Add Widget" FontSize="36" Margin="20,0"/>
         <Grid Margin="0,50,0,0">
             <GridView x:Name="BasicGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick"/>

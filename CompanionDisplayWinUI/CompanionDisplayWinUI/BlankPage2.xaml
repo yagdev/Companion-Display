@@ -7,19 +7,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Unloaded="Page_Unloaded" Loaded="Page_Loaded">
+    Unloaded="Page_Unloaded" Loaded="Page_Loaded" IsEnabledChanged="Page_IsEnabledChanged" Background="{ThemeResource SolidBackgroundFillColorTertiary}" >
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="90" x:Name="ControlsRow"/>
+            <RowDefinition Height="40" x:Name="ControlsRow"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Width="80" Height="80" VerticalAlignment="Top" Margin="10,0,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76b;" Click="Button_Click"/>
-        <Button Width="80" Height="80" VerticalAlignment="Top" Margin="92,0,0,0"  FontFamily="Segoe Fluent Icons" Content="&#xe76c;" Click="Button_Click_1"/>
-        <Button Width="80" Height="80" VerticalAlignment="Top" Margin="174,0,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe80f;" Click="Button_Click_2"/>
-        <Button Width="80" Height="80" VerticalAlignment="Top" Margin="0,0,92,0" FontFamily="Segoe Fluent Icons" Content="&#xe896;" HorizontalAlignment="Right" Click="Button_Click_3"/>
-        <Button Width="80" Height="80" VerticalAlignment="Top" Margin="0,0,10,0" FontFamily="Segoe Fluent Icons" Content="&#xf738;" HorizontalAlignment="Right" Click="Button_Click_4"/>
-        <TextBox Name="AddressBar" VerticalAlignment="Top" Height="80" Margin="256,0,174,0" FontFamily="Segoe Fluent Icons" HorizontalAlignment="Stretch" KeyDown="AddressBar_KeyDown" Padding="10,28,10,0"/>
-        <WebView2 Name="WebView" Grid.Row="2" Source="https://www.google.com/" NavigationCompleted="WebView_NavigationCompleted" Loaded="WebView_Loaded"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="5,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76b;" Click="Button_Click"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="58,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76c;" Click="Button_Click_1"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="111,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe80f;" Click="Button_Click_2"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,58,0" FontFamily="Segoe Fluent Icons" Content="&#xe896;" HorizontalAlignment="Right" Click="Button_Click_3"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,5,0" FontFamily="Segoe Fluent Icons" Content="&#xf738;" HorizontalAlignment="Right" Click="Button_Click_4"/>
+        <TextBox Name="AddressBar" VerticalAlignment="Top" Height="30" Margin="164,4,111,0" FontFamily="Segoe UI Variable Display" HorizontalAlignment="Stretch" KeyDown="AddressBar_KeyDown" Padding="10,5,10,0" PlaceholderText="Search or insert URL" GotFocus="AddressBar_GotFocus"/>
+        <WebView2 Name="WebView" Grid.Row="2" Source="https://www.google.com/" NavigationCompleted="WebView_NavigationCompleted" Loaded="WebView_Loaded" KeyDown="WebView_KeyDown"/>
     </Grid>
 </Page>

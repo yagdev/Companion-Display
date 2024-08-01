@@ -20,6 +20,9 @@ using System.Threading;
 using System.Diagnostics;
 using Windows.System;
 using System.Net;
+using IWshRuntimeLibrary;
+using System.Net.Http;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,6 +38,11 @@ namespace CompanionDisplayWinUI
         public BlankPage3()
         {
             this.InitializeComponent();
+            if (System.IO.File.Exists("Config/SE.crlh"))
+            {
+                AppIconImg.Source = new BitmapImage(new Uri("https://i.imgur.com/ng8AhkJ.jpeg"));
+            }
+            this.NavigationCacheMode = NavigationCacheMode.Required;
             if(Globals.IsUpdateAvailable == true)
             {
                 UpdateBtn.IsEnabled = true;
@@ -53,10 +61,12 @@ namespace CompanionDisplayWinUI
             ImageBlurToggle.IsOn = Globals.Blur;
             VersionString.Text = Globals.Version;
             FocusToggle.IsOn = Globals.StealFocus;
+            UpdateToggle.IsOn = Globals.IsBetaProgram;
+            AddButtonToggle.IsOn = Globals.HideAddButton;
+            StartupToggle.IsOn = Globals.LaunchOnStartup;
             LoadFinish = true;
         }
         private Frame mainframe;
-        private Color colorTemp;
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (LoadFinish == true)
@@ -74,11 +84,8 @@ namespace CompanionDisplayWinUI
                         ((App)Application.Current).SetAppTheme(ElementTheme.Light);
                         break;
                 }
-                if(ColorSchemeSelect.SelectedIndex != null)
-                {
-                    Globals.ColorSchemeSelect = ColorSchemeSelect.SelectedIndex;
-                }
-                Thread thread = new Thread(Save_Settings);
+                Globals.ColorSchemeSelect = ColorSchemeSelect.SelectedIndex;
+                Thread thread = new(Save_Settings);
                 thread.Start();
             }
         }
@@ -91,17 +98,14 @@ namespace CompanionDisplayWinUI
                 switch (Theme)
                 {
                     case "System Automatic":
-                        (Application.Current as App)?.RevertToSystemAccentColor();
+                        App.RevertToSystemAccentColor();
                         break;
                     case "Custom":
-                        (Application.Current as App)?.SetAccentColor(Color.FromArgb(255, (byte)Globals.ColorSchemeSelectAccentR, (byte)Globals.ColorSchemeSelectAccentG, (byte)Globals.ColorSchemeSelectAccentB));
+                        App.SetAccentColor(Color.FromArgb(255, (byte)Globals.ColorSchemeSelectAccentR, (byte)Globals.ColorSchemeSelectAccentG, (byte)Globals.ColorSchemeSelectAccentB));
                         break;
                 }
-                if (AccentSelect.SelectedIndex != null)
-                {
-                    Globals.InjectCustomAccent = AccentSelect.SelectedIndex;
-                }
-                Thread thread = new Thread(Save_Settings);
+                Globals.InjectCustomAccent = AccentSelect.SelectedIndex;
+                Thread thread = new(Save_Settings);
                 thread.Start();
                 mainframe.Navigate(typeof(BlankPage1));
                 mainframe.Navigate(typeof(BlankPage3));
@@ -120,7 +124,7 @@ namespace CompanionDisplayWinUI
                 Globals.ColorSchemeSelectAccentR = AccentColorPicker.Color.R;
                 Globals.ColorSchemeSelectAccentG = AccentColorPicker.Color.G;
                 Globals.ColorSchemeSelectAccentB = AccentColorPicker.Color.B;
-                Thread thread = new Thread(Save_Settings);
+                Thread thread = new(Save_Settings);
                 thread.Start();
             }
         }
@@ -144,11 +148,8 @@ namespace CompanionDisplayWinUI
                 }
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
-                if (BackdropSelect.SelectedIndex != null)
-                {
-                    Globals.Backdrop = BackdropSelect.SelectedIndex;
-                }
-                Thread thread = new Thread(Save_Settings);
+                Globals.Backdrop = BackdropSelect.SelectedIndex;
+                Thread thread = new(Save_Settings);
                 thread.Start();
             }
         }
@@ -163,7 +164,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.Wallpaper = btntag;
                 }
-                Thread thread = new Thread(Save_Settings);
+                Thread thread = new(Save_Settings);
                 thread.Start();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
@@ -182,7 +183,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.StealFocus = false;
                 }
-                Thread thread = new Thread(Save_Settings);
+                Thread thread = new(Save_Settings);
                 thread.Start();
             }
         }
@@ -191,8 +192,9 @@ namespace CompanionDisplayWinUI
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB;
-                File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
+                Globals.ResetHome = true;
+                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup;
+                System.IO.File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
             });
         }
 
@@ -208,7 +210,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.Blur = false;
                 }
-                Thread thread = new Thread(Save_Settings);
+                Thread thread = new(Save_Settings);
                 thread.Start();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
@@ -218,7 +220,7 @@ namespace CompanionDisplayWinUI
         private void BackgroundLink_LostFocus(object sender, RoutedEventArgs e)
         {
             Globals.BackgroundLink = BackgroundLink.Text;
-            Thread thread = new Thread(Save_Settings);
+            Thread thread = new(Save_Settings);
             thread.Start();
             mainframe.IsEnabled = false;
             mainframe.IsEnabled = true;
@@ -230,20 +232,29 @@ namespace CompanionDisplayWinUI
             await Launcher.LaunchUriAsync(new Uri(url));
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private async void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            using (WebClient client = new WebClient())
+            using HttpClient client = new();
+            UpdateBtn.IsEnabled = false;
+            UpdateBtn.Content = "Updating...";
+            if (Globals.IsBetaProgram)
             {
-                UpdateBtn.IsEnabled = false;
-                UpdateBtn.Content = "Updating...";
-                client.DownloadFile(Globals.UpdateZip, "release.zip");
-                Process cmd = new Process();
-                cmd.StartInfo.FileName = "cmd.exe";
-                cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                cmd.StartInfo.CreateNoWindow = true;
-                cmd.StartInfo.Arguments = "/C mkdir Update & MOVE * Update/ & cd Update & move CompanionDisplayWinUI.exe.WebView2 ../ & move Config ../ & move release.zip ../ & cd .. & tar -xf release.zip & del /f /q release.zip & taskkill /f /im CompanionDisplayWinUI.exe & timeout 1 & rmdir /s /q Update & CompanionDisplayWinUI.exe";
-                cmd.Start();
+                using var s = await client.GetStreamAsync(Globals.UpdateZipBeta);
+                using var fs = new FileStream("release.zip", FileMode.CreateNew);
+                await s.CopyToAsync(fs);
             }
+            else
+            {
+                using var s = await client.GetStreamAsync(Globals.UpdateZip);
+                using var fs = new FileStream("release.zip", FileMode.CreateNew);
+                await s.CopyToAsync(fs);
+            }
+            Process cmd = new();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.Arguments = "/C mkdir Update & MOVE * Update/ & cd Update & move CompanionDisplayWinUI.exe.WebView2 ../ & move Config ../ & move release.zip ../ & cd .. & tar -xf release.zip & del /f /q release.zip & taskkill /f /im CompanionDisplayWinUI.exe & timeout 1 & rmdir /s /q Update & CompanionDisplayWinUI.exe";
+            cmd.Start();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
@@ -253,10 +264,84 @@ namespace CompanionDisplayWinUI
                 Globals.BackgroundColorR = BackgroundColorPicker.Color.R;
                 Globals.BackgroundColorG = BackgroundColorPicker.Color.G;
                 Globals.BackgroundColorB = BackgroundColorPicker.Color.B;
-                Thread thread = new Thread(Save_Settings);
+                Thread thread = new(Save_Settings);
                 thread.Start();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
+            }
+        }
+
+        private void UpdateToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                if (UpdateToggle.IsOn)
+                {
+                    Globals.IsBetaProgram = true;
+                }
+                else
+                {
+                    Globals.IsBetaProgram = false;
+                }
+                Thread thread = new (Save_Settings);
+                thread.Start();
+            }
+        }
+
+        private void AddButtonToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                if (AddButtonToggle.IsOn)
+                {
+                    Globals.HideAddButton = true;
+                }
+                else
+                {
+                    Globals.HideAddButton = false;
+                }
+                Thread thread = new(Save_Settings);
+                thread.Start();
+            }
+        }
+
+        private void StartupToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                if (StartupToggle.IsOn)
+                {
+                    try
+                    {
+                        object shStartup = (object)"startup";
+                        WshShell shell = new();
+                        string shortcutAddress = (string)shell.SpecialFolders.Item(ref shStartup) + @"\Companion Display.lnk";
+                        IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutAddress);
+                        shortcut.Description = "Comanion Display launch on startup object";
+                        shortcut.TargetPath = System.IO.Path.Combine(System.IO.Path.GetFullPath(Environment.ProcessPath.ToString()));
+                        shortcut.WorkingDirectory = System.IO.Path.Combine(System.IO.Path.GetFullPath(Environment.CurrentDirectory.ToString()));
+                        shortcut.Save();
+                        Globals.LaunchOnStartup = true;
+                    }
+                    catch
+                    {
+                        AddButtonToggle.IsOn = false;
+                        Globals.LaunchOnStartup = false;
+                    }
+                }
+                else
+                {
+                    object shStartup = (object)"startup";
+                    WshShell shell = new();
+                    string shortcutAddress = (string)shell.SpecialFolders.Item(ref shStartup) + @"\Companion Display.lnk";
+                    if (System.IO.File.Exists(shortcutAddress))
+                    {
+                        System.IO.File.Delete(shortcutAddress);
+                    }
+                    Globals.LaunchOnStartup = false;
+                }
+                Thread thread = new(Save_Settings);
+                thread.Start();
             }
         }
     }

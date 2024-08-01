@@ -36,31 +36,56 @@ namespace CompanionDisplayWinUI
             Thread thread0 = new(UpdateUI);
             thread0.Start();
         }
-        private void UpdateUI()
+        private async void UpdateUI()
         {
-            WebClient client = new WebClient();
-            string reply = client.DownloadString("https://www.dropbox.com/scl/fi/f8nu0pn6leiz646o1ebce/changelog.txt?rlkey=fd6srkx7xm3wexk1eevglgs8c&st=mtnphh0r&dl=1");
-            string version = client.DownloadString(Globals.UpdateString);
-            DispatcherQueue.TryEnqueue(() =>
+            using(HttpClient client = new())
             {
-                VersionName.Text = "Update " + version;
-                ChangelogBlock.Text = reply;
-            });
+                string version, reply;
+                if (Globals.IsBetaProgram)
+                {
+                    reply = await client.GetStringAsync("https://www.dropbox.com/scl/fi/hr6tiqeazmkzllsz9y53z/changelog.txt?rlkey=s40umhmz174z7tok6guelylnu&st=a68s40wb&dl=1");
+                    version = await client.GetStringAsync(Globals.UpdateStringBeta);
+                }
+                else
+                {
+                    reply = await client.GetStringAsync("https://www.dropbox.com/scl/fi/f8nu0pn6leiz646o1ebce/changelog.txt?rlkey=fd6srkx7xm3wexk1eevglgs8c&st=mtnphh0r&dl=1");
+                    version = await client.GetStringAsync(Globals.UpdateString);
+                }
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    VersionName.Text = "Update " + version;
+                    ChangelogBlock.Text = reply;
+                });
+            }
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (WebClient client = new WebClient())
+            using (HttpClient client = new())
             {
                 UpdateBtn.IsEnabled = false;
                 UpdateBtn.Content = "Updating...";
-                client.DownloadFile(Globals.UpdateZip, "release.zip");
-                Process cmd = new Process();
-                cmd.StartInfo.FileName = "cmd.exe";
-                cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                cmd.StartInfo.CreateNoWindow = true;
-                cmd.StartInfo.Arguments = "/C mkdir Update & MOVE * Update/ & cd Update & move CompanionDisplayWinUI.exe.WebView2 ../ & move Config ../ & move release.zip ../ & cd .. & tar -xf release.zip & del /f /q release.zip & taskkill /f /im CompanionDisplayWinUI.exe & timeout 1 & rmdir /s /q Update & CompanionDisplayWinUI.exe";
-                cmd.Start();
+                if (Globals.IsBetaProgram)
+                {
+                    using var s = await client.GetStreamAsync(Globals.UpdateZipBeta);
+                    using var fs = new FileStream("release.zip", FileMode.CreateNew);
+                    await s.CopyToAsync(fs);
+                }
+                else
+                {
+                    using var s = await client.GetStreamAsync(Globals.UpdateZip);
+                    using var fs = new FileStream("release.zip", FileMode.CreateNew);
+                    await s.CopyToAsync(fs);
+                }
+                using(Process cmd = new())
+                {
+                    cmd.StartInfo.FileName = "cmd.exe";
+                    cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    cmd.StartInfo.CreateNoWindow = true;
+                    cmd.StartInfo.Arguments = "/C mkdir Update & MOVE * Update/ & cd Update & move CompanionDisplayWinUI.exe.WebView2 ../ & move Config ../ & move release.zip ../ & cd .. & tar -xf release.zip & del /f /q release.zip & taskkill /f /im CompanionDisplayWinUI.exe & timeout 1 & rmdir /s /q Update & CompanionDisplayWinUI.exe";
+                    cmd.Start();
+                }
             }
+            
         }
     }
 }

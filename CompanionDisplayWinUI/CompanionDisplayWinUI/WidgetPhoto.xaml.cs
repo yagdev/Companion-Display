@@ -32,7 +32,6 @@ namespace CompanionDisplayWinUI
         }
         Frame frame;
         string path = "";
-        bool Cooldown = false;
         int ItemCount = 0, ChosenImage = 0;
         public void UpdateUI()
         {
@@ -42,8 +41,8 @@ namespace CompanionDisplayWinUI
                 switch (SF)
                 {
                     case "False":
-                        break;
                         Globals.SmartFlipToggle = false;
+                        break;
                     case "True":
                         Globals.SmartFlipToggle = true;
                         break;
@@ -53,13 +52,13 @@ namespace CompanionDisplayWinUI
             {
 
             }
-            int pos = path.LastIndexOf("/") + 1;
-            if ((path.Substring(pos, path.Length - pos)).Contains("."))
+            int pos = path.LastIndexOf('/') + 1;
+            if (path[pos..].Contains('.'))
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
-                    Image image = new Image();
-                    BitmapImage bitmapImage = new BitmapImage();
+                    Image image = new();
+                    BitmapImage bitmapImage = new();
                     using (var stream = new FileStream(path, FileMode.Open, FileAccess.Read))
                     {
                         bitmapImage.SetSource(stream.AsRandomAccessStream());
@@ -74,7 +73,7 @@ namespace CompanionDisplayWinUI
             {
                 try
                 {
-                    DirectoryInfo d = new DirectoryInfo(path);
+                    DirectoryInfo d = new(path);
                     foreach (var file in d.GetFiles("*"))
                     {
                         string imagePath = file.FullName;
@@ -84,15 +83,17 @@ namespace CompanionDisplayWinUI
                             {
                                 try
                                 {
-                                    Image image = new Image();
-                                    image.Stretch = Stretch.UniformToFill;
-                                    image.Name = imagePath;
+                                    Image image = new()
+                                    {
+                                        Stretch = Stretch.UniformToFill,
+                                        Name = imagePath
+                                    };
                                     image.Loaded += Image_Loaded;
                                     image.Unloaded += Image_Unloaded;
                                     FlipViewImages.Items.Add(image);
                                     ItemCount++;
                                 }
-                                catch (Exception ex)
+                                catch
                                 {
                                 }
                             });
@@ -104,33 +105,41 @@ namespace CompanionDisplayWinUI
             Thread thread = new(SmartFlip);
             thread.Start();
         }
-        private BitmapImage bitmapImage = new BitmapImage();
-        public void SmartFlip()
+        private readonly BitmapImage bitmapImage = new();
+        private bool IsVisible = false;
+        private void SmartFlip()
         {
-            Random random = new Random();
-            ChosenImage = random.Next(0, ItemCount);
-            DispatcherQueue.TryEnqueue(() =>
+            if (Globals.SmartFlipToggle && IsVisible)
             {
-                FlipViewImages.SelectedIndex = ChosenImage;
-            });
-            Thread.Sleep(60000);
-            if (Globals.SmartFlipToggle)
-            {
+                Random random = new();
+                ChosenImage = random.Next(0, ItemCount);
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    FlipViewImages.SelectedIndex = ChosenImage;
+                });
+                Thread.Sleep(60000);
                 Thread thread = new(SmartFlip);
                 thread.Start();
             }
         }
-
+        private bool FTU = true;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            frame = this.Parent as Frame;
-            try
+            if (FTU)
             {
-                path = frame.Tag.ToString();
+                frame = this.Parent as Frame;
+                try
+                {
+                    path = frame.Tag.ToString();
+                }
+                catch { }
+                Thread thread = new(UpdateUI);
+                thread.Start();
+                FTU = false;
             }
-            catch { }
-            Thread thread = new Thread(UpdateUI);
-            thread.Start();
+            IsVisible = true;
+            Thread thread0 = new(SmartFlip);
+            thread0.Start();
         }
 
         private void Image_Loaded(object sender, RoutedEventArgs e)
@@ -150,15 +159,25 @@ namespace CompanionDisplayWinUI
         }
         private void Image_Unloaded(object sender, RoutedEventArgs e)
         {
-            var senderImage = sender as Image;
-            if (senderImage != null)
+            if (IsVisible)
             {
-                string oldname = senderImage.Name;
-                senderImage = null;
-                senderImage = new Image();
-                senderImage.Name = oldname;
-                senderImage.Loaded += Image_Loaded;
+                var senderImage = sender as Image;
+                if (senderImage != null)
+                {
+                    string oldname = senderImage.Name;
+                    senderImage = null;
+                    senderImage = new()
+                    {
+                        Name = oldname
+                    };
+                    senderImage.Loaded += Image_Loaded;
+                }
             }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            IsVisible = false;
         }
 
         private void FlipViewImages_SelectionChanged(object sender, SelectionChangedEventArgs e)

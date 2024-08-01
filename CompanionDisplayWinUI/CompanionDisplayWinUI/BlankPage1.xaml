@@ -6,13 +6,13 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Unloaded="Page_Unloaded" >
+    mc:Ignorable="d" Loaded="Page_Loaded">
 
-    <Grid>
+    <Grid Margin="0,35,0,0">
         <Grid>
             <TextBlock Name="Debug" Text="100" Height="20" VerticalAlignment="Top" Visibility="Collapsed"/>
             <GridView SelectionMode="None" Margin="5,0,0,0" HorizontalAlignment="Center">
-                <GridView x:Name="BasicGridView" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted"/>
+                <GridView x:Name="BasicGridView" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch"/>
             </GridView>
         </Grid>
     </Grid>

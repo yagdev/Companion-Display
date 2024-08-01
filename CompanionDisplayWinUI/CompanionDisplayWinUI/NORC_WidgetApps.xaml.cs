@@ -41,6 +41,9 @@ namespace CompanionDisplayWinUI
         public NORC_WidgetApps()
         {
             this.InitializeComponent();
+        }
+        private void UpdateUI()
+        {
             string WidgetOrder = "";
             try
             {
@@ -50,88 +53,109 @@ namespace CompanionDisplayWinUI
             {
                 File.AppendAllText("Config/AppOrder.crlh", "");
             }
-            foreach (string line in WidgetOrder.Split('\n'))
+            DispatcherQueue.TryEnqueue(() =>
             {
-                if (line.Length != 0)
+                foreach (string line in WidgetOrder.Split('\n'))
                 {
-                    string fix = line.Replace("\r", "");
-                    Grid grid = new()
+                    if (line.Length != 0)
                     {
-                        Name = "AppGrid" + i,
-                        Height = 77,
-                        Width = 77
-                    };
-                    Microsoft.UI.Xaml.Controls.Image appIcon = new Microsoft.UI.Xaml.Controls.Image
-                    {
-                        Name = "App" + i + "Icon",
-                        Stretch = Stretch.Uniform
-                    };
-                    Button button1 = new() { Name = "App" + i , Content = appIcon, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = line };
-                    button1.Loaded += GetIcons;
-                    button1.Click += OpenShortcut;
-                    button1.RightTapped += Button_RightTapped;
-                    grid.Children.Add(button1);
-                    BasicGridView.Items.Add(grid);
-                    i++;
+                        string fix = line.Replace("\r", "");
+                        Grid grid = new()
+                        {
+                            Name = "AppGrid" + i,
+                            Height = 77,
+                            Width = 77
+                        };
+                        Microsoft.UI.Xaml.Controls.Image appIcon = new()
+                        {
+                            Name = "App" + i + "Icon",
+                            Stretch = Stretch.Uniform
+                        };
+                        Button button1 = new() { Name = "App" + i, Content = appIcon, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = line };
+                        button1.Loaded += GetIcons;
+                        button1.Click += OpenShortcut;
+                        button1.RightTapped += Button_RightTapped;
+                        grid.Children.Add(button1);
+                        BasicGridView.Items.Add(grid);
+                        i++;
+                    }
                 }
-            }
-            if (BasicGridView.Items.Count == 0)
-            {
-                EmptyApps.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                EmptyApps.Visibility = Visibility.Collapsed;
-            }
+                if (BasicGridView.Items.Count == 0)
+                {
+                    EmptyApps.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    EmptyApps.Visibility = Visibility.Collapsed;
+                }
+            });
             try
             {
                 File.Delete("Config/AppOrder.crlh");
             }
             catch { }
-            foreach (UIElement item in BasicGridView.Items)
+            DispatcherQueue.TryEnqueue(() =>
             {
-                if (item is Grid)
+                foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
                 {
-                    Grid grid = item as Grid;
-                    var childControl3 = (Microsoft.UI.Xaml.Controls.Button)grid.FindName(grid.Name.Replace("Grid", ""));
-                    File.AppendAllText("Config/AppOrder.crlh", childControl3.Tag.ToString() + "\n");
+                    if (item is Grid)
+                    {
+                        Grid grid = item as Grid;
+                        var childControl3 = (Microsoft.UI.Xaml.Controls.Button)grid.FindName(grid.Name.Replace("Grid", ""));
+                        File.AppendAllText("Config/AppOrder.crlh", childControl3.Tag.ToString() + "\n");
+                    }
                 }
-            }
+            });
         }
-        private void SetIcon(object sender, RightTappedRoutedEventArgs e)
+        private void ElevationCheck()
         {
-            
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            if (isElevated == true)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    BasicGridView.CanReorderItems = false;
+                    BasicGridView.CanDragItems = false;
+                });
+            }
         }
         private void OpenShortcut(object sender, RoutedEventArgs e)
         {
-            Process process = new();
-            ProcessStartInfo startInfo = new()
+            using (Process process = new())
             {
-                CreateNoWindow = true,
-                FileName = "cmd.exe",
-                Arguments = "/C \"" + ((Button)sender).Tag + "\""
-            };
-            process.StartInfo = startInfo;
-            process.Start();
+                ProcessStartInfo startInfo = new()
+                {
+                    CreateNoWindow = true,
+                    FileName = "cmd.exe",
+                    Arguments = "/C \"" + ((Button)sender).Tag + "\""
+                };
+                process.StartInfo = startInfo;
+                process.Start();
+            }
         }
         private void Button_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new MenuFlyout();
-            MenuFlyoutItem thirdItem = new MenuFlyoutItem { Text = "Replace", Name = senderElement.Name + "Replace" };
-            MenuFlyoutItem fourthItem = new MenuFlyoutItem { Text = "Remove", Name = senderElement.Name + "Remove" };
+            MenuFlyout myFlyout = new();
+            MenuFlyoutItem thirdItem = new () { Text = "Replace", Name = senderElement.Name + "Replace" };
+            MenuFlyoutItem fourthItem = new() { Text = "Remove", Name = senderElement.Name + "Remove" };
             thirdItem.Click += MenuFlyoutItem2_Click;
             fourthItem.Click += MenuFlyoutItem4_Click;
             myFlyout.Items.Add(thirdItem);
             myFlyout.Items.Add(fourthItem);
             myFlyout.ShowAt(senderElement, new Windows.Foundation.Point(0, 0));
         }
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var frame = this.Parent as Frame;
             frame.IsEnabled = false;
         }
-        private async void MenuFlyoutItem4_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem4_Click(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
             var childControl = (Microsoft.UI.Xaml.Controls.Button)BasicGridView.FindName(senderElement.Name.Remove(senderElement.Name.Length - 6, 6));
@@ -147,7 +171,7 @@ namespace CompanionDisplayWinUI
                 EmptyApps.Visibility = Visibility.Collapsed;
             }
             string Apps = "";
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -158,7 +182,7 @@ namespace CompanionDisplayWinUI
             }
             File.WriteAllText("Config/AppOrder.crlh", Apps);
         }
-        private async void MenuFlyoutItem2_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem2_Click(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
             var childControl = (Microsoft.UI.Xaml.Controls.Button)BasicGridView.FindName(senderElement.Name.Remove(senderElement.Name.Length - 7, 7));
@@ -168,9 +192,9 @@ namespace CompanionDisplayWinUI
             {
                 childControl.Tag = btntag;
                 var childControl2 = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(childControl.Name + "Icon");
-                Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(childControl.Tag.ToString());
-                BitmapImage bitmapImage = new BitmapImage();
-                using (MemoryStream iconStream = new MemoryStream())
+                BitmapImage bitmapImage = new();
+                using (Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(childControl.Tag.ToString()))
+                using (MemoryStream iconStream = new ())
                 {
                     icon.Save(iconStream);
                     iconStream.Seek(0, SeekOrigin.Begin);
@@ -179,7 +203,7 @@ namespace CompanionDisplayWinUI
                 childControl2.Source = bitmapImage;
             }
             string Apps = "";
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -192,55 +216,54 @@ namespace CompanionDisplayWinUI
         }
         private async void GetIcons(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
             var childControl = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(((Button)sender).Name + "Icon");
-            try
-            {
-                childControl.Source = await GetThumbnailImageAsync(((Button)sender).Tag.ToString());
-            }
-            catch
+            if (childControl.Source == null)
             {
                 try
                 {
-                    Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(((Button)sender).Tag.ToString());
-                    using (Bitmap bitmap = icon.ToBitmap())
-                    using (MemoryStream iconStream = new MemoryStream())
-                    {
-                        bitmap.Save(iconStream, ImageFormat.Png);
-                        iconStream.Seek(0, SeekOrigin.Begin);
-
-                        BitmapImage bitmapImage = new BitmapImage();
-                        bitmapImage.SetSource(iconStream.AsRandomAccessStream());
-                        childControl.Source = bitmapImage;
-                    }
+                    childControl.Source = await GetThumbnailImageAsync(((Button)sender).Tag.ToString());
                 }
                 catch
                 {
+                    try
+                    {
+                        using (Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(((Button)sender).Tag.ToString()))
+                        using(Bitmap bitmap = icon.ToBitmap())
+                        using (MemoryStream iconStream = new())
+                        {
+                            bitmap.Save(iconStream, ImageFormat.Png);
+                            iconStream.Seek(0, SeekOrigin.Begin);
+                            BitmapImage bitmapImage = new();
+                            bitmapImage.SetSource(iconStream.AsRandomAccessStream());
+                            childControl.Source = bitmapImage;
+                        }
+                    }
+                    catch
+                    {
 
+                    }
                 }
             }
-
-
         }
-        public async Task<BitmapImage> GetThumbnailImageAsync(string filePath)
+        public static async Task<BitmapImage> GetThumbnailImageAsync(string filePath)
         {
+            BitmapImage bitmapImage = new();
             StorageFile storageFile = await StorageFile.GetFileFromPathAsync(filePath);
             const ThumbnailMode thumbnailMode = ThumbnailMode.PicturesView;
             const uint requestedSize = 100; // Size of the thumbnail
-
-            StorageItemThumbnail thumbnail = await storageFile.GetThumbnailAsync(thumbnailMode, requestedSize);
-
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.SetSource(thumbnail);
+            using (StorageItemThumbnail thumbnail = await storageFile.GetThumbnailAsync(thumbnailMode, requestedSize))
+            {
+                bitmapImage.SetSource(thumbnail);
+            }
             return bitmapImage;
         }
 
         private void MainGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new MenuFlyout();
-            MenuFlyoutItem firstItem = new MenuFlyoutItem { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-            MenuFlyoutItem fifthItem = new MenuFlyoutItem { Text = "Edit", Name = senderElement.Name + "Edit" };
+            MenuFlyout myFlyout = new();
+            MenuFlyoutItem firstItem = new () { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
+            MenuFlyoutItem fifthItem = new () { Text = "Edit", Name = senderElement.Name + "Edit" };
             firstItem.Click += MenuFlyoutItem_Click;
             fifthItem.Click += MenuFlyoutItem5_Click;
             myFlyout.Items.Add(firstItem);
@@ -250,9 +273,9 @@ namespace CompanionDisplayWinUI
             }
             myFlyout.ShowAt(senderElement, new Windows.Foundation.Point(0, 0));
         }
-        private async void MenuFlyoutItem5_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem5_Click(object sender, RoutedEventArgs e)
         {
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -294,7 +317,7 @@ namespace CompanionDisplayWinUI
             var childControl2 = (Microsoft.UI.Xaml.Controls.Button)MainGrid.FindName("Finish");
             BasicGridView.Items.Remove(childControl);
             BasicGridView.Items.Remove(childControl2);
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -325,7 +348,7 @@ namespace CompanionDisplayWinUI
                     Height = 77,
                     Width = 77
                 };
-                Microsoft.UI.Xaml.Controls.Image appIcon = new Microsoft.UI.Xaml.Controls.Image
+                Microsoft.UI.Xaml.Controls.Image appIcon = new ()
                 {
                     Name = "App" + i + "Icon",
                     Stretch = Stretch.Uniform
@@ -348,7 +371,7 @@ namespace CompanionDisplayWinUI
                 EmptyApps.Visibility = Visibility.Collapsed;
             }
             string Apps = "";
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -363,7 +386,7 @@ namespace CompanionDisplayWinUI
         private void BasicGridView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             string Apps = "";
-            foreach (UIElement item in BasicGridView.Items)
+            foreach (UIElement item in BasicGridView.Items.Cast<UIElement>())
             {
                 if (item is Grid)
                 {
@@ -374,22 +397,16 @@ namespace CompanionDisplayWinUI
             }
             File.WriteAllText("Config/AppOrder.crlh", Apps);
         }
-
+        private bool FTU = true;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            bool isElevated;
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            if (FTU)
             {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-            if (isElevated == true)
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    BasicGridView.CanReorderItems = false;
-                    BasicGridView.CanDragItems = false;
-                });
+                Thread thread = new(UpdateUI);
+                thread.Start();
+                Thread thread0 = new(ElevationCheck);
+                thread0.Start();
+                FTU = false;
             }
         }
     }

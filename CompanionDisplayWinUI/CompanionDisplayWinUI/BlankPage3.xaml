@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
-    <ScrollViewer Name="MainScroll" Padding="10,0,10,0">
+    <ScrollViewer Name="MainScroll" Padding="10,35,10,0">
         <StackPanel Spacing="10">
             <TextBlock Text="Settings" FontSize="28" Padding="0" FontFamily="Segoe Variable Display" FontWeight="SemiBold"/>
             <Expander HorizontalAlignment="Stretch"
@@ -82,15 +82,27 @@
                         <TextBlock Text="Stop app from stealing focus" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ToggleSwitch Name="FocusToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ToggleSwitch_Toggled" Margin="0,0,-110,0"/>
                     </Grid>
+                    <Grid>
+                        <TextBlock Text="Hide Add Widget Button" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ToggleSwitch Name="AddButtonToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="AddButtonToggle_Toggled" Margin="0,0,-110,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Launch on startup" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ToggleSwitch Name="StartupToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="StartupToggle_Toggled" Margin="0,0,-110,0"/>
+                    </Grid>
                 </StackPanel>
             </Expander>
             <Expander HorizontalAlignment="Stretch" Header="About &amp; Updates" HorizontalContentAlignment="Stretch">
                 <StackPanel Spacing="20">
-                    <Image Source="https://i.imgur.com/Llq7YZA.png" Height="100" Margin="0,-10,0,0"/>
+                    <Image Name="AppIconImg" Source="https://i.imgur.com/Llq7YZA.png" Height="100" Margin="0,-10,0,0"/>
                     <TextBlock Text="Companion Display" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0,-20,0,0"/>
                     <Grid>
                         <TextBlock Text="Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <TextBlock Name="VersionString" Text="-" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Enable Beta Updates" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ToggleSwitch Name="UpdateToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="UpdateToggle_Toggled" Margin="0,0,-110,0"/>
                     </Grid>
                     <Grid>
                         <TextBlock Text="Update" HorizontalAlignment="Left" VerticalAlignment="Center"/>
@@ -98,7 +110,7 @@
                     </Grid>
                     <Grid>
                         <TextBlock Text="Made with ❤︎ by YAG-dev" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <Button Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_2"/>
+                        <HyperlinkButton Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2"/>
                     </Grid>
                 </StackPanel>
             </Expander>

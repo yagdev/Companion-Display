@@ -30,6 +30,7 @@ namespace CompanionDisplayWinUI
         public AllWidgets()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
             var currentAssembly = this.GetType().GetTypeInfo().Assembly;
             var pageTypeInfo = typeof(Page).GetTypeInfo();
             int i = 1;
@@ -47,12 +48,22 @@ namespace CompanionDisplayWinUI
         }
         private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            Globals.ResetHome = true;
             try
             {
                 Globals.IsAllApps = false;
                 var frame = e.ClickedItem as Frame;
-                File.AppendAllText("Config/WidgetOrder.crlh", frame.Content + Environment.NewLine);
+                if (frame.Content.ToString().Contains("NotesWidget"))
+                {
+                    File.AppendAllText("Config/WidgetOrder.crlh", frame.Content + "ID" + DateTime.Now.ToString("yyyymmddhhmmssff") + Environment.NewLine);
+                }
+                else
+                {
+                    File.AppendAllText("Config/WidgetOrder.crlh", frame.Content + Environment.NewLine);
+                }
                 var frame2 = this.Parent as Frame;
+                var navviewparent = frame2.Parent as NavigationView;
+                navviewparent.SelectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)navviewparent.FindName("HomeItem");
                 frame2.Navigate(typeof(BlankPage1));
             }
             catch 

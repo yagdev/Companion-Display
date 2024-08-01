@@ -29,6 +29,7 @@ namespace CompanionDisplayWinUI
         public IndividualComponent()
         {
             this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
         public bool LoadFinished = false;
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -47,9 +48,11 @@ namespace CompanionDisplayWinUI
                         {
                             foreach (ISensor sensor in subhardware.Sensors)
                             {
-                                Frame frame = new();
-                                frame.Tag = sensor;
-                                frame.Name = sensor.Name;
+                                Frame frame = new()
+                                {
+                                    Tag = sensor,
+                                    Name = sensor.Name
+                                };
                                 switch (sensor.SensorType)
                                 {
                                     case SensorType.Load:
@@ -100,9 +103,11 @@ namespace CompanionDisplayWinUI
                     catch { }
                     foreach (ISensor sensor in hardware.Sensors)
                     {
-                        Frame frame = new();
-                        frame.Tag = sensor;
-                        frame.Name = sensor.Name;
+                        Frame frame = new()
+                        {
+                            Tag = sensor,
+                            Name = sensor.Name
+                        };
                         switch (sensor.SensorType)
                         {
                             case SensorType.Load:

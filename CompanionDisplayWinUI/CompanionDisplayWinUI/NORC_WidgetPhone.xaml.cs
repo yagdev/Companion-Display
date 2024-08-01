@@ -27,9 +27,7 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class NORC_WidgetPhone : Page
     {
-        int i = 0;
         string LastID;
-        double Brightness1, Brightness2;
         public NORC_WidgetPhone()
         {
             this.InitializeComponent();
@@ -37,22 +35,22 @@ namespace CompanionDisplayWinUI
         private void Frame_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new MenuFlyout();
-            MenuFlyoutItem firstItem = new MenuFlyoutItem { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-            MenuFlyoutItem secondItem = new MenuFlyoutItem { Text = "Refresh", Name = senderElement.Name + "Edit" };
+            MenuFlyout myFlyout = new();
+            MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
+            MenuFlyoutItem secondItem = new() { Text = "Refresh", Name = senderElement.Name + "Edit" };
             firstItem.Click += MenuFlyoutItem_Click;
             secondItem.Click += MenuFlyoutEdit_Click;
             myFlyout.Items.Add(firstItem);
             myFlyout.Items.Add(secondItem);
             myFlyout.ShowAt(senderElement, new Point(0, 0));
         }
-        private async void MenuFlyoutEdit_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutEdit_Click(object sender, RoutedEventArgs e)
         {
             BasicGridView.Items.Clear();
             Thread thread0 = new(UpdateUI);
             thread0.Start();
         }
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var frame = this.Parent as Frame;
             frame.IsEnabled = false;
@@ -60,57 +58,62 @@ namespace CompanionDisplayWinUI
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
         {
+            BasicGridView.Items.Clear();
             Thread thread0 = new(UpdateUI);
             thread0.Start();
         }
 
-        public void UpdateUI()
+        private void UpdateUI()
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                Process process = new();
-                process.StartInfo = new ProcessStartInfo
+                using (Process process = new()
                 {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    FileName = "CMD.exe",
-                    CreateNoWindow = true
-                };
-                process.StartInfo.Arguments = "/C runtimes\\adb.exe devices";
-                process.Start();
-                process.WaitForExit();
-                string output = process.StandardOutput.ReadToEnd().Replace("List of devices attached", "").Replace("\tdevice", "");
-                foreach (string line in output.Split('\n'))
-                {
-                    try
+                    StartInfo = new ProcessStartInfo
                     {
-                        string fix = line.Replace("\r", "");
-                        if (fix.Length != 0)
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        FileName = "CMD.exe",
+                        CreateNoWindow = true
+                    }
+                })
+                {
+                    process.StartInfo.Arguments = "/C runtimes\\adb.exe devices";
+                    process.Start();
+                    process.WaitForExit();
+                    string output = process.StandardOutput.ReadToEnd().Replace("List of devices attached", "").Replace("\tdevice", "");
+                    foreach (string line in output.Split('\n'))
+                    {
+                        try
                         {
-                            LastID = fix;
-                            Frame frame = new()
+                            string fix = line.Replace("\r", "");
+                            if (fix.Length != 0)
                             {
-                                Name = fix,
-                                Width = 240,
-                            };
-                            BasicGridView.Items.Add(frame);
-                            frame.Navigate(typeof(WidgetPhoneIndividual));
+                                LastID = fix;
+                                Frame frame = new()
+                                {
+                                    Name = fix,
+                                    Width = 240,
+                                };
+                                BasicGridView.Items.Add(frame);
+                                frame.Navigate(typeof(WidgetPhoneIndividual));
+                            }
                         }
+                        catch { }
                     }
-                    catch { }
-                }
-                if(BasicGridView.Items.Count == 0)
-                {
-                    NoDevices.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    if(BasicGridView.Items.Count == 1)
+                    if (BasicGridView.Items.Count == 0)
                     {
-                        var childControl = (Microsoft.UI.Xaml.Controls.Frame)BasicGridView.FindName(LastID);
-                        childControl.Width = 486;
+                        NoDevices.Visibility = Visibility.Visible;
                     }
-                    NoDevices.Visibility = Visibility.Collapsed;
+                    else
+                    {
+                        if (BasicGridView.Items.Count == 1)
+                        {
+                            var childControl = (Microsoft.UI.Xaml.Controls.Frame)BasicGridView.FindName(LastID);
+                            childControl.Width = 486;
+                        }
+                        NoDevices.Visibility = Visibility.Collapsed;
+                    }
                 }
             });
         }

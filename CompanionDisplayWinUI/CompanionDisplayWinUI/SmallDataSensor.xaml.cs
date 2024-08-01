@@ -29,15 +29,20 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private bool FTU = true;
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CleanUp = false;
             var parent = this.Parent as Frame;
             if (parent != null)
             {
-                SensorName.Text = parent.Name;
-                var sensor = parent.Tag as ISensor;
-                sensor1 = sensor;
+                if (FTU)
+                {
+                    FTU = false;
+                    SensorName.Text = parent.Name;
+                    var sensor = parent.Tag as ISensor;
+                    sensor1 = sensor;
+                }
                 Thread thread = new(UpdateUI);
                 thread.Start();
             }
@@ -49,6 +54,7 @@ namespace CompanionDisplayWinUI
             CleanUp = true;
         }
         public bool CleanUp = false;
+        private double LastValue = -2;
         private void UpdateUI()
         {
             if (sensor1 != null)
@@ -56,23 +62,28 @@ namespace CompanionDisplayWinUI
                 string query = "";
                 try
                 {
-                    query = sensor1.Hardware.Parent.Name;
+                    try
+                    {
+                        query = sensor1.Hardware.Parent.Name;
+                    }
+                    catch { }
+                    if ((Globals.CurrentHW == sensor1.Hardware || Globals.CurrentHW == sensor1.Hardware.Parent) && Math.Round((float)sensor1.Value) != LastValue)
+                    {
+                        LastValue = Math.Round((float)sensor1.Value);
+                        try
+                        {
+                            LoadValue2 = (Math.Round((float)sensor1.Value)) + " MB";
+                        }
+                        catch { }
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            LoadPercent.Text = LoadValue2;
+                        });
+                    }
                 }
                 catch
                 {
 
-                }
-                if (Globals.CurrentHW == sensor1.Hardware.Name || Globals.CurrentHW == query)
-                {
-                    try
-                    {
-                        LoadValue2 = (Math.Round((float)sensor1.Value)) + " MB";
-                    }
-                    catch { }
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        LoadPercent.Text = LoadValue2;
-                    });
                 }
             }
             if (CleanUp == false)

@@ -26,7 +26,7 @@ namespace CompanionDisplayWinUI
             public void VisitSensor(ISensor sensor) { }
             public void VisitParameter(IParameter parameter) { }
         }
-        public Computer computer = new Computer
+        public Computer computer = new()
         {
             IsCpuEnabled = true,
             IsGpuEnabled = true,
@@ -45,8 +45,11 @@ namespace CompanionDisplayWinUI
         }
         public void UpdateSensor() 
         {
-            UpdateVisitor update = new UpdateVisitor();
-            update.VisitComputer(computer);
+            if(Globals.CurrentHW != null)
+            {
+                UpdateVisitor update = new();
+                update.VisitHardware(Globals.CurrentHW);
+            }
             Thread.Sleep(3000);
             Thread thread = new(UpdateSensor);
             thread.Start();

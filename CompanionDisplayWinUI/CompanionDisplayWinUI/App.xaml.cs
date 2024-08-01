@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Principal;
 using System.Threading;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -40,7 +41,17 @@ namespace CompanionDisplayWinUI
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            bool isElevated;
+            System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+            if (isElevated == true)
+            {
+                Globals.IsAdmin = true;
+            }
             try
             {
                 Directory.CreateDirectory("Config");
@@ -59,11 +70,14 @@ namespace CompanionDisplayWinUI
                 Globals.BackgroundColorR = int.Parse(readerconfig.ReadLine());
                 Globals.BackgroundColorG = int.Parse(readerconfig.ReadLine());
                 Globals.BackgroundColorB = int.Parse(readerconfig.ReadLine());
+                Globals.IsBetaProgram = bool.Parse(readerconfig.ReadLine());
+                Globals.HideAddButton = bool.Parse(readerconfig.ReadLine());
+                Globals.LaunchOnStartup = bool.Parse(readerconfig.ReadLine());
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -106,9 +120,8 @@ namespace CompanionDisplayWinUI
                         break;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 File.WriteAllText("Config/GlobalSettings.crlh", "");
             }
         }
@@ -120,10 +133,9 @@ namespace CompanionDisplayWinUI
                 frameworkElement.RequestedTheme = theme;
             }
         }
-        public void SetAccentColor(Color color)
+        public static void SetAccentColor(Color color)
         {
-            var customResourceDictionary = new ResourceDictionary();
-            customResourceDictionary = Application.Current.Resources;
+            var customResourceDictionary = Application.Current.Resources;
             customResourceDictionary["SystemAccentColor"] = color;
             customResourceDictionary["SystemAccentColorLight1"] = color;
             customResourceDictionary["SystemAccentColorLight2"] = color;
@@ -132,12 +144,10 @@ namespace CompanionDisplayWinUI
             customResourceDictionary["SystemAccentColorDark2"] = color;
             Application.Current.Resources = customResourceDictionary;
         }
-        public void RevertToSystemAccentColor()
+        public static void RevertToSystemAccentColor()
         {
             var uiSettings = new Windows.UI.ViewManagement.UISettings();
-            var systemAccentColor = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Accent);
-            var customResourceDictionary = new ResourceDictionary();
-            customResourceDictionary = Application.Current.Resources;
+            var customResourceDictionary = Application.Current.Resources;
             customResourceDictionary["SystemAccentColor"] = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Accent);
             customResourceDictionary["SystemAccentColorLight1"] = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.AccentLight1);
             customResourceDictionary["SystemAccentColorLight2"] = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.AccentLight2);

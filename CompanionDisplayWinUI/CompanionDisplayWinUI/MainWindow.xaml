@@ -11,24 +11,20 @@
     <Window.SystemBackdrop>
         <DesktopAcrylicBackdrop />
     </Window.SystemBackdrop>
-
     <Grid Name="GridMain" Background="#00FFFFFF">
-        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Collapsed" />
+        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Collapsed" ImageOpened="BackgroundImage_ImageOpened"/>
         <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="2" Visibility="Collapsed"/>
         <MediaPlayerElement Name="BackgroundVideo"  AutoPlay="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ElementSoundMode="Off" Visibility="Collapsed" Stretch="UniformToFill"/>
-        <NavigationView x:Name="nvSample" SelectionChanged="NavigationView_SelectionChanged" PaneDisplayMode="Auto" SelectedItem="{x:Bind HomeItem, Mode=OneWay}" IsBackButtonVisible="Collapsed" HorizontalContentAlignment="Center">
+        <NavigationView x:Name="nvSample" Grid.Row="1" SelectedItem="{x:Bind HomeItem, Mode=OneTime}"
+                                    PaneDisplayMode="Auto" SelectionFollowsFocus="Enabled"  SelectionChanged="NavigationView_SelectionChanged"
+                                    IsTabStop="False" IsBackButtonVisible="Collapsed" >
             <NavigationView.MenuItems>
-                <HyperlinkButton Name="FullScreenBtn" Content="&#xe740;" FontFamily="Segoe Fluent Icons" Margin="-30, -10,-22,-10" Height="40" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Click="HyperlinkButton_Click"/>
-                <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1" Name="HomeItem"/>
-                <NavigationViewItem Icon="Globe" Content="Internet" Tag="SamplePage2" />
-                <NavigationViewItem Icon="MusicInfo" Content="Spotify" Tag="SamplePage3" />
+                <NavigationViewItem Icon="FullScreen" Content="Enter Fullscreen" Tag="Musixmatch" x:Name="DebugPage" SelectsOnInvoked="False" Tapped="DebugPage_Tapped"/>
+                <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1" x:Name="HomeItem"/>
+                <NavigationViewItem Icon="Globe" Content="Internet" Tag="SamplePage2" x:Name="BrowserPage"/>
+                <NavigationViewItem Icon="MusicInfo" Content="Spotify" Tag="SamplePage3" x:Name="SpotifyBuiltInPage"/>
             </NavigationView.MenuItems>
-            <Grid>
-                <Frame x:Name="contentFrame" Margin="0,35,0,0" CacheSize="0" CacheMode="BitmapCache" IsEnabledChanged="contentFrame_IsEnabledChanged"/>
-                <WebView2 Name="SpotifyBuiltin" Grid.Row="2" Loaded="SpotifyBuiltin_Loaded"/>
-            </Grid>
-            
+            <Frame x:Name="contentFrame" Margin="0,0,0,0" IsEnabledChanged="ContentFrame_IsEnabledChanged"/>
         </NavigationView>
-        
     </Grid>
 </Window>

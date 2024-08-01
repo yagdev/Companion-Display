@@ -21,6 +21,18 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="AudioDevice.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IndividualAudioControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="BrowserTab.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="NotesWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SpotifyPlayer.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -49,6 +61,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="IndividualComponent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WidgetAudioControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="WidgetSensors.xaml">

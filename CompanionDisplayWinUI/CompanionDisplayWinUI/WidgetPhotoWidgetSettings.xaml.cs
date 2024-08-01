@@ -32,8 +32,8 @@ namespace CompanionDisplayWinUI
                 switch (SF)
                 {
                     case "false":
-                        break;
                         SmartFlipToggle.IsOn = false;
+                        break;
                     case "true":
                         SmartFlipToggle.IsOn = true;
                         break;

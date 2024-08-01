@@ -16,31 +16,26 @@ namespace CompanionDisplayWinUI
         public string SetIcon()
         {
             var window = (Microsoft.UI.Xaml.Application.Current as App)?.m_window as MainWindow;
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
+            using (OpenFileDialog openFileDialog1 = new() {DereferenceLinks = false, InitialDirectory = "%AppData%\\Microsoft\\Windows\\Start Menu\\Programs", FilterIndex = 0, RestoreDirectory = true })
             {
-                DereferenceLinks = false
-            };
-            openFileDialog1.InitialDirectory = "%AppData%\\Microsoft\\Windows\\Start Menu\\Programs";
-            openFileDialog1.FilterIndex = 0;
-            openFileDialog1.RestoreDirectory = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                }
+                string filename = openFileDialog1.FileName;
+                return filename;
             }
-            string filename = openFileDialog1.FileName;
-            return filename;
         }
         public string SetIcon2()
         {
             var window = (Microsoft.UI.Xaml.Application.Current as App)?.m_window as MainWindow;
-            FolderBrowserDialog openFileDialog1 = new FolderBrowserDialog();
-            openFileDialog1.InitialDirectory = "%AppData%\\Microsoft\\Windows\\Start Menu\\Programs";
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            using (FolderBrowserDialog openFileDialog1 = new() { InitialDirectory = "%AppData%\\Microsoft\\Windows\\Start Menu\\Programs" })
             {
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                }
+                string filename = openFileDialog1.SelectedPath;
+                return filename;
             }
-            string filename = openFileDialog1.SelectedPath;
-            return filename;
         }
         public void LaunchApp(string ButtonName)
         {

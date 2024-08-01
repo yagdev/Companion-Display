@@ -16,6 +16,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Principal;
 using System.Text;
@@ -35,12 +36,10 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class BlankPage1 : Page
     {
-        bool CleanUp = false;
         public BlankPage1()
         {
             this.InitializeComponent();
-            Thread thread0 = new(UpdateUI);
-            thread0.Start();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
         private void GridView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
@@ -58,7 +57,7 @@ namespace CompanionDisplayWinUI
             {
                 e.AcceptedOperation = DataPackageOperation.Copy;
                 var sourceGridView = e.DataView.Properties["sourceGridView"] as string;
-                if (sourceGridView != (sender as GridView).Tag)
+                if (sourceGridView != (sender as GridView).Tag as string)
                 {
                     e.AcceptedOperation = DataPackageOperation.None;
                 }
@@ -71,7 +70,7 @@ namespace CompanionDisplayWinUI
             {
                 var sourceGridView = e.DataView.Properties["sourceGridView"] as string;
                 var targetGridView = sender as GridView;
-                if (sourceGridView == targetGridView.Tag)
+                if (sourceGridView == targetGridView.Tag as string)
                 {
                     // Assuming the items are strings for this example
                     var items = e.DataView.GetDataAsync("Text").GetResults() as IEnumerable<string>;
@@ -81,14 +80,14 @@ namespace CompanionDisplayWinUI
                     {
                         (targetGridView.ItemsSource as IList<string>).Add(item);
                     }
-                    Thread thread = new Thread(SaveTo);
+                    Thread thread = new(SaveTo);
                     thread.Start();
                 }
             });
         }
         private void SaveTo()
         {
-            if(CleanUp == false && Globals.IsAllApps == false)
+            if(Globals.IsAllApps == false)
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -102,20 +101,24 @@ namespace CompanionDisplayWinUI
                             string deedify = item.Content.ToString().Replace("WidgetSettings", "");
                             if (!deedify.Contains("CompanionDisplayWinUI.UpdateWarning"))
                             {
-                                if (deedify.Contains("CompanionDisplayWinUI.WidgetPhoto"))
+                                switch (deedify)
                                 {
-                                    Order = Order + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine;
-                                }
-                                else
-                                {
-                                    Order = Order + deedify + Environment.NewLine;
+                                    case var s when deedify.Contains("CompanionDisplayWinUI.NotesWidget"):
+                                        var NotesWidget = item.Content as NotesWidget;
+                                        File.AppendAllText("Config/WidgetOrder.crlh", Order + deedify + "ID" + item.Tag.ToString() + Environment.NewLine);
+                                        break;
+                                    case var s when deedify.Contains("CompanionDisplayWinUI.WidgetPhoto"):
+                                        Order = Order + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine;
+                                        break;
+                                    default:
+                                        Order = Order + deedify + Environment.NewLine;
+                                        break;
                                 }
                             }
                             
                         }
-                        catch (Exception ex)
+                        catch
                         {
-                            //File.AppendAllText("ErrorLog.crlh", ex.Message);
                         }
                         File.WriteAllText("Config/WidgetOrder.crlh", Order);
                     }
@@ -129,10 +132,9 @@ namespace CompanionDisplayWinUI
             {
                 Globals.IsAllApps = true;
                 var frame = this.Parent as Frame;
+                var navviewparent = frame.Parent as NavigationView;
                 frame.Navigate(typeof(AllWidgets));
-                var gridparent = frame.Parent as Grid;
-                var navviewparent = gridparent.Parent as NavigationView;
-                navviewparent.SelectedItem = null;
+                navviewparent.SelectedItem = -1;
             }
             catch
             {
@@ -148,13 +150,13 @@ namespace CompanionDisplayWinUI
         private void Frame_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new MenuFlyout();
-            MenuFlyoutItem firstItem = new MenuFlyoutItem { Text = "Remove", Name = senderElement.Name + "Flyout" };
+            MenuFlyout myFlyout = new();
+            MenuFlyoutItem firstItem = new(){ Text = "Remove", Name = senderElement.Name + "Flyout" };
             Frame frame = senderElement as Frame;
             Type type1 = Type.GetType(frame.Content.ToString() + "WidgetSettings");
             if (type1 != null)
             {
-                MenuFlyoutItem secondItem = new MenuFlyoutItem { Text = "Edit", Name = senderElement.Name + "Edit" };
+                MenuFlyoutItem secondItem = new(){ Text = "Edit", Name = senderElement.Name + "Edit" };
                 secondItem.Click += MenuFlyoutEdit_Click;
                 myFlyout.Items.Add(secondItem);
             }
@@ -163,16 +165,21 @@ namespace CompanionDisplayWinUI
             myFlyout.ShowAt(senderElement, new Point(0, 0));
         }
 
-        private async void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
             var childControl = (Microsoft.UI.Xaml.Controls.Frame)BasicGridView.FindName(senderElement.Name.Remove (senderElement.Name.Length - 6, 6));
             Debug.Text = senderElement.Name.Remove(senderElement.Name.Length - 6, 6);
             BasicGridView.Items.Remove(childControl);
-            Thread thread = new Thread(SaveTo);
+            try
+            {
+                File.Delete("Config/WidgetNotes/" + childControl.Tag.ToString() + ".crlh");
+            }
+            catch { }
+            Thread thread = new(SaveTo);
             thread.Start();
         }
-        private async void MenuFlyoutEdit_Click(object sender, RoutedEventArgs e)
+        private void MenuFlyoutEdit_Click(object sender, RoutedEventArgs e)
         {
             var senderElement = sender as MenuFlyoutItem;
             var childControl = (Microsoft.UI.Xaml.Controls.Frame)BasicGridView.FindName(senderElement.Name.Remove(senderElement.Name.Length - 4, 4));
@@ -180,27 +187,16 @@ namespace CompanionDisplayWinUI
             Type type1 = Type.GetType(frame.Content + "WidgetSettings");
             frame.Navigate(type1);
         }
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            CleanUp = true;
-            BasicGridView.Items.Clear();
-        }
 
         private void BasicGridView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
-            Thread thread = new Thread(SaveTo);
+            Thread thread = new(SaveTo);
             thread.Start();
         }
 
-        private void UpdateUI()
+        private async void UpdateUI()
         {
-            bool isElevated;
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-            if(isElevated == true)
+            if(Globals.IsAdmin)
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
@@ -214,9 +210,8 @@ namespace CompanionDisplayWinUI
             {
                 WidgetOrder = File.ReadAllText("Config/WidgetOrder.crlh");
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 Directory.CreateDirectory("Config");
                 File.WriteAllText("Config/WidgetOrder.crlh", "");
             }
@@ -227,104 +222,140 @@ namespace CompanionDisplayWinUI
                     if (line.Length != 0)
                     {
                         string fix = line.Replace("\r", "");
-                        if (fix.Contains("CompanionDisplayWinUI.WidgetPhotoIMAGESOURCE"))
+                        switch (fix)
                         {
-                            string fix2 = "CompanionDisplayWinUI.WidgetPhoto";
-                            string folderpath = fix.Replace("CompanionDisplayWinUI.WidgetPhotoIMAGESOURCE", "");
-                            Type type1 = Type.GetType(fix2);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                Frame frame = new()
+                            case string a when a.Contains("CompanionDisplayWinUI.WidgetPhotoIMAGESOURCE"):
+                                string fix2 = "CompanionDisplayWinUI.WidgetPhoto";
+                                string folderpath = fix.Replace("CompanionDisplayWinUI.WidgetPhotoIMAGESOURCE", "");
+                                Type type1 = Type.GetType(fix2);
+                                DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    Name = "Widget" + i,
-                                    Tag = folderpath,
-                                };
-                                frame.IsEnabledChanged += Frame_IsEnabledChanged2;
-                                if (fix.Contains("NORC_") != true)
+                                    Frame frame = new()
+                                    {
+                                        Name = "Widget" + i,
+                                        Tag = folderpath,
+                                    };
+                                    frame.IsEnabledChanged += Frame_IsEnabledChanged2;
+                                    if (fix.Contains("NORC_") != true)
+                                    {
+                                        frame.RightTapped += Frame_RightTapped;
+                                    }
+                                    else
+                                    {
+                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
+                                    }
+                                    BasicGridView.Items.Add(frame);
+                                    frame.Navigate(type1);
+                                    i++;
+                                });
+                                break;
+                            case string b when b.Contains("CompanionDisplayWinUI.NotesWidgetID"):
+                                string fix3 = "CompanionDisplayWinUI.NotesWidget";
+                                string ID = fix.Replace("CompanionDisplayWinUI.NotesWidgetID", "");
+                                Type type2 = Type.GetType(fix3);
+                                DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    frame.RightTapped += Frame_RightTapped;
-                                }
-                                else
+                                    Frame frame = new()
+                                    {
+                                        Name = "Widget" + i,
+                                        Tag = ID,
+                                    };
+                                    frame.IsEnabledChanged += Frame_IsEnabledChanged2;
+                                    if (fix.Contains("NORC_") != true)
+                                    {
+                                        frame.RightTapped += Frame_RightTapped;
+                                    }
+                                    else
+                                    {
+                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
+                                    }
+                                    BasicGridView.Items.Add(frame);
+                                    frame.Navigate(type2);
+                                    i++;
+                                });
+                                break;
+                            default:
+                                Type type0 = Type.GetType(fix);
+                                DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                }
-                                BasicGridView.Items.Add(frame);
-                                frame.Navigate(type1);
-                                i++;
-                            });
+                                    Frame frame = new()
+                                    {
+                                        Name = "Widget" + i,
+                                    };
+                                    if (fix.Contains("NORC_") != true)
+                                    {
+                                        frame.RightTapped += Frame_RightTapped;
+                                    }
+                                    else
+                                    {
+                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
+                                    }
+                                    BasicGridView.Items.Add(frame);
+                                    frame.Navigate(type0);
+                                    i++;
+                                });
+                                break;
                         }
-                        else
-                        {
-                            Type type1 = Type.GetType(fix);
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                Frame frame = new()
-                                {
-                                    Name = "Widget" + i,
-                                };
-                                if (fix.Contains("NORC_") != true)
-                                {
-                                    frame.RightTapped += Frame_RightTapped;
-                                }
-                                else
-                                {
-                                    frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                }
-                                BasicGridView.Items.Add(frame);
-                                frame.Navigate(type1);
-                                i++;
-                            });
-                        }
-                        
-                        
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
-                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 }
             }
-            DispatcherQueue.TryEnqueue(() =>
+            if (!Globals.HideAddButton)
             {
-                Button button = new()
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    Name = "AddWidget",
-                    Height = 300,
-                    Width = 500,
-                    Content = "+",
-                    FontFamily = new FontFamily("Segoe UI Variable Display Light"),
-                    FontSize = 100,
-                    AllowDrop = true,
-                };
-                button.Click += Button_Click;
-                button.DropCompleted += Button_DropCompleted;
-                BasicGridView.Items.Add(button);
-            });
+                    Button button = new()
+                    {
+                        Name = "AddWidget",
+                        Height = 300,
+                        Width = 500,
+                        Content = "+",
+                        FontFamily = new FontFamily("Segoe UI Variable Display Light"),
+                        FontSize = 100,
+                        AllowDrop = true,
+                    };
+                    button.Click += Button_Click;
+                    button.DropCompleted += Button_DropCompleted;
+                    BasicGridView.Items.Add(button);
+                });
+            }
+           
             try
             {
-                WebClient client = new WebClient();
-                string reply = client.DownloadString(Globals.UpdateString);
-                if (reply == Globals.Version)
+                using (HttpClient client = new())
                 {
-                    Globals.IsUpdateAvailable = false;
-                }
-                else
-                {
-                    Globals.IsUpdateAvailable = true;
-                }
-                if (Globals.IsUpdateAvailable == true)
-                {
-                    DispatcherQueue.TryEnqueue(() =>
+                    string reply;
+                    if (Globals.IsBetaProgram)
                     {
-                        Frame frame = new()
+                        reply = await client.GetStringAsync(Globals.UpdateStringBeta);
+                    }
+                    else
+                    {
+                        reply = await client.GetStringAsync(Globals.UpdateString);
+                    }
+                    if (reply == Globals.Version)
+                    {
+                        Globals.IsUpdateAvailable = false;
+                    }
+                    else
+                    {
+                        Globals.IsUpdateAvailable = true;
+                    }
+                    if (Globals.IsUpdateAvailable == true)
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
                         {
-                            Name = "UpdateWidget1",
-                        };
-                        frame.RightTapped += Frame_RightTapped;
-                        BasicGridView.Items.Add(frame);
-                        frame.Navigate(typeof(UpdateWarning));
-
-                    });
+                            Frame frame = new()
+                            {
+                                Name = "UpdateWidget1",
+                            };
+                            frame.RightTapped += Frame_RightTapped;
+                            BasicGridView.Items.Add(frame);
+                            frame.Navigate(typeof(UpdateWarning));
+                        });
+                    }
                 }
             }
             catch
@@ -343,15 +374,26 @@ namespace CompanionDisplayWinUI
             var frame2 = (Frame)sender;
             if(frame2 != null && frame2.IsEnabled == true)
             {
-                Thread thread = new Thread(SaveTo);
+                Thread thread = new(SaveTo);
                 thread.Start();
             }
         }
         private void Frame_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             BasicGridView.Items.Remove(sender);
-            Thread thread = new Thread(SaveTo);
+            Thread thread = new(SaveTo);
             thread.Start();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Globals.ResetHome)
+            {
+                BasicGridView.Items.Clear();
+                Thread thread0 = new(UpdateUI);
+                thread0.Start();
+                Globals.ResetHome = false;
+            }
         }
     }
 }

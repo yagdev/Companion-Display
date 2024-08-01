@@ -6,7 +6,7 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Width="500" Height="300" Unloaded="Page_Unloaded">
+    mc:Ignorable="d" Width="500" Height="300" Unloaded="Page_Unloaded" Loaded="Page_Loaded">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -31,8 +31,8 @@
         <TextBlock x:Name="SongInfo" Text="-" Margin="10,65,10,0" FontSize="32" Height="45" VerticalAlignment="Top" Padding="0,0,0,0"/>
         <TextBlock Text="-" x:Name="SongLyrics" Margin="10,100,10,0" FontSize="32" VerticalAlignment="Top"/>
         <Image x:Name="Album" Margin="10,10,0,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114"/>
-        <Grid Margin="65,0,65,103" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost">
-            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Bottom"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False"/>
+        <Grid Margin="65,0,65,103" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost">
+            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Bottom"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
         </Grid>
         <TextBlock x:Name="CurrentTime" Text="01:53" Margin="10,0,0,99" FontSize="20" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="1" />
         <TextBlock x:Name="EndTime" Text="02:26" Margin="0,0,10,99" FontSize="20" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" />

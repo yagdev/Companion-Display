@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using NAudio.CoreAudioApi;
+using CoreAudio;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -35,8 +35,6 @@ namespace CompanionDisplayWinUI
         public MediaPlayerWidget()
         {
             this.InitializeComponent();
-            Thread thread0 = new(StartUI);
-            thread0.Start();
         }
         public bool CleanUp = false, IsDragging = false;
         internal static class Helper
@@ -47,27 +45,27 @@ namespace CompanionDisplayWinUI
                 {
                     return null;
                 }
-                IRandomAccessStreamWithContentType imageStream = Thumbnail.OpenReadAsync().GetAwaiter().GetResult();
-                byte[] fileBytes = new byte[imageStream.Size];
-                using (DataReader reader = new (imageStream))
+                using (IRandomAccessStreamWithContentType imageStream = Thumbnail.OpenReadAsync().GetAwaiter().GetResult())
+                using (DataReader reader = new(imageStream))
+                using (var stream = new InMemoryRandomAccessStream())
+                using (var writer = new DataWriter(stream))
                 {
+                    byte[] fileBytes = new byte[imageStream.Size];
                     reader.LoadAsync((uint)imageStream.Size).GetAwaiter().GetResult();
                     reader.ReadBytes(fileBytes);
-                }
-                BitmapImage image = new ();
-                using (var stream = new InMemoryRandomAccessStream())
-                {
-                    using (var writer = new DataWriter(stream))
-                    {
-                        writer.WriteBytes(fileBytes);
-                        writer.StoreAsync();
-                        writer.FlushAsync();
-                        writer.DetachStream();
-                    }
+                    BitmapImage image = new();
+                    writer.WriteBytes(fileBytes);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    writer.StoreAsync();
+                    writer.FlushAsync();
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    writer.DetachStream();
                     stream.Seek(0);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     image.SetSourceAsync(stream);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    return image;
                 }
-                return image;
             }
         }
         private async void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
@@ -76,7 +74,7 @@ namespace CompanionDisplayWinUI
             {
                 await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryTogglePlayPauseAsync();
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
@@ -87,7 +85,7 @@ namespace CompanionDisplayWinUI
             {
                 await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TrySkipPreviousAsync();
             }
-            catch (Exception ex)
+            catch
             {
             }
         }
@@ -98,7 +96,7 @@ namespace CompanionDisplayWinUI
             {
                 await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TrySkipNextAsync();
             }
-            catch (Exception ex)
+            catch
             {
                 //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
@@ -106,10 +104,10 @@ namespace CompanionDisplayWinUI
 
         private void VolumeBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            using (var deviceEnumerator = new MMDeviceEnumerator())
+            MMDeviceEnumerator DevEnum = new (Guid.NewGuid());
+            using(var defaultPlaybackDevice = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
             {
-                var defaultPlaybackDevice = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-                defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(VolumeBar.Value/100) ;
+                defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(VolumeBar.Value / 100);
             }
         }
 
@@ -125,10 +123,10 @@ namespace CompanionDisplayWinUI
                 PlayerSpotify mediaPlayerWidget = new();
                 mediaPlayerWidget.Page_Loaded();
             }
-            using (var deviceEnumerator = new MMDeviceEnumerator())
+            MMDeviceEnumerator DevEnum = new(Guid.NewGuid());
+            using (var mDeviceEnumerator = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
             {
-                var defaultPlaybackDevice = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-                VolumeCur = defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
+                VolumeCur = mDeviceEnumerator.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
                 DispatcherQueue.TryEnqueue(() =>
                 {
                     VolumeBar.Value = VolumeCur;
@@ -143,6 +141,46 @@ namespace CompanionDisplayWinUI
             IsDragging = true;
         }
 
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            CleanUp = false;
+            Thread thread0 = new(StartUI);
+            thread0.Start();
+        }
+        private async void Grid_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            try
+            {
+                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
+                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                IsDragging = false;
+                SongProgressBar.IsFocusEngaged = false;
+            }
+            catch
+            {
+                IsDragging = false;
+            }
+        }
+
+        private async void SongProgressBar_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            try
+            {
+                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
+                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
+                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                IsDragging = false;
+                SongProgressBar.IsFocusEngaged = false;
+            }
+            catch
+            {
+                IsDragging = false;
+            }
+        }
+
         private async void Grid_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
         {
             try
@@ -154,59 +192,103 @@ namespace CompanionDisplayWinUI
                 IsDragging = false;
                 SongProgressBar.IsFocusEngaged = false;
             }
-            catch (Exception ex)
+            catch
             {
                 IsDragging = false;
             }
         }
+        private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-";
+        private float LastVol = -2;
+        private bool LastSpotifyCheck = false;
         private async void UpdateUI()
         {
             try
             {
-                DispatcherQueue.TryEnqueue(() =>
+                if(LastTitle != Globals.SongName)
                 {
-                    SongTitle.Text = Globals.SongName;
-                    SongInfo.Text = Globals.SongDetails;
-                    SongLyrics.Text = Globals.SongLyrics;
-                    CurrentTime.Text = Globals.SongTime;
-                    EndTime.Text = Globals.SongEnd;
-                    if (Globals.IsSpotify == true)
+                    LastTitle = Globals.SongName;
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        SpotifyLogo.Visibility = Visibility.Visible;
-                    }
-                    else
+                        SongTitle.Text = Globals.SongName;
+                    });
+                }
+                if (LastDetail != Globals.SongDetails)
+                {
+                    LastDetail = Globals.SongDetails;
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        SpotifyLogo.Visibility = Visibility.Collapsed;
-                    }
-                    if (IsDragging == false)
+                        SongInfo.Text = Globals.SongDetails;
+                    });
+                }
+                if (LastLyric != Globals.SongLyrics)
+                {
+                    LastLyric = Globals.SongLyrics;
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        try
+                        SongLyrics.Text = Globals.SongLyrics;
+                    });
+                }
+                if (LastTime != Globals.SongTime)
+                {
+                    LastTime = Globals.SongTime;
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        CurrentTime.Text = Globals.SongTime;
+                        if (IsDragging == false)
                         {
-                            SongProgressBar.Value = Globals.SongProgress;
+                            try
+                            {
+                                SongProgressBar.Value = Globals.SongProgress;
+                            }
+                            catch
+                            {
+                                SongProgressBar.Value = 0;
+                            }
                         }
-                        catch (Exception ex)
+                    });
+                }
+                if (LastEnd != Globals.SongEnd)
+                {
+                    LastEnd = Globals.SongEnd;
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        EndTime.Text = Globals.SongEnd;
+                    });
+                }
+                if(LastSpotifyCheck != Globals.IsSpotify)
+                {
+                    LastSpotifyCheck = Globals.IsSpotify;
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        if (Globals.IsSpotify == true)
                         {
-                            //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                            SongProgressBar.Value = 0;
+                            SpotifyLogo.Visibility = Visibility.Visible;
                         }
-                    }
-                });
+                        else
+                        {
+                            SpotifyLogo.Visibility = Visibility.Collapsed;
+                        }
+                    });
+                }
                 try
                 {
-                    using (var deviceEnumerator = new MMDeviceEnumerator())
+                    MMDeviceEnumerator DevEnum = new(Guid.NewGuid());
+                    using (var defaultPlaybackDevice = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
                     {
-                        var defaultPlaybackDevice = deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
-                        VolumeCur = defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
-                        DispatcherQueue.TryEnqueue(() =>
+                        if (LastVol != defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar)
                         {
-                            VolumeBar.Value = VolumeCur;
-                        });
+                            LastVol = defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar;
+                            DispatcherQueue.TryEnqueue(() =>
+                            {
+                                VolumeCur = LastVol * 100;
+                                VolumeBar.Value = VolumeCur;
+                            });
+                        }
                     }
                 }
                 catch { }
-               
             }
-            catch (Exception ex)
+            catch
             {
             }
             if (Globals.SongBackground != AlbumCoverCache)
@@ -220,9 +302,8 @@ namespace CompanionDisplayWinUI
                             AlbumCoverImg.Source = new BitmapImage(new Uri(Globals.SongBackground));
                             AlbumCoverCache = Globals.SongBackground;
                         }
-                        catch (Exception ex)
+                        catch
                         {
-                            //File.AppendAllText("ErrorLog.crlh", ex.Message);
                         }
                     });
                 }
@@ -249,7 +330,7 @@ namespace CompanionDisplayWinUI
                             });
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
                     }
                 }
@@ -271,9 +352,8 @@ namespace CompanionDisplayWinUI
                     });
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
             if(!CleanUp)
             {

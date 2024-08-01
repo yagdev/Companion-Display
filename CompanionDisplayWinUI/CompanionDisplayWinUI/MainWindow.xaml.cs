@@ -19,7 +19,6 @@ using Windows.Media.Core;
 using Windows.Storage;
 using Windows.UI.ViewManagement;
 using WinRT.Interop;
-using Windows.Foundation;
 using static CompanionDisplayWinUI.MediaPlayerWidget;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
@@ -38,17 +37,17 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class MainWindow : Window
     {
-        [DllImport("user32.dll")]
-        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [LibraryImport("user32.dll", EntryPoint = "GetWindowLongA")]
+        private static partial int GetWindowLong(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll")]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        [LibraryImport("user32.dll", EntryPoint = "SetWindowLongA")]
+        private static partial void SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         public MainWindow()
         {
             this.InitializeComponent();
-            ExtendsContentIntoTitleBar = true;
+            this.ExtendsContentIntoTitleBar = true;
             _appWindow = GetAppWindowForCurrentWindow();
-            Thread thread = new Thread(UpdateUI);
+            Thread thread = new(UpdateUI);
             thread.Start();
         }
         private AppWindow GetAppWindowForCurrentWindow()
@@ -67,42 +66,37 @@ namespace CompanionDisplayWinUI
                 switch (args.SelectedItemContainer.Tag.ToString())
                 {
                     case "Musixmatch":
-                        contentFrame.Navigate(typeof(MusixmatchIntegrationProto));
+                        contentFrame.Navigate(typeof(MusixmatchIntegrationProto), null, args.RecommendedNavigationTransitionInfo);
                         SetWindowLong(hWnd, -20, 256);
-                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
                         break;
                     case "SamplePage1":
-                        contentFrame.Navigate(typeof(BlankPage1));
-                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
+                        contentFrame.Navigate(typeof(BlankPage1), null, args.RecommendedNavigationTransitionInfo);
                         if (Globals.StealFocus)
                         {
                             SetWindowLong(hWnd, -20, GetWindowLong(hWnd, -20) | 134480128);
                         }
                         break;
                     case "SamplePage2":
-                        contentFrame.Navigate(typeof(BlankPage2));
-                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
+                        contentFrame.Navigate(typeof(BrowserTab), null, args.RecommendedNavigationTransitionInfo);
                         SetWindowLong(hWnd, -20, 256);
                         break;
                     case "SamplePage3":
-                        SpotifyBuiltin.Visibility = Visibility.Visible;
+                        contentFrame.Navigate(typeof(SpotifyPlayer), null, args.RecommendedNavigationTransitionInfo);
                         SetWindowLong(hWnd, -20, 256);
                         break;
                     case "Settings":
                         SetWindowLong(hWnd, -20, 256);
-                        contentFrame.Navigate(typeof(BlankPage3));
-                        SpotifyBuiltin.Visibility = Visibility.Collapsed;
+                        contentFrame.Navigate(typeof(BlankPage3), null, args.RecommendedNavigationTransitionInfo);
                         break;
                 }
             }
             catch { }
         }
-
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             Environment.Exit(0);
         }
-        string AlbumCoverCache = "", SongTitleCache = "";
+        string SongTitleCache = "";
         int SongCoverStarted = 0;
         private async void SongCoverBackground()
         {
@@ -112,15 +106,11 @@ namespace CompanionDisplayWinUI
                 {
                     try
                     {
-                        BitmapImage bitmapImage = new();
-                        bitmapImage.UriSource = new Uri(Globals.SongBackground);
                         BackgroundImage.Source = new BitmapImage(new Uri(Globals.SongBackground));
-                        AlbumCoverCache = Globals.SongBackground;
                         SongTitleCache = Globals.SongName;
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
                     }
                 });
             }
@@ -138,20 +128,19 @@ namespace CompanionDisplayWinUI
                             {
                                 try
                                 {
+                                    BackgroundImage.Source = null;
                                     BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
-                                    AlbumCoverCache = "";
                                     SongTitleCache = songInfo.Title;
                                 }
-                                catch (Exception e)
+                                catch
                                 {
 
                                 }
                             });
                         }
                     }
-                    catch (Exception ex)
+                    catch
                     {
-                        //File.AppendAllText("ErrorLog.crlh", ex.Message);
                     }
                 }
             }
@@ -219,7 +208,7 @@ namespace CompanionDisplayWinUI
                                     if (Globals.BackgroundLink == "")
                                     {
                                         string imagePath = Globals.Wallpaper;
-                                        BitmapImage bitmapImage = new BitmapImage();
+                                        BitmapImage bitmapImage = new();
                                         using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                                         {
                                             bitmapImage.SetSource(stream.AsRandomAccessStream());
@@ -228,8 +217,10 @@ namespace CompanionDisplayWinUI
                                     }
                                     else
                                     {
-                                        BitmapImage bitmapImage = new BitmapImage();
-                                        bitmapImage.UriSource = new Uri(Globals.BackgroundLink);
+                                        BitmapImage bitmapImage = new()
+                                        {
+                                            UriSource = new Uri(Globals.BackgroundLink)
+                                        };
                                         BackgroundImage.Source = bitmapImage;
                                     }
                                     BackgroundImage.Visibility = Visibility.Visible;
@@ -243,45 +234,42 @@ namespace CompanionDisplayWinUI
                             if (Globals.BackgroundLink == "")
                             {
                                 StorageFile file = await StorageFile.GetFileFromPathAsync(Globals.Wallpaper);
-                                var mediaSource = MediaSource.CreateFromStorageFile(file);
-                                DispatcherQueue.TryEnqueue(() =>
+                                using (var mediaSource = MediaSource.CreateFromStorageFile(file))
                                 {
-                                    try
+                                    DispatcherQueue.TryEnqueue(() =>
                                     {
-                                        BackgroundVideo.Source = mediaSource;
-                                        BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
-                                        BackgroundVideo.Visibility = Visibility.Visible;
-                                        BackgroundVideo.MediaPlayer.Volume = 0;
-                                        BackgroundVideo.AutoPlay = true;
-                                    }
-                                    catch { }
-                                });
+                                        try
+                                        {
+                                            BackgroundVideo.Source = mediaSource;
+                                            BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
+                                            BackgroundVideo.Visibility = Visibility.Visible;
+                                            BackgroundVideo.MediaPlayer.Volume = 0;
+                                            BackgroundVideo.AutoPlay = true;
+                                        }
+                                        catch { }
+                                    });
+                                }
                             }
                             else
                             {
                                 DispatcherQueue.TryEnqueue(() =>
                                 {
-                                    try
+                                    using (MediaSource mediaSource = MediaSource.CreateFromUri(new Uri(Globals.BackgroundLink)))
                                     {
-                                        MediaSource mediaSource = MediaSource.CreateFromUri(new Uri(Globals.BackgroundLink));
-                                        BackgroundVideo.Source = mediaSource;
-                                        BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
-                                        BackgroundVideo.Visibility = Visibility.Visible;
-                                        BackgroundVideo.AutoPlay = true;
+                                        try
+                                        {
+                                            BackgroundVideo.Source = mediaSource;
+                                            BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
+                                            BackgroundVideo.Visibility = Visibility.Visible;
+                                            BackgroundVideo.AutoPlay = true;
+                                        }
+                                        catch { }
                                     }
-                                    catch { }
                                 });
                             }
-
-
                         }
-                        catch (Exception ex)
+                        catch
                         {
-                            try
-                            {
-
-                            }
-                            catch { }
                         }
 
                         break;
@@ -331,33 +319,35 @@ namespace CompanionDisplayWinUI
             }
             
         }
-        private async void contentFrame_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void ContentFrame_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Thread thread = new Thread(UpdateUI);
+            Thread thread = new (UpdateUI);
             thread.Start();
         }
-        private AppWindow _appWindow;
-        private async void SpotifyBuiltin_Loaded(object sender, RoutedEventArgs e)
+        private readonly AppWindow _appWindow;
+
+        private void BackgroundImage_ImageOpened(object sender, RoutedEventArgs e)
         {
-            var environmentOptions = new CoreWebView2EnvironmentOptions();
-            environmentOptions.AreBrowserExtensionsEnabled = true;
-            CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, environmentOptions);
-            await SpotifyBuiltin.EnsureCoreWebView2Async(environment);
-            await SpotifyBuiltin.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.57.2_0"));
-            SpotifyBuiltin.Source = new Uri("https://open.spotify.com/");
+            if (ImageOptionalBlur.Visibility == Visibility.Visible)
+            {
+                ImageOptionalBlur.Stretch = Stretch.None;
+                ImageOptionalBlur.Stretch = Stretch.UniformToFill;
+            }
         }
 
-        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        private void DebugPage_Tapped(object sender, TappedRoutedEventArgs e)
         {
             if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
             {
                 _appWindow.SetPresenter(AppWindowPresenterKind.Default);
-                FullScreenBtn.Content = "\ue740";
+                DebugPage.Content = "Enter Fullscreen";
+                DebugPage.Icon = new SymbolIcon(Symbol.FullScreen);
             }
             else
             {
                 _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                FullScreenBtn.Content = "\ue73f";
+                DebugPage.Content = "Exit Fullscreen";
+                DebugPage.Icon = new SymbolIcon(Symbol.BackToWindow);
             }
         }
     }

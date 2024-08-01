@@ -25,12 +25,55 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class TimeWidget : Page
     {
-        readonly Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
         public TimeWidget()
         {
             this.InitializeComponent();
+        }
+        public bool CleanUp = false;
+        private string DateStr = "", TimeStr = "";
+        private void UpdateUI()
+        {
             try
             {
+                if(DateStr != DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        Date.Text = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
+                    });
+                    DateStr = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
+                }
+                if(TimeStr != TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm"))
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        Time.Text = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
+                    });
+                    TimeStr = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
+                }
+            }
+            catch
+            {
+
+            }
+            if (CleanUp == false)
+            {
+                Thread.Sleep(1000);
+                Thread thread = new(UpdateUI);
+                thread.Start();
+            }
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CleanUp = true;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CleanUp = false;
                 string config = File.ReadAllText(Globals.TimeConfigFile);
                 if (config != "")
                 {
@@ -51,33 +94,6 @@ namespace CompanionDisplayWinUI
             }
             Thread thread0 = new(UpdateUI);
             thread0.Start();
-        }
-        public bool CleanUp = false;
-        private void UpdateUI()
-        {
-            try
-            {
-                dispatcherQueue.TryEnqueue(() =>
-                {
-                    Date.Text = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
-                    Time.Text = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
-                });
-            }
-            catch
-            {
-
-            }
-            if (CleanUp == false)
-            {
-                Thread.Sleep(1000);
-                Thread thread = new(UpdateUI);
-                thread.Start();
-            }
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            CleanUp = true;
         }
     }
 }

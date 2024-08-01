@@ -29,18 +29,25 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private double LastValue = -1;
+        private bool FTU = true;
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CleanUp = false;
-            var parent = this.Parent as Frame;
-            if (parent != null)
+            if (FTU)
             {
-                SensorName.Text = parent.Name;
-                var sensor = parent.Tag as ISensor;
-                sensor1 = sensor;
-                Thread thread = new(UpdateUI);
-                thread.Start();
+                var parent = this.Parent as Frame;
+                if (parent != null)
+                {
+                    FTU = false;
+                    SensorName.Text = parent.Name;
+                    var sensor = parent.Tag as ISensor;
+                    sensor1 = sensor;
+                }
             }
+            CleanUp = false;
+            Thread thread = new(UpdateUI);
+            thread.Start();
+
         }
         ISensor sensor1;
         public double LoadValue, LoadMin, LoadMax;
@@ -58,26 +65,28 @@ namespace CompanionDisplayWinUI
                 string query = "";
                 try
                 {
-                    query = sensor1.Hardware.Parent.Name;
+                    try
+                    {
+                        query = sensor1.Hardware.Parent.Name;
+                    }
+                    catch { }
+                    if ((Globals.CurrentHW == sensor1.Hardware || Globals.CurrentHW == sensor1.Hardware.Parent) && Math.Round((float)sensor1.Value) != LastValue)
+                    {
+                        LastValue = Math.Round((float)sensor1.Value);
+                        try
+                        {
+                            LoadValue2 = (Math.Round((float)sensor1.Value)) + " MHz";
+                        }
+                        catch { }
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            LoadPercent.Text = LoadValue2;
+                        });
+                    }
                 }
                 catch
                 {
 
-                }
-                if (Globals.CurrentHW == sensor1.Hardware.Name || Globals.CurrentHW == query)
-                {
-                    try
-                    {
-                        LoadValue = (double)sensor1.Value;
-                        LoadValue2 = (Math.Round((float)sensor1.Value)) + " MHz";
-                        LoadMin = (double)sensor1.Min;
-                        LoadMax = (double)sensor1.Max;
-                    }
-                    catch { }
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        LoadPercent.Text = LoadValue2;
-                    });
                 }
             }
             if (CleanUp == false)

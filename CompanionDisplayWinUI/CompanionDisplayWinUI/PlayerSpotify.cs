@@ -22,20 +22,14 @@ namespace CompanionDisplayWinUI
 {
     class PlayerSpotify
     {
-        private string Toki, TokiA, TokiO, TokiRefresh, TokiRefresh2, Authy, Authy2, Toki2, TitleSongOffline, code, code2, ReleaseDate, LyricCache, Title, AlbumName, SongTitleReloadedAlgo, AlbumCoverBase2, ArtistBase2, Lyrics, SongID, SongIDCache, SongIDCache2, timestamp, timestamp2, StringDetail, LastLyric;
+        private string Toki, TokiA, TokiO, TokiRefresh, TokiRefresh2, Authy, Authy2, Toki2, TitleSongOffline, ReleaseDate, LyricCache, Title, AlbumName, SongTitleReloadedAlgo, AlbumCoverBase2, ArtistBase2, Lyrics, SongID, SongIDCache, SongIDCache2, timestamp, timestamp2, StringDetail, LastLyric;
         string LyricsProvider = "";
         string Lyrics2 = "";
         private TimeSpan ts, ts2;
-        private int currenttimestamp = 0, endtimestamp = 0, startshit = 0, cooldown;
+        private int currenttimestamp = 0, endtimestamp = 0, startshit = 0;
         public const byte VK_MEDIA_PLAY_PAUSE = 179, VK_MEDIA_NEXT = 176, VK_MEDIA_PREV = 177;
         public DiscordRpcClient client;
         private readonly Uri BaseUri = new("http://localhost:5543/callback");
-        private readonly HttpClient client2 = new(new SocketsHttpHandler
-        {
-            ConnectTimeout = TimeSpan.FromSeconds(5.0),
-            KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
-            EnableMultipleHttp2Connections = false
-        });
         private readonly PlayerCurrentlyPlayingRequest request2 = new();
         public void PreStart()
         {
@@ -61,7 +55,7 @@ namespace CompanionDisplayWinUI
                 Thread thread = new(Initialize);
                 thread.Start();
             }
-            catch (Exception ex)
+            catch
             {
                 //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 Thread thread = new(PerformLyricShit);
@@ -70,7 +64,7 @@ namespace CompanionDisplayWinUI
         }
         public static string GenerateHex(int length)
         {
-            Random random = new Random();
+            Random random = new ();
             byte[] buffer = new byte[length / 2];
             random.NextBytes(buffer);
             string result = string.Concat(buffer.Select(x => x.ToString("X2")).ToArray());
@@ -84,12 +78,14 @@ namespace CompanionDisplayWinUI
             {
                 string config = File.ReadAllText(Globals.MediaConfigFile);
                 using StringReader readerconfig = new(config);
-                Globals.SP_DC = readerconfig.ReadLine();
-                Globals._clientId = readerconfig.ReadLine();
-                Globals._secretId = readerconfig.ReadLine();
-                Globals._clientId2 = readerconfig.ReadLine();
-                Globals._secretId2 = readerconfig.ReadLine();
-                Globals.DiscordID = readerconfig.ReadLine();
+                {
+                    Globals.SP_DC = readerconfig.ReadLine();
+                    Globals._clientId = readerconfig.ReadLine();
+                    Globals._secretId = readerconfig.ReadLine();
+                    Globals._clientId2 = readerconfig.ReadLine();
+                    Globals._secretId2 = readerconfig.ReadLine();
+                    Globals.DiscordID = readerconfig.ReadLine();
+                }
             }
             if (File.Exists(Globals.RefreshTokenPath))
             {
@@ -101,25 +97,31 @@ namespace CompanionDisplayWinUI
             }
             try
             {
-                string toHash = "https://apic.musixmatch.com/ws/1.1/token.get?adv_id=" + Guid.NewGuid().ToString() + "&referal=utm_source%3Dgoogle-play%26utm_medium%3Dorganic&root=0&sideloaded=0&build_number=2024050901&guid=" + Guid.NewGuid().ToString() + "&lang=en_US&model=manufacturer%2FGoogle%2FPixel%204%20XL%2FAP1A.240505.005&timestamp=" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ") + "&app_id=android-player-v1.0&format=json" + DateTime.Now.ToString("yyyyMMdd");
-                //string toHash = "https://apic.musixmatch.com/ws/1.1/token.get?adv_id=" + Guid.NewGuid().ToString() + "&referal=utm_source%3Dgoogle-play%26utm_medium%3Dorganic&root=0&sideloaded=0&build_number=2024050901&guid=" + GenerateHex(16) + "&lang=en_US&model=manufacturer%2FGoogle%2FPixel%204%20XL%2FAP1A.240505.005&timestamp=" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ") + "&app_id=android-player-v1.0&format=json" + DateTime.Now.ToString("yyyyMMdd");
-                string key = "967Pn4)N3&R_GBg5$b('";
-                byte[] keyBytes = Encoding.UTF8.GetBytes(key);
-                byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
-                string link;
-                using (HMACSHA1 hmac = new HMACSHA1(keyBytes))
+                using(HttpClient client2 = new(new SocketsHttpHandler
                 {
+                    ConnectTimeout = TimeSpan.FromSeconds(5.0),
+                    KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
+                    EnableMultipleHttp2Connections = false
+                }))
+                {
+                    string toHash = "https://apic.musixmatch.com/ws/1.1/token.get?adv_id=" + Guid.NewGuid().ToString() + "&referal=utm_source%3Dgoogle-play%26utm_medium%3Dorganic&root=0&sideloaded=0&build_number=2024050901&guid=" + Guid.NewGuid().ToString() + "&lang=en_US&model=manufacturer%2FGoogle%2FPixel%204%20XL%2FAP1A.240505.005&timestamp=" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ") + "&app_id=android-player-v1.0&format=json" + DateTime.Now.ToString("yyyyMMdd");
+                    string key = "967Pn4)N3&R_GBg5$b('";
+                    byte[] keyBytes = Encoding.UTF8.GetBytes(key);
+                    byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
+                    string link;
+                    using HMACSHA1 hmac = new(keyBytes);
                     byte[] signatureBytes = hmac.ComputeHash(toHashBytes);
                     string signaturekey = Convert.ToBase64String(signatureBytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
                     link = toHash.Remove(toHash.Length - 8, 8) + "&signature=" + signaturekey + "&signature_protocol=sha1";
-                    Task<string> responselyrics = client2.GetStringAsync(link);
-                    string idresult = responselyrics.Result;
-                    Globals.MusixMatchToken = (string)JObject.Parse(idresult)["message"]["body"]["user_token"];
+                    using (Task<string> responselyrics = client2.GetStringAsync(link))
+                    {
+                        string idresult = responselyrics.Result;
+                        Globals.MusixMatchToken = (string)JObject.Parse(idresult)["message"]["body"]["user_token"];
+                    }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
             Thread thread5 = new(PreStart);
             thread5.Start();
@@ -130,7 +132,7 @@ namespace CompanionDisplayWinUI
             {
                 client.ClearPresence();
             }
-            catch (Exception ex)
+            catch
             {
             }
             try
@@ -148,15 +150,16 @@ namespace CompanionDisplayWinUI
                 Globals.SongLyrics = songInfo.AlbumTitle;
                 TimeSpan timeSpan = TimeSpan.FromMilliseconds(sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds);
                 TimeSpan timeSpan2 = TimeSpan.FromMilliseconds(sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds);
-                Globals.SongTime = string.Format("{1:D2}:{2:D2}", timeSpan.Hours, timeSpan.Minutes, timeSpan.Seconds, timeSpan.Milliseconds);
-                Globals.SongEnd = string.Format("{1:D2}:{2:D2}", timeSpan2.Hours, timeSpan2.Minutes, timeSpan2.Seconds, timeSpan2.Milliseconds);
+                Globals.SongTime = timeSpan.ToString(@"mm\:ss");
+                Globals.SongEnd = timeSpan2.ToString(@"mm\:ss");
                 Globals.SongProgress = sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds / sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds * 100.0;
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
         }
+        private JObject responsedecode;
+        private SpotifyClient spotify;
         public void PerformLyricShit()
         {
             if (startshit == 1)
@@ -164,18 +167,25 @@ namespace CompanionDisplayWinUI
                 try
                 {
                     LyricCache = "";
-                    if (startshit == 1)
+                    if(spotify == null)
                     {
-                        SpotifyClient spotify = new(Toki);
-                        spotify.Player.GetCurrentlyPlaying(request2);
-                        try
+                        spotify = new(Toki);
+                    }
+                    spotify.Player.GetCurrentlyPlaying(request2);
+                    try
+                    {
+                        using (HttpClient client2 = new(new SocketsHttpHandler
                         {
-                            try
+                            ConnectTimeout = TimeSpan.FromSeconds(5.0),
+                            KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
+                            EnableMultipleHttp2Connections = false
+                        }))
+                        {
+                            string url = "https://api.spotify.com/v1/me/player/currently-playing";
+                            client2.DefaultRequestHeaders.Clear();
+                            client2.DefaultRequestHeaders.Add("Authorization", "Bearer " + Toki);
+                            using (Task<string> response = client2.GetStringAsync(url))
                             {
-                                string url = "https://api.spotify.com/v1/me/player/currently-playing";
-                                client2.DefaultRequestHeaders.Clear();
-                                client2.DefaultRequestHeaders.Add("Authorization", "Bearer " + Toki);
-                                Task<string> response = client2.GetStringAsync(url);
                                 try
                                 {
                                     Title = response.Result.ToString();
@@ -183,15 +193,16 @@ namespace CompanionDisplayWinUI
                                     if (Title.Contains("https://api.spotify.com/v1/tracks/") && Title.Contains("\"is_playing\" : true"))
                                     {
                                         Globals.IsSpotify = true;
-                                        SongID = JObject.Parse(Title)["item"]["id"].ToString();
-                                        SongTitleReloadedAlgo = JObject.Parse(Title)["item"]["name"].ToString();
-                                        timestamp2 = JObject.Parse(Title)["item"]["duration_ms"].ToString();
-                                        timestamp = JObject.Parse(Title)["progress_ms"].ToString();
-                                        Globals.SongID = JObject.Parse(Title)["item"]["external_ids"]["isrc"].ToString();
-                                        AlbumCoverBase2 = JObject.Parse(Title)["item"]["album"]["images"][0]["url"].ToString();
-                                        AlbumName = JObject.Parse(Title)["item"]["album"]["name"].ToString();
-                                        ReleaseDate = JObject.Parse(Title)["item"]["album"]["release_date"].ToString();
-                                        ArtistBase2 = JObject.Parse(Title)["item"]["artists"][0]["name"].ToString();
+                                        responsedecode = JObject.Parse(Title);
+                                        SongID = responsedecode["item"]["id"].ToString();
+                                        SongTitleReloadedAlgo = responsedecode["item"]["name"].ToString();
+                                        timestamp2 = responsedecode["item"]["duration_ms"].ToString();
+                                        timestamp = responsedecode["progress_ms"].ToString();
+                                        Globals.SongID = responsedecode["item"]["external_ids"]["isrc"].ToString();
+                                        AlbumCoverBase2 = responsedecode["item"]["album"]["images"][0]["url"].ToString();
+                                        AlbumName = responsedecode["item"]["album"]["name"].ToString();
+                                        ReleaseDate = responsedecode["item"]["album"]["release_date"].ToString();
+                                        ArtistBase2 = responsedecode["item"]["artists"][0]["name"].ToString();
                                         currenttimestamp = int.Parse(timestamp);
                                         Globals.currenttimestamp = int.Parse(timestamp);
                                         ts = TimeSpan.FromMilliseconds(currenttimestamp);
@@ -206,83 +217,84 @@ namespace CompanionDisplayWinUI
                                                     timestamp = "";
                                                     if (Lyrics.Contains("startTimeMs"))
                                                     {
-                                                        var reader2 = new StringReader(Lyrics);
-                                                    startchicanery:
-                                                        Lyrics2 = reader2.ReadLine();
-                                                        if (Lyrics2.Contains("startTimeMs"))
+                                                        using (var reader2 = new StringReader(Lyrics))
                                                         {
-
-                                                            Lyrics2 = Lyrics2.Remove(0, 15);
-                                                            Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
-                                                            int lyrictimestamp = int.Parse(Lyrics2);
+                                                        startchicanery:
                                                             Lyrics2 = reader2.ReadLine();
-                                                            Lyrics2 = Lyrics2.Remove(0, 9);
-                                                            Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
-                                                            if (Lyrics2.Contains("♪"))
+                                                            if (Lyrics2.Contains("startTimeMs"))
                                                             {
-                                                                Lyrics2 = Lyrics2 + "♪";
-                                                            }
-                                                        startchicanery2:
-                                                            if (lyrictimestamp < currenttimestamp)
-                                                            {
-                                                                LyricCache = Lyrics2;
-                                                                LyricCache = System.Text.RegularExpressions.Regex.Unescape(LyricCache);
+
+                                                                Lyrics2 = Lyrics2.Remove(0, 15);
+                                                                Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
+                                                                int lyrictimestamp = int.Parse(Lyrics2);
                                                                 Lyrics2 = reader2.ReadLine();
+                                                                Lyrics2 = Lyrics2.Remove(0, 9);
+                                                                Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
+                                                                if (Lyrics2.Contains('♪'))
+                                                                {
+                                                                    Lyrics2 += "♪";
+                                                                }
+                                                                if (lyrictimestamp < currenttimestamp)
+                                                                {
+                                                                    LyricCache = Lyrics2;
+                                                                    LyricCache = System.Text.RegularExpressions.Regex.Unescape(LyricCache);
+                                                                    Lyrics2 = reader2.ReadLine();
+                                                                    goto startchicanery;
+                                                                }
+                                                            }
+                                                            else
+                                                            {
                                                                 goto startchicanery;
                                                             }
                                                         }
-                                                        else
-                                                        {
-                                                            goto startchicanery;
-                                                        }
-                                                        reader2.Close();
                                                     }
                                                 }
                                                 if (LyricsProvider == "MXM")
                                                 {
-                                                    using StringReader readerlyric = new(Lyrics);
-                                                    string line;
-                                                    while ((line = readerlyric.ReadLine()) != null)
+                                                    using (StringReader readerlyric = new(Lyrics))
                                                     {
-                                                        if (line.Contains("text"))
+                                                        string line;
+                                                        while ((line = readerlyric.ReadLine()) != null)
                                                         {
-                                                            string combined;
-                                                            combined = System.Text.RegularExpressions.Regex.Unescape(line.Remove(line.Length - 2, 2).Remove(0, 8));
-                                                            line = readerlyric.ReadLine();
-                                                            if (line.StartsWith(" "))
+                                                            if (line.Contains("text"))
                                                             {
-                                                                combined = combined + line.Remove(line.Length - 1, 1);
+                                                                string combined;
+                                                                combined = System.Text.RegularExpressions.Regex.Unescape(line.Remove(line.Length - 2, 2).Remove(0, 8));
                                                                 line = readerlyric.ReadLine();
-                                                            }
-                                                            if (line.EndsWith(","))
-                                                            {
-                                                                line = line.Remove(line.Length - 1, 1).Remove(0, 15);
-                                                            }
-                                                            double s;
-                                                            try
-                                                            {
-                                                                s = TimeSpan.FromSeconds(Double.Parse(line)).TotalMilliseconds;
-                                                            }
-                                                            catch (Exception ex)
-                                                            {
-                                                                //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                                                                s = TimeSpan.FromSeconds(Double.Parse(line.Replace(".", ","))).TotalMilliseconds;
-                                                            }
-                                                            if (s <= Globals.currenttimestamp)
-                                                            {
-                                                                if (combined == "")
+                                                                if (line.StartsWith(' '))
                                                                 {
-                                                                    combined = "♪♪";
+                                                                    combined += line.Remove(line.Length - 1, 1);
+                                                                    line = readerlyric.ReadLine();
                                                                 }
-                                                                LyricCache = combined;
+                                                                if (line.EndsWith(','))
+                                                                {
+                                                                    line = line.Remove(line.Length - 1, 1).Remove(0, 15);
+                                                                }
+                                                                double s;
+                                                                try
+                                                                {
+                                                                    s = TimeSpan.FromSeconds(Double.Parse(line)).TotalMilliseconds;
+                                                                }
+                                                                catch
+                                                                {
+                                                                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
+                                                                    s = TimeSpan.FromSeconds(Double.Parse(line.Replace(".", ","))).TotalMilliseconds;
+                                                                }
+                                                                if (s <= Globals.currenttimestamp)
+                                                                {
+                                                                    if (combined == "")
+                                                                    {
+                                                                        combined = "♪♪";
+                                                                    }
+                                                                    LyricCache = combined;
+                                                                }
                                                             }
                                                         }
                                                     }
                                                 }
                                             }
-                                            catch (Exception ex)
+                                            catch
                                             {
-                                                //File.AppendAllText("ErrorLog.crlh", ex.Message);
                                                 LyricCache = "";
                                             }
                                         }
@@ -303,59 +315,57 @@ namespace CompanionDisplayWinUI
                                                     Lyrics = Lyrics.Replace("},", "\n},\n");
                                                     Lyrics = Lyrics.Replace("\",", "\",\n");
                                                     Lyrics = Lyrics.Replace("{", "{\n");
-                                                    var reader2 = new StringReader(Lyrics);
-                                                    Lyrics2 = reader2.ReadLine();
-                                                startchicanery:
-                                                    if (Lyrics2.Contains("startTimeMs"))
+                                                    using (var reader2 = new StringReader(Lyrics))
                                                     {
-                                                        Lyrics2 = Lyrics2.Remove(0, 15);
-                                                        Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
-
-
-                                                        int lyrictimestamp = int.Parse(Lyrics2);
-
                                                         Lyrics2 = reader2.ReadLine();
-                                                        Lyrics2 = Lyrics2.Remove(0, 9);
-                                                        Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
-                                                        if (Lyrics2.Contains("♪"))
+                                                    startchicanery:
+                                                        if (Lyrics2.Contains("startTimeMs"))
                                                         {
-                                                            Lyrics2 = Lyrics2 + "♪";
-                                                        }
-                                                        SongIDCache = SongID;
-                                                    startchicanery2:
-                                                        if (lyrictimestamp < currenttimestamp)
-                                                        {
-                                                            Lyrics2 = Lyrics2.Replace("\\u0027", "'");
-                                                            Lyrics2 = Lyrics2.Replace("\\\"", "\"");
-                                                            LyricCache = Lyrics2;
+                                                            Lyrics2 = Lyrics2.Remove(0, 15);
+                                                            Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
+                                                            int lyrictimestamp = int.Parse(Lyrics2);
                                                             Lyrics2 = reader2.ReadLine();
-                                                            goto startchicanery;
+                                                            Lyrics2 = Lyrics2.Remove(0, 9);
+                                                            Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
+                                                            if (Lyrics2.Contains('♪'))
+                                                            {
+                                                                Lyrics2 += "♪";
+                                                            }
+                                                            SongIDCache = SongID;
+                                                            if (lyrictimestamp < currenttimestamp)
+                                                            {
+                                                                Lyrics2 = Lyrics2.Replace("\\u0027", "'");
+                                                                Lyrics2 = Lyrics2.Replace("\\\"", "\"");
+                                                                LyricCache = Lyrics2;
+                                                                Lyrics2 = reader2.ReadLine();
+                                                                goto startchicanery;
+                                                            }
+                                                            else
+                                                            {
+                                                                reader2.Close();
+                                                            }
                                                         }
                                                         else
                                                         {
-                                                            reader2.Close();
+                                                            if (Lyrics2 != "")
+                                                            {
+                                                                Lyrics2 = reader2.ReadLine();
+                                                                goto startchicanery;
+                                                            }
                                                         }
+                                                        LyricsProvider = "Spotify";
                                                     }
-                                                    else
-                                                    {
-                                                        if (Lyrics2 != "")
-                                                        {
-                                                            Lyrics2 = reader2.ReadLine();
-                                                            goto startchicanery;
-                                                        }
-                                                    }
-                                                    LyricsProvider = "Spotify";
                                                 }
                                                 else
                                                 {
                                                     SongIDCache = SongID;
                                                 }
                                             }
-                                            catch(Exception nn)
+                                            catch (Exception nn)
                                             {
                                                 if (nn.Message.Contains("401"))
                                                 {
-                                                    Thread thread4 = new Thread(RefreshToken);
+                                                    Thread thread4 = new(RefreshToken);
                                                     thread4.Start();
                                                 }
                                                 try
@@ -364,98 +374,93 @@ namespace CompanionDisplayWinUI
                                                     string key = "967Pn4)N3&R_GBg5$b('";
                                                     byte[] keyBytes = Encoding.UTF8.GetBytes(key);
                                                     byte[] toHashBytes0 = Encoding.UTF8.GetBytes(toHash0);
-                                                    using (HMACSHA1 hmac = new HMACSHA1(keyBytes))
+                                                    using (HMACSHA1 hmac = new(keyBytes))
                                                     {
                                                         byte[] signatureBytes = hmac.ComputeHash(toHashBytes0);
                                                         string signaturekey = Convert.ToBase64String(signatureBytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
                                                         toHash0 = toHash0.Remove(toHash0.Length - 8, 8) + "&signature=" + signaturekey + "&signature_protocol=sha1";
                                                     }
-                                                    Task<string> responselyrics = client2.GetStringAsync(toHash0);
-                                                    string idresult = responselyrics.Result;
-                                                    if (idresult.Contains("\"status_code\":401"))
+                                                    using (Task<string> responselyrics = client2.GetStringAsync(toHash0))
                                                     {
-                                                        throw new MusixMatchToken(string.Format("Error"));
-                                                    }
-                                                    string songidmxm = (string)JObject.Parse(idresult)["message"]["body"]["track"]["track_id"];
-                                                    string toHash = "https://apic.musixmatch.com/ws/1.1/macro.subtitles.get?tags=playing&f_subtitle_length_max_deviation=1&subtitle_format=mxm&page_size=1&track_id=" + songidmxm + "&usertoken=" + Globals.MusixMatchToken + "&app_id=android-player-v1.0&country=pt&language_iso_code=1&format=json" + DateTime.Now.ToString("yyyyMMdd");
-                                                    byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
-                                                    using (HMACSHA1 hmac = new HMACSHA1(keyBytes))
-                                                    {
-                                                        byte[] signatureBytes = hmac.ComputeHash(toHashBytes);
-                                                        string signaturekey = Convert.ToBase64String(signatureBytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
-                                                        toHash = toHash.Remove(toHash.Length - 8, 8) + "&signature=" + signaturekey + "&signature_protocol=sha1";
-                                                    }
-                                                    Task<string> response2 = client2.GetStringAsync(toHash);
-                                                    string lyricsformat = response2.Result.Replace("track.subtitles.get", "track_subtitles_get").Replace("track.lyrics.get", "track_lyrics_get").Replace("track.snippet.get", "track_snippet_get");
-                                                    var readString2 = JObject.Parse(lyricsformat)["message"]["body"]["macro_calls"]["track_subtitles_get"]["message"]["body"]["subtitle_list"][0]["subtitle"]["subtitle_body"];
-                                                    string totalstring = readString2.ToString().Replace("\",", "\",\n").Replace("[", "").Replace("]", "").Replace("{", "").Replace("}", "").Replace(",\"", ",\n\"");
-                                                    Lyrics = totalstring.ToString();
-                                                    using (StringReader readerlyric = new(totalstring.ToString()))
-                                                    {
-                                                        string line;
-                                                        while ((line = readerlyric.ReadLine()) != null)
+                                                        string idresult = responselyrics.Result;
+                                                        if (idresult.Contains("\"status_code\":401"))
                                                         {
-                                                            if (line.Contains("text"))
+                                                            throw new MusixMatchToken(string.Format("Error"));
+                                                        }
+                                                        string songidmxm = (string)JObject.Parse(idresult)["message"]["body"]["track"]["track_id"];
+                                                        string toHash = "https://apic.musixmatch.com/ws/1.1/macro.subtitles.get?tags=playing&f_subtitle_length_max_deviation=1&subtitle_format=mxm&page_size=1&track_id=" + songidmxm + "&usertoken=" + Globals.MusixMatchToken + "&app_id=android-player-v1.0&country=pt&language_iso_code=1&format=json" + DateTime.Now.ToString("yyyyMMdd");
+                                                        byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
+                                                        using (HMACSHA1 hmac = new(keyBytes))
+                                                        {
+                                                            byte[] signatureBytes = hmac.ComputeHash(toHashBytes);
+                                                            string signaturekey = Convert.ToBase64String(signatureBytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
+                                                            toHash = toHash.Remove(toHash.Length - 8, 8) + "&signature=" + signaturekey + "&signature_protocol=sha1";
+                                                        }
+                                                        using (Task<string> response2 = client2.GetStringAsync(toHash))
+                                                        {
+                                                            string lyricsformat = response2.Result.Replace("track.subtitles.get", "track_subtitles_get").Replace("track.lyrics.get", "track_lyrics_get").Replace("track.snippet.get", "track_snippet_get");
+                                                            responsedecode = JObject.Parse(lyricsformat);
+                                                            string totalstring = responsedecode["message"]["body"]["macro_calls"]["track_subtitles_get"]["message"]["body"]["subtitle_list"][0]["subtitle"]["subtitle_body"].ToString().Replace("\",", "\",\n").Replace("[", "").Replace("]", "").Replace("{", "").Replace("}", "").Replace(",\"", ",\n\"");
+                                                            Lyrics = totalstring.ToString();
+                                                            using (StringReader readerlyric = new(totalstring.ToString()))
                                                             {
-                                                                string combined;
-                                                                combined = System.Text.RegularExpressions.Regex.Unescape(line.Remove(line.Length - 2, 2).Remove(0, 8));
-                                                                line = readerlyric.ReadLine();
-                                                                if (line.StartsWith(" "))
+                                                                string line;
+                                                                while ((line = readerlyric.ReadLine()) != null)
                                                                 {
-                                                                    combined = combined + line.Remove(line.Length - 1, 1);
-                                                                    line = readerlyric.ReadLine();
-                                                                }
-                                                                if (line.EndsWith(",") && line.Contains("\"time\":\"total\""))
-                                                                {
-                                                                    line = line.Remove(line.Length - 1, 1).Remove(0, 15);
-                                                                }
-                                                                double s;
-                                                                try
-                                                                {
-                                                                    s = TimeSpan.FromSeconds(Double.Parse(line)).TotalMilliseconds;
-                                                                }
-                                                                catch (Exception ex)
-                                                                {
-                                                                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                                                                    s = TimeSpan.FromSeconds(Double.Parse(line.Replace(".", ","))).TotalMilliseconds;
-                                                                }
-                                                                if (s <= Globals.currenttimestamp)
-                                                                {
-                                                                    if (combined == "")
+                                                                    if (line.Contains("text"))
                                                                     {
-                                                                        combined = "♪♪";
+                                                                        string combined;
+                                                                        combined = System.Text.RegularExpressions.Regex.Unescape(line.Remove(line.Length - 2, 2).Remove(0, 8));
+                                                                        line = readerlyric.ReadLine();
+                                                                        if (line.StartsWith(' '))
+                                                                        {
+                                                                            combined += line.Remove(line.Length - 1, 1);
+                                                                            line = readerlyric.ReadLine();
+                                                                        }
+                                                                        if (line.EndsWith(',') && line.Contains("\"time\":\"total\""))
+                                                                        {
+                                                                            line = line.Remove(line.Length - 1, 1).Remove(0, 15);
+                                                                        }
+                                                                        double s = TimeSpan.FromSeconds(Double.Parse(line.Replace(".", ","))).TotalMilliseconds;
+                                                                        if (s <= Globals.currenttimestamp)
+                                                                        {
+                                                                            if (combined == "")
+                                                                            {
+                                                                                combined = "♪♪";
+                                                                            }
+                                                                            LyricCache = combined;
+                                                                        }
                                                                     }
-                                                                    LyricCache = combined;
                                                                 }
                                                             }
+                                                            LyricsProvider = "MXM";
+                                                            SongIDCache = SongID;
                                                         }
                                                     }
-                                                    LyricsProvider = "MXM";
-                                                    SongIDCache = SongID;
                                                 }
-                                                catch (MusixMatchToken ex)
+                                                catch (MusixMatchToken)
                                                 {
-                                                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
                                                     string toHash = "https://apic.musixmatch.com/ws/1.1/token.get?adv_id=" + Guid.NewGuid().ToString() + "&referal=utm_source%3Dgoogle-play%26utm_medium%3Dorganic&root=0&sideloaded=0&build_number=2024050901&guid=" + Guid.NewGuid().ToString() + "&lang=en_US&model=manufacturer%2FGoogle%2FPixel%204%20XL" + HttpUtility.UrlEncode(Guid.NewGuid().ToString()) + "%2FAP1A.240505.005&timestamp=" + DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ") + "&app_id=android-player-v1.0&format=json" + DateTime.Now.ToString("yyyyMMdd");
                                                     string key = "967Pn4)N3&R_GBg5$b('";
                                                     byte[] keyBytes = Encoding.UTF8.GetBytes(key);
                                                     byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
                                                     string link;
-                                                    using (HMACSHA1 hmac = new HMACSHA1(keyBytes))
+                                                    using (HMACSHA1 hmac = new(keyBytes))
                                                     {
                                                         byte[] signatureBytes = hmac.ComputeHash(toHashBytes);
                                                         string signaturekey = Convert.ToBase64String(signatureBytes).Replace('+', '-').Replace('/', '_').TrimEnd('=');
                                                         link = toHash.Remove(toHash.Length - 8, 8) + "&signature=" + signaturekey + "&signature_protocol=sha1";
-                                                        Task<string> responselyrics = client2.GetStringAsync(link);
-                                                        string idresult = responselyrics.Result;
-                                                        Globals.MusixMatchToken = (string)JObject.Parse(idresult)["message"]["body"]["user_token"];
+                                                        using (Task<string> responselyrics = client2.GetStringAsync(link))
+                                                        {
+                                                            string idresult = responselyrics.Result;
+                                                            Globals.MusixMatchToken = (string)JObject.Parse(idresult)["message"]["body"]["user_token"];
+                                                        }
                                                     }
                                                     LyricsProvider = "Spotify";
                                                     SongIDCache = SongID;
                                                 }
                                                 catch (Exception ex2)
                                                 {
-                                                    //File.AppendAllText("ErrorLog.crlh", ex2.Message);
                                                     if (ex2.Message.Contains("401"))
                                                     {
                                                         Thread thread4 = new(RefreshToken);
@@ -506,9 +511,9 @@ namespace CompanionDisplayWinUI
                                                     Buttons =
                                                 [
                                                 new() {
-                                                    Label = "View on Spotify",
-                                                    Url = "https://open.spotify.com/track/" + SongID
-                                                }
+                                            Label = "View on Spotify",
+                                            Url = "https://open.spotify.com/track/" + SongID
+                                        }
                                                 ],
                                                     Assets = new Assets
                                                     {
@@ -522,10 +527,8 @@ namespace CompanionDisplayWinUI
                                             }
                                             SongIDCache2 = SongID;
                                         }
-                                        catch (Exception aa)
+                                        catch
                                         {
-                                            //File.AppendAllText("ErrorLog.crlh", aa.Message);
-                                            Globals.SongLyrics = aa.Message;
                                         }
                                     }
                                     else
@@ -535,13 +538,9 @@ namespace CompanionDisplayWinUI
                                         thread3.Start();
                                     }
                                 }
-                                catch (Exception ex2)
+                                catch
                                 {
-                                    //File.AppendAllText("ErrorLog.crlh", ex2.Message);
-                                    Exception a = ex2;
-                                    a.Data.Clear();
                                     startshit = 1;
-                                    client2.CancelPendingRequests();
                                     if (Toki == TokiO && TokiA != null)
                                     {
                                         Toki = TokiA;
@@ -552,33 +551,19 @@ namespace CompanionDisplayWinUI
                                     }
                                 }
                             }
-                            catch (Exception ex2)
-                            {
-                                //File.AppendAllText("ErrorLog.crlh", ex2.Message);
-                                Exception r = ex2;
-                                r.Data.Clear();
-                                throw new Exception();
-                            }
-                            Thread.Sleep(1000);
-                            Thread thread2 = new(PerformLyricShit);
-                            thread2.Start();
-                        }
-                        catch (Exception ex2)
-                        {
-                            //File.AppendAllText("ErrorLog.crlh", ex2.Message);
-                            Exception ex = ex2;
-                            ex.Data.Clear();
-                            throw new Exception();
                         }
                     }
+                    catch
+                    {
+                        throw new Exception();
+                    }
+                    Thread.Sleep(1000);
+                    Thread thread2 = new(PerformLyricShit);
+                    thread2.Start();
                 }
-                catch (Exception ex2)
+                catch
                 {
-                    //File.AppendAllText("ErrorLog.crlh", ex2.Message);
-                    Exception e = ex2;
-                    e.Data.Clear();
                     startshit = 1;
-                    client2.CancelPendingRequests();
                     if (Toki == TokiO && TokiA != null)
                     {
                         Toki = TokiA;
@@ -601,18 +586,8 @@ namespace CompanionDisplayWinUI
                 thread2.Start();
             }
         }
-        public class MusixMatchToken : Exception
-
+        public class MusixMatchToken(string message) : Exception(message)
         {
-
-            public MusixMatchToken(string message)
-
-            : base(message)
-
-            {
-
-            }
-
         }
         public async void Initialize()
         {
@@ -632,7 +607,6 @@ namespace CompanionDisplayWinUI
                     EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543);
                     server.AuthorizationCodeReceived += async delegate (object sender, AuthorizationCodeResponse response)
                     {
-                        code = response.Code;
                         AuthorizationCodeTokenResponse tokenResponse = await new OAuthClient(config).RequestToken(new AuthorizationCodeTokenRequest(Globals._clientId, Globals._secretId, response.Code, BaseUri));
                         await server.Stop();
                         TokiO = tokenResponse.AccessToken;
@@ -661,46 +635,9 @@ namespace CompanionDisplayWinUI
                 }
                 Toki = TokiO;
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                Globals.SongLyrics = ex.Message;
-                //Thread thread = new Thread(Initialize);
-                //thread.Start();
-            }
-        }
-        private void Start()
-        {
-            if (startshit == 1)
-            {
-                startshit = 0;
-            }
-            if (File.Exists(Globals.SP_DC) && File.Exists(Globals._clientId) && File.Exists(Globals._secretId) && File.Exists(Globals.DiscordID))
-            {
-                try
-                {
-                    client = new DiscordRpcClient(File.ReadAllText(Globals.DiscordID));
-                    client.OnReady += delegate (object sender, ReadyMessage e)
-                    {
-                        Console.WriteLine("Received Ready from user {0}", e.User.Username);
-                    };
-                    client.OnPresenceUpdate += delegate (object sender, PresenceMessage e)
-                    {
-                        Console.WriteLine("Received Update! {0}", e.Presence);
-                    };
-                    client.Initialize();
-                    Thread thread2 = new(RefreshToken);
-                    thread2.Start();
-                    Thread thread = new(Initialize);
-                    thread.Start();
-                    startshit = 1;
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                    return;
-                }
+                Globals.SongLyrics = "Config error";
             }
         }
         public async void InitializeB()
@@ -720,35 +657,36 @@ namespace CompanionDisplayWinUI
                 }
                 else
                 {
+                    
                     SpotifyClientConfig config = SpotifyClientConfig.CreateDefault();
-                    EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543);
-                    server.AuthorizationCodeReceived += async delegate (object sender, AuthorizationCodeResponse response)
+                    using (EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543))
                     {
-                        code2 = response.Code;
-                        AuthorizationCodeTokenResponse tokenResponse = await new OAuthClient(config).RequestToken(new AuthorizationCodeTokenRequest(Globals._clientId2, Globals._secretId2, response.Code, BaseUri));
-                        await server.Stop();
-                        TokiA = tokenResponse.AccessToken;
-                        TokiRefresh2 = tokenResponse.RefreshToken;
-                        Globals.RefreshToken2 = tokenResponse.RefreshToken;
-                        File.WriteAllText(Globals.RefreshToken2Path, tokenResponse.RefreshToken);
-                        Thread thread4 = new(PerformLyricShit);
-                        thread4.Start();
-                        Thread thread2a2 = new(RefreshAPI);
-                        thread2a2.Start();
-                        Thread thread5 = new(RefreshAPI2);
-                        thread5.Start();
-                    };
-                    await server.Start();
-                    LoginRequest loginRequest = new(server.BaseUri, Globals._clientId2, LoginRequest.ResponseType.Code)
-                    {
-                        Scope = ["user-read-currently-playing", "user-read-playback-state", "user-read-recently-played"]
-                    };
-                    BrowserUtil.Open(loginRequest.ToUri());
+                        server.AuthorizationCodeReceived += async delegate (object sender, AuthorizationCodeResponse response)
+                        {
+                            AuthorizationCodeTokenResponse tokenResponse = await new OAuthClient(config).RequestToken(new AuthorizationCodeTokenRequest(Globals._clientId2, Globals._secretId2, response.Code, BaseUri));
+                            await server.Stop();
+                            TokiA = tokenResponse.AccessToken;
+                            TokiRefresh2 = tokenResponse.RefreshToken;
+                            Globals.RefreshToken2 = tokenResponse.RefreshToken;
+                            File.WriteAllText(Globals.RefreshToken2Path, tokenResponse.RefreshToken);
+                            Thread thread4 = new(PerformLyricShit);
+                            thread4.Start();
+                            Thread thread2a2 = new(RefreshAPI);
+                            thread2a2.Start();
+                            Thread thread5 = new(RefreshAPI2);
+                            thread5.Start();
+                        };
+                        await server.Start();
+                        LoginRequest loginRequest = new(server.BaseUri, Globals._clientId2, LoginRequest.ResponseType.Code)
+                        {
+                            Scope = ["user-read-currently-playing", "user-read-playback-state", "user-read-recently-played"]
+                        };
+                        BrowserUtil.Open(loginRequest.ToUri());
+                    }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 if (Globals._clientId2 != "" && Globals._secretId2 != "")
                 {
                     Thread thread = new(InitializeB);
@@ -761,45 +699,45 @@ namespace CompanionDisplayWinUI
                     Thread thread2a2 = new(RefreshAPI);
                     thread2a2.Start();
                 }
-                Exception ea = ex;
-
             }
         }
         public void RefreshToken()
         {
-            if (startshit != 1)
-            {
-
-            }
             try
             {
-                string url = "https://open.spotify.com/get_access_token?reason=transport&productType=web_player";
-                client2.DefaultRequestHeaders.Clear();
-                client2.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36");
-                client2.DefaultRequestHeaders.Add("App-platform", "WebPlayer");
-                client2.DefaultRequestHeaders.Add("cookie", "sp_dc=" + Globals.SP_DC);
-                Task<string> response = client2.GetStringAsync(url);
-                Authy = response.Result.ToString();
-                Authy = Authy.Replace("{", "{\n");
-                Authy = Authy.Replace("false", "\nfalse\n");
-                Authy = Authy.Replace("\",", "\",\n");
-                Authy = Authy.Remove(0, 50);
-                StringReader reader2 = new(Authy);
-                Authy2 = reader2.ReadLine();
-                Authy2 = Authy2.Remove(0, 14);
-                Authy2 = Authy2.Remove(Authy2.Length - 2, 2);
-                Toki2 = Authy2;
-                reader2.Close();
+                using (HttpClient client2 = new(new SocketsHttpHandler
+                {
+                    ConnectTimeout = TimeSpan.FromSeconds(5.0),
+                    KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
+                    EnableMultipleHttp2Connections = false
+                }))
+                {
+                    string url = "https://open.spotify.com/get_access_token?reason=transport&productType=web_player";
+                    client2.DefaultRequestHeaders.Clear();
+                    client2.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.0.0 Safari/537.36");
+                    client2.DefaultRequestHeaders.Add("App-platform", "WebPlayer");
+                    client2.DefaultRequestHeaders.Add("cookie", "sp_dc=" + Globals.SP_DC);
+                    using (Task<string> response = client2.GetStringAsync(url))
+                    {
+                        Authy = response.Result.ToString();
+                    }
+                    Authy = Authy.Replace("{", "{\n");
+                    Authy = Authy.Replace("false", "\nfalse\n");
+                    Authy = Authy.Replace("\",", "\",\n");
+                    Authy = Authy.Remove(0, 50);
+                    using (StringReader reader2 = new(Authy))
+                    {
+                        Authy2 = reader2.ReadLine();
+                        Authy2 = Authy2.Remove(0, 14);
+                        Authy2 = Authy2.Remove(Authy2.Length - 2, 2);
+                        Toki2 = Authy2;
+                        reader2.Close();
+                    }
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
-        }
-        public void CooldownVoid()
-        {
-            Thread.Sleep(5000);
-            cooldown = 0;
         }
         public async void RefreshAPI()
         {
@@ -811,11 +749,8 @@ namespace CompanionDisplayWinUI
                 Thread thread3 = new(RefreshAPI);
                 thread3.Start();
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                Exception en = ex;
-                en.Data.Clear();
                 Thread.Sleep(30000);
                 Thread thread2 = new(RefreshAPI);
                 thread2.Start();
@@ -831,9 +766,8 @@ namespace CompanionDisplayWinUI
                 Thread thread3 = new(RefreshAPI2);
                 thread3.Start();
             }
-            catch (Exception ex)
+            catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
                 Thread.Sleep(30000);
                 Thread thread2 = new(RefreshAPI2);
                 thread2.Start();

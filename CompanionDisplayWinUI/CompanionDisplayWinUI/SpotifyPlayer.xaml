@@ -10,6 +10,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <WebView2 Name="WebView" Grid.Row="2" Source="https://open.spotify.com"/>
+        <WebView2 Name="SpotifyBuiltin" Source="https://open.spotify.com"/>
     </Grid>
 </Page>

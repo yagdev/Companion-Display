@@ -29,7 +29,6 @@ namespace CompanionDisplayWinUI
         public WidgetMonitorBrightness()
         {
             this.InitializeComponent();
-            LoadMonitorNames();
         }
         private List<PHYSICAL_MONITOR> physicalMonitors = new List<PHYSICAL_MONITOR>();
 
@@ -114,6 +113,15 @@ namespace CompanionDisplayWinUI
             public int top;
             public int right;
             public int bottom;
+        }
+        private bool FTU = true;
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FTU)
+            {
+                LoadMonitorNames();
+                FTU = false;
+            }
         }
     }
 }
