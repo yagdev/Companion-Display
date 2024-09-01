@@ -7,7 +7,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
-using CoreAudio;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -19,6 +18,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
+using CoreAudio;
+using Windows.Media;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -72,7 +73,7 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryTogglePlayPauseAsync();
+                await Globals.sessionManager.GetCurrentSession().TryTogglePlayPauseAsync();
             }
             catch
             {
@@ -83,7 +84,7 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TrySkipPreviousAsync();
+                await Globals.sessionManager.GetCurrentSession().TrySkipPreviousAsync();
             }
             catch
             {
@@ -94,23 +95,21 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                await (await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TrySkipNextAsync();
+                await Globals.sessionManager.GetCurrentSession().TrySkipNextAsync();
             }
             catch
             {
-                //File.AppendAllText("ErrorLog.crlh", ex.Message);
             }
         }
-
+        private bool Updating = false;
         private void VolumeBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            MMDeviceEnumerator DevEnum = new (Guid.NewGuid());
-            using(var defaultPlaybackDevice = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+            if (IsManipulative)
             {
-                defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(VolumeBar.Value / 100);
+                mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(VolumeBar.Value / 100);
             }
         }
-
+        private MMDevice mDevice;
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             CleanUp = true;
@@ -123,17 +122,31 @@ namespace CompanionDisplayWinUI
                 PlayerSpotify mediaPlayerWidget = new();
                 mediaPlayerWidget.Page_Loaded();
             }
-            MMDeviceEnumerator DevEnum = new(Guid.NewGuid());
-            using (var mDeviceEnumerator = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+            MMDeviceEnumerator DevEnum = new();
+            mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            mDevice.AudioEndpointVolume.OnVolumeNotification += ChangeVol;
+            VolumeCur = mDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
+            DispatcherQueue.TryEnqueue(() =>
             {
-                VolumeCur = mDeviceEnumerator.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    VolumeBar.Value = VolumeCur;
-                });
-            }
+                VolumeBar.Value = VolumeCur;
+            });
             Thread thread0 = new(UpdateUI);
             thread0.Start();
+        }
+        private bool IsManipulative = false;
+        private void ChangeVol(AudioVolumeNotificationData data)
+        {
+            if (!IsManipulative)
+            {
+                try
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        VolumeBar.Value = data.MasterVolume * 100;
+                    });
+                }
+                catch { }
+            }
         }
 
         private void SongProgressBar_ManipulationStarted(object sender, ManipulationStartedRoutedEventArgs e)
@@ -144,6 +157,8 @@ namespace CompanionDisplayWinUI
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             CleanUp = false;
+            MMDeviceEnumerator DevEnum = new();
+            mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
             Thread thread0 = new(StartUI);
             thread0.Start();
         }
@@ -151,10 +166,9 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long maxpos = long.Parse(Globals.sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
                 long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
-                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                await(Globals.sessionManager.GetCurrentSession().TryChangePlaybackPositionAsync(newpos));
                 IsDragging = false;
                 SongProgressBar.IsFocusEngaged = false;
             }
@@ -168,10 +182,9 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long maxpos = long.Parse(Globals.sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
                 long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
-                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                await(Globals.sessionManager.GetCurrentSession().TryChangePlaybackPositionAsync(newpos));
                 IsDragging = false;
                 SongProgressBar.IsFocusEngaged = false;
             }
@@ -185,10 +198,9 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                long maxpos = long.Parse((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
+                long maxpos = long.Parse(Globals.sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.Ticks.ToString());
                 long newpos = (long)(Math.Round((SongProgressBar.Value / 100) * maxpos));
-                await(await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().TryChangePlaybackPositionAsync(newpos);
+                await (Globals.sessionManager.GetCurrentSession().TryChangePlaybackPositionAsync(newpos));
                 IsDragging = false;
                 SongProgressBar.IsFocusEngaged = false;
             }
@@ -198,8 +210,19 @@ namespace CompanionDisplayWinUI
             }
         }
         private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-";
-        private float LastVol = -2;
+
+        private void VolumeBar_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            IsManipulative = true;
+        }
+
+        private void VolumeBar_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            IsManipulative = false;
+        }
+
         private bool LastSpotifyCheck = false;
+        private BitmapImage bitmapImage;
         private async void UpdateUI()
         {
             try
@@ -260,7 +283,7 @@ namespace CompanionDisplayWinUI
                     LastSpotifyCheck = Globals.IsSpotify;
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (Globals.IsSpotify == true)
+                        if (Globals.IsSpotify)
                         {
                             SpotifyLogo.Visibility = Visibility.Visible;
                         }
@@ -270,28 +293,11 @@ namespace CompanionDisplayWinUI
                         }
                     });
                 }
-                try
-                {
-                    MMDeviceEnumerator DevEnum = new(Guid.NewGuid());
-                    using (var defaultPlaybackDevice = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
-                    {
-                        if (LastVol != defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar)
-                        {
-                            LastVol = defaultPlaybackDevice.AudioEndpointVolume.MasterVolumeLevelScalar;
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                VolumeCur = LastVol * 100;
-                                VolumeBar.Value = VolumeCur;
-                            });
-                        }
-                    }
-                }
-                catch { }
             }
             catch
             {
             }
-            if (Globals.SongBackground != AlbumCoverCache)
+            if (Globals.SongBackground != AlbumCoverCache || !Globals.IsSpotify)
             {
                 if (Globals.IsSpotify == true)
                 {
@@ -313,19 +319,25 @@ namespace CompanionDisplayWinUI
                     {
                         if (Globals.SongName != SongTitleCache)
                         {
-                            GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                            GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 try
                                 {
-                                    AlbumCoverImg.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
+                                    AlbumCoverImg.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
                                     AlbumCoverCache = "";
-                                    SongTitleCache = songInfo.Title;
+                                    SongTitleCache = Globals.songInfo.Title;
                                 }
-                                catch (Exception e)
+                                catch
                                 {
-                                    SongTitle.Text = e.Message; 
+                                    SongTitle.Text = "No media playing"; 
+                                    SongInfo.Text = "";
+                                    SongLyrics.Text = "";
+                                    EndTime.Text = "00:00";
+                                    SongTitleCache = "";
+                                    LastDetail = "";
+                                    LastTitle = "";
+                                    LastLyric = "";
+                                    LastTime = "";
                                 }
                             });
                         }
@@ -337,7 +349,7 @@ namespace CompanionDisplayWinUI
             }
             try
             {
-                if ((await GlobalSystemMediaTransportControlsSessionManager.RequestAsync()).GetCurrentSession().GetPlaybackInfo().PlaybackStatus.ToString() == "Paused")
+                if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused)
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {

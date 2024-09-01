@@ -10,13 +10,54 @@
 
     <Grid>
         <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1.4*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <TextBlock Name="Time" Text="3:55" FontSize="72" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-            <TextBlock Name="Date" Text="22/4/2024" FontSize="36" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center"/>
-        </Grid>
+        <FlipView Background="Transparent" SelectedIndex="1">
+            <StackPanel Spacing="14">
+                <Grid>
+                    
+                    <ScrollView>
+                        <StackPanel Width="250" Height="120" x:Name="BTStackBattery" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,10,10,0"/>
+                    </ScrollView>
+                    <StackPanel Orientation="Vertical" Height="120" Margin="10,10,0,0">
+                        <TextBlock x:Name="FullDate" Text="Thursday, 8th August 2024" FontSize="16" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Light"/>
+                        <Grid Height="90">
+                            <TextBlock x:Name="TimeLeft" Text="--:--" FontSize="80" FontWeight="Thin" VerticalAlignment="Center"/>
+                        </Grid>
+                        
+                    </StackPanel>
+                </Grid>
+                <Grid>
+                    <GridView Margin="3,-19,0,0" HorizontalAlignment="Center">
+                        <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe701;" x:Name="WiFiToggle" Tapped="WiFiToggle_Tapped" IsEnabled="False" IsHitTestVisible="False"/>
+                        <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe702;" x:Name="BTToggle" Tapped="BTToggle_Tapped"  IsEnabled="False" IsHitTestVisible="False"/>
+                        <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe790;" x:Name="DarkModeToggle" Tapped="DarkModeToggle_Tapped"/>
+                        <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe74f;" x:Name="MuteToggle" Tapped="MuteToggle_Tapped"/>
+                        <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe709;" x:Name="AirPlaneToggle" Tapped="AirPlaneToggle_Tapped" IsHitTestVisible="False"/>
+                        <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe7e8;" x:Name="Shutdown" Tag="shutdown -s -t 0" Tapped="shutdown_Tapped"/>
+                        <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe777;" x:Name="Restart" Tag="shutdown -r -t 0" Tapped="shutdown_Tapped"/>
+                        <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe708;" x:Name="Suspend" Tag="%windir%\System32\rundll32.exe powrprof.dll,SetSuspendState 0,1,0" Tapped="shutdown_Tapped"/>
+                        <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe785;" x:Name="Lock" Tag="Rundll32.exe user32.dll,LockWorkStation" Tapped="shutdown_Tapped"/>
+                        <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xf3b1;" x:Name="Logoff" Tag="%windir%\System32\shutdown.exe -l" Tapped="shutdown_Tapped"/>
+                    </GridView>
+                </Grid>
+                <Grid Margin="7,-13,7,0" CornerRadius="4">
+                    <Rectangle HorizontalAlignment="Left" Width="487" Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3" Height="50" />
+                    <Image x:Name="Album" Height="50" Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left" Width="500" />
+                    <Rectangle Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="2"/>
+                    <Grid CornerRadius="3" Height="40" Margin="5,5,5,5" Width="40" HorizontalAlignment="Left">
+                        <Image x:Name="Album2"  Stretch="Fill" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                    </Grid>
+                    <TextBlock x:Name="SongTitle" Text="-" Margin="55,-3,90,0" VerticalAlignment="Center"/>
+                    <HyperlinkButton FontFamily="Segoe Fluent Icons" Content="&#xe893;" Margin="55,0,5,0" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{ThemeResource SystemBaseHighColor}" Tapped="HyperlinkButton_Tapped"/>
+                    <HyperlinkButton FontFamily="Segoe Fluent Icons" x:Name="PlayPause" Content="&#xe769;" Margin="55,0,45,0" Height="40" Width="40" VerticalAlignment="Center" HorizontalAlignment="Right" Foreground="{ThemeResource SystemBaseHighColor}" Tapped="PlayPause_Tapped"/>
+
+                </Grid>
+
+            </StackPanel>
+            <StackPanel VerticalAlignment="Center" Spacing="-10">
+                <TextBlock Name="Time" Text="--:--" FontSize="80" FontWeight="SemiLight" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock Name="Date" Text="--/--/----" FontSize="32" Grid.Row="1" FontWeight="Light" VerticalAlignment="Top" HorizontalAlignment="Center" />
+            </StackPanel>
+            <CalendarView Height="300" Width="500" Background="Transparent" SelectionMode="None"/>
+        </FlipView>
     </Grid>
 </Page>

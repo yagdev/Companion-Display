@@ -68,13 +68,13 @@ namespace CompanionDisplayWinUI
             }
             DispatcherQueue.TryEnqueue(() =>
             {
-                Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as Hardware;
+                Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as IHardware;
             });
         }
 
         private void FlipViewHW_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as Hardware;
+            Globals.CurrentHW = (FlipViewHW.SelectedItem as Frame).Tag as IHardware;
         }
     }
 }

@@ -65,11 +65,10 @@ namespace CompanionDisplayWinUI
                 string query = "";
                 try
                 {
-                    try
+                    if (sensor1.Hardware.Parent != null)
                     {
                         query = sensor1.Hardware.Parent.Name;
                     }
-                    catch { }
                     if ((Globals.CurrentHW == sensor1.Hardware || Globals.CurrentHW == sensor1.Hardware.Parent) && (double)sensor1.Value != LastValue)
                     {
                         LastValue = (double)sensor1.Value;

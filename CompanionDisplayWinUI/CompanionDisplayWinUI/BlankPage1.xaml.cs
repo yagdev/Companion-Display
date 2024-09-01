@@ -7,7 +7,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
-using NAudio.Gui;
 using Swan;
 using System;
 using System.Collections.Generic;
@@ -196,14 +195,6 @@ namespace CompanionDisplayWinUI
 
         private async void UpdateUI()
         {
-            if(Globals.IsAdmin)
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    BasicGridView.CanReorderItems = false;
-                    BasicGridView.CanDragItems = false;
-                });
-            }
             int i = 1;
             string WidgetOrder = "";
             try
@@ -387,6 +378,22 @@ namespace CompanionDisplayWinUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            if (Globals.IsAdmin || Globals.LockLayout)
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    BasicGridView.CanReorderItems = false;
+                    BasicGridView.CanDragItems = false;
+                });
+            }
+            else
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    BasicGridView.CanReorderItems = true;
+                    BasicGridView.CanDragItems = true;
+                });
+            }
             if (Globals.ResetHome)
             {
                 BasicGridView.Items.Clear();

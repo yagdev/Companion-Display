@@ -21,6 +21,12 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="BTLEIndividual.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="BTBatteryIndividual.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="AudioDevice.xaml">
       <SubType>Designer</SubType>
     </Page>

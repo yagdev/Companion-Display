@@ -7,9 +7,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Loaded="SpotifyBuiltin_Loaded">
 
     <Grid>
-        <WebView2 Name="SpotifyBuiltin" Source="https://open.spotify.com"/>
+        <WebView2 x:Name="SpotifyBuiltin"/>
     </Grid>
 </Page>

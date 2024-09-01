@@ -14,6 +14,6 @@
         <Image Height="30" Width="30" HorizontalAlignment="Left" Margin="10" Name="ProcessImage" Tapped="SysIcon_Tapped"/>
         <SymbolIcon Symbol="Volume" Height="30" Width="30" Margin="10" HorizontalAlignment="Left" Name="SysIcon" Tapped="SysIcon_Tapped"/>
         <TextBlock Margin="50,5,300,5" Text="-" VerticalAlignment="Center" Name="ProcessName"/>
-        <Slider Margin="190,5,10,5" VerticalAlignment="Center" Name="Volume" ValueChanged="Volume_ValueChanged"/>
+        <Slider Margin="190,5,10,5" VerticalAlignment="Center" Name="Volume" ValueChanged="Volume_ValueChanged" ManipulationStarting="Volume_ManipulationStarting" ManipulationCompleted="Volume_ManipulationCompleted" ManipulationMode="All"/>
     </Grid>
 </Page>

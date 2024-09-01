@@ -15,4 +15,5 @@
     <Color x:Key="SystemAccentColorLight1">#FF0078D7</Color>
     <Color x:Key="SystemAccentColorLight2">#FF0078D7</Color>
     <Color x:Key="SystemAccentColorLight3">#FF0078D7</Color>
+    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI Variable Display</FontFamily>
 </ResourceDictionary>

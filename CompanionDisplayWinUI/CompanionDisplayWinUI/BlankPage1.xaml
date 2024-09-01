@@ -8,12 +8,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
 
-    <Grid Margin="0,35,0,0">
+    <Grid>
         <Grid>
+            
             <TextBlock Name="Debug" Text="100" Height="20" VerticalAlignment="Top" Visibility="Collapsed"/>
-            <GridView SelectionMode="None" Margin="5,0,0,0" HorizontalAlignment="Center">
-                <GridView x:Name="BasicGridView" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch"/>
-            </GridView>
+            <ScrollViewer Margin="5,0,0,0" HorizontalAlignment="Stretch" >
+                <GridView x:Name="BasicGridView" Margin="0,35,0,0" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch"/>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>

@@ -23,6 +23,7 @@ using System.Net;
 using IWshRuntimeLibrary;
 using System.Net.Http;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System.Drawing.Text;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -64,7 +65,27 @@ namespace CompanionDisplayWinUI
             UpdateToggle.IsOn = Globals.IsBetaProgram;
             AddButtonToggle.IsOn = Globals.HideAddButton;
             StartupToggle.IsOn = Globals.LaunchOnStartup;
+            LockToggle.IsOn = Globals.LockLayout;
+            InstalledFontCollection fontCollection = new InstalledFontCollection();
+            foreach (var fontFamily in fontCollection.Families)
+            {
+                MenuFlyoutItem item = new MenuFlyoutItem();
+                item.Text = fontFamily.Name;
+                item.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(fontFamily.Name);
+                item.Click += MenuFlyoutItem_Click;
+                FontSelectorActually.Items.Add(item);
+            }
+            FontSelector.Content = App.CurrentFont();
             LoadFinish = true;
+        }
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            App.SetFont(new Microsoft.UI.Xaml.Media.FontFamily((sender as MenuFlyoutItem).Text));
+            FontSelector.Content = (sender as MenuFlyoutItem).Text;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+            mainframe.Navigate(typeof(BlankPage1));
+            mainframe.Navigate(typeof(BlankPage3));
         }
         private Frame mainframe;
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -124,6 +145,10 @@ namespace CompanionDisplayWinUI
                 Globals.ColorSchemeSelectAccentR = AccentColorPicker.Color.R;
                 Globals.ColorSchemeSelectAccentG = AccentColorPicker.Color.G;
                 Globals.ColorSchemeSelectAccentB = AccentColorPicker.Color.B;
+                if (Globals.InjectCustomAccent == 1)
+                {
+                    App.SetAccentColor(Color.FromArgb(255, (byte)Globals.ColorSchemeSelectAccentR, (byte)Globals.ColorSchemeSelectAccentG, (byte)Globals.ColorSchemeSelectAccentB));
+                }
                 Thread thread = new(Save_Settings);
                 thread.Start();
             }
@@ -134,21 +159,9 @@ namespace CompanionDisplayWinUI
             if(LoadFinish == true)
             {
                 string Theme = e.AddedItems[0].ToString();
-                switch (Theme)
-                {
-                    case "Acrylic":
-                        Globals.Backdrop = 0;
-                        break;
-                    case "Mica":
-                        Globals.Backdrop = 1;
-                        break;
-                    case "Image":
-                        Globals.Backdrop = 2;
-                        break;
-                }
+                Globals.Backdrop = BackdropSelect.SelectedIndex;
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
-                Globals.Backdrop = BackdropSelect.SelectedIndex;
                 Thread thread = new(Save_Settings);
                 thread.Start();
             }
@@ -193,7 +206,7 @@ namespace CompanionDisplayWinUI
             DispatcherQueue.TryEnqueue(() =>
             {
                 Globals.ResetHome = true;
-                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup;
+                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup + "\n" + Globals.LockLayout + "\n" + App.CurrentFont();
                 System.IO.File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
             });
         }
@@ -339,6 +352,23 @@ namespace CompanionDisplayWinUI
                         System.IO.File.Delete(shortcutAddress);
                     }
                     Globals.LaunchOnStartup = false;
+                }
+                Thread thread = new(Save_Settings);
+                thread.Start();
+            }
+        }
+
+        private void LockToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                if (LockToggle.IsOn)
+                {
+                    Globals.LockLayout = true;
+                }
+                else
+                {
+                    Globals.LockLayout = false;
                 }
                 Thread thread = new(Save_Settings);
                 thread.Start();

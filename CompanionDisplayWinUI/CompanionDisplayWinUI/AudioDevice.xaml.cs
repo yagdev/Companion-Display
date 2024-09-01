@@ -1,4 +1,5 @@
 using CoreAudio;
+using CoreAudio.Interfaces;
 using EmbedIO.Sessions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -30,28 +32,33 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private int LastCount = 0, IsVisible = 0;
+        private int IsVisible = 0;
         private bool FTU = true;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            UpdateUI();
             IsVisible = 1;
             device = (this.Parent as Frame).Tag as MMDevice;
+            device.AudioSessionManager2.OnSessionCreated += NewSesh;
             if (FTU)
             {
                 FTU = false;
-                Thread thread = new(UpdateUI);
-                thread.Start();
+                var t = Task.Run(() => UpdateUI());
+                t.Wait();
             }
-            Thread thread0 = new(Count);
-            thread0.Start();
         }
-        private void UpdateUI()
+        private void NewSesh(object sender, IAudioSessionControl2 newSession)
+        {
+            UpdateUI();
+        }
+        private async Task UpdateUI()
         {
             try
             {
-                using (device)
+                device.AudioSessionManager2.RefreshSessions();
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    try
                     {
                         SessionController.Children.Clear();
                         Frame frame0 = new()
@@ -61,55 +68,35 @@ namespace CompanionDisplayWinUI
                         };
                         frame0.Navigate(typeof(IndividualAudioControl));
                         SessionController.Children.Add(frame0);
-                        LastCount = 0;
-                        foreach (var session in device.AudioSessionManager2.Sessions)
+                        if (device.AudioSessionManager2.Sessions != null)
                         {
-                            Frame frame = new()
+                            foreach (var session in device.AudioSessionManager2.Sessions)
                             {
-                                Tag = session
-                            };
-                            frame.Navigate(typeof(IndividualAudioControl));
-                            SessionController.Children.Add(frame);
-                            LastCount++;
+                                Frame frame = new()
+                                {
+                                    Tag = session
+                                };
+                                frame.Navigate(typeof(IndividualAudioControl));
+                                SessionController.Children.Add(frame);
+                            }
                         }
-                    });
-                }
+                    }
+                    catch { }
+                });
             }
             catch
             {
-                LastCount = -1;
             }
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                device.AudioSessionManager2.OnSessionCreated -= NewSesh;
+            }
+            catch { }
             IsVisible = 0;
         }
         private MMDevice device;
-        private void Count()
-        {
-            try
-            {
-                using (device)
-                {
-                    device.AudioSessionManager2.RefreshSessions();
-                    if (device.AudioSessionManager2.Sessions.Count != LastCount || LastCount == -1)
-                    {
-                        Thread thread = new(UpdateUI);
-                        thread.Start();
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-            if(IsVisible == 1)
-            {
-                Thread.Sleep(1000);
-                Thread thread1 = new(Count);
-                thread1.Start();
-            }
-            
-        }
     }
 }

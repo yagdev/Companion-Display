@@ -17,14 +17,14 @@ using Windows.Media.Control;
 using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Web;
+using Windows.Foundation;
 
 namespace CompanionDisplayWinUI
 {
     class PlayerSpotify
     {
-        private string Toki, TokiA, TokiO, TokiRefresh, TokiRefresh2, Authy, Authy2, Toki2, TitleSongOffline, ReleaseDate, LyricCache, Title, AlbumName, SongTitleReloadedAlgo, AlbumCoverBase2, ArtistBase2, Lyrics, SongID, SongIDCache, SongIDCache2, timestamp, timestamp2, StringDetail, LastLyric;
+        private string Toki, TokiA, TokiO, TokiRefresh, TokiRefresh2, Authy, Authy2, Toki2, TitleSongOffline, ReleaseDate, LyricCache, AlbumName, SongTitleReloadedAlgo, AlbumCoverBase2, ArtistBase2, Lyrics, SongID, SongIDCache, SongIDCache2, timestamp, timestamp2, StringDetail, LastLyric;
         string LyricsProvider = "";
-        string Lyrics2 = "";
         private TimeSpan ts, ts2;
         private int currenttimestamp = 0, endtimestamp = 0, startshit = 0;
         public const byte VK_MEDIA_PLAY_PAUSE = 179, VK_MEDIA_NEXT = 176, VK_MEDIA_PREV = 177;
@@ -72,8 +72,9 @@ namespace CompanionDisplayWinUI
                 return result;
             return result + random.Next(16).ToString("X");
         }
-        public void Page_Loaded()
+        public async void Page_Loaded()
         {
+            Globals.sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
             if (File.Exists(Globals.MediaConfigFile))
             {
                 string config = File.ReadAllText(Globals.MediaConfigFile);
@@ -126,33 +127,34 @@ namespace CompanionDisplayWinUI
             Thread thread5 = new(PreStart);
             thread5.Start();
         }
-        public async void OfflinePlayer()
+        public async Task OfflinePlayer()
         {
             try
             {
-                client.ClearPresence();
+                if(client.CurrentPresence != null)
+                {
+                    client.ClearPresence();
+                }
             }
             catch
             {
             }
             try
             {
-                GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
-                if (TitleSongOffline != songInfo.Title)
+                if (Globals.IsSpotify)
                 {
-                    Globals.BackgroundChanged = true;
-                    TitleSongOffline = songInfo.Title;
+                    Globals.IsSpotify = false;
+                    Globals.sessionManager.CurrentSessionChanged -= OnCurrentSessionChanged;
+                    Globals.sessionManager.CurrentSessionChanged += OnCurrentSessionChanged;
                 }
-                Globals.IsSpotify = false;
-                Globals.SongName = songInfo.Title;
-                Globals.SongDetails = songInfo.Artist;
-                Globals.SongLyrics = songInfo.AlbumTitle;
-                TimeSpan timeSpan = TimeSpan.FromMilliseconds(sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds);
-                TimeSpan timeSpan2 = TimeSpan.FromMilliseconds(sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds);
-                Globals.SongTime = timeSpan.ToString(@"mm\:ss");
-                Globals.SongEnd = timeSpan2.ToString(@"mm\:ss");
-                Globals.SongProgress = sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds / sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds * 100.0;
+                else
+                {
+                    TimeSpan timeSpan = TimeSpan.FromMilliseconds(Globals.sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds);
+                    TimeSpan timeSpan2 = TimeSpan.FromMilliseconds(Globals.sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds);
+                    Globals.SongTime = timeSpan.ToString(@"mm\:ss");
+                    Globals.SongEnd = timeSpan2.ToString(@"mm\:ss");
+                    Globals.SongProgress = Globals.sessionManager.GetCurrentSession().GetTimelineProperties().Position.TotalMilliseconds / Globals.sessionManager.GetCurrentSession().GetTimelineProperties().EndTime.TotalMilliseconds * 100.0;
+                }
             }
             catch
             {
@@ -160,26 +162,43 @@ namespace CompanionDisplayWinUI
         }
         private JObject responsedecode;
         private SpotifyClient spotify;
-        public void PerformLyricShit()
+        private async void OnCurrentSessionChanged(GlobalSystemMediaTransportControlsSessionManager sender, CurrentSessionChangedEventArgs args)
         {
+            try
+            {
+                var currentSession = sender.GetCurrentSession();
+                if (currentSession != null)
+                {
+                    Globals.songInfo = await Globals.sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
+                    if (TitleSongOffline != Globals.songInfo.Title)
+                    {
+                        Globals.BackgroundChanged = true;
+                        TitleSongOffline = Globals.songInfo.Title;
+                    }
+                    Globals.SongName = Globals.songInfo.Title;
+                    Globals.SongDetails = Globals.songInfo.Artist;
+                    Globals.SongLyrics = Globals.songInfo.AlbumTitle;
+                }
+            }
+            catch { }
+            
+        }
+        private async Task ActuallyDoShit()
+        {
+            System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
             if (startshit == 1)
             {
                 try
                 {
                     LyricCache = "";
-                    if(spotify == null)
+                    if (spotify == null)
                     {
                         spotify = new(Toki);
                     }
                     spotify.Player.GetCurrentlyPlaying(request2);
                     try
                     {
-                        using (HttpClient client2 = new(new SocketsHttpHandler
-                        {
-                            ConnectTimeout = TimeSpan.FromSeconds(5.0),
-                            KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0),
-                            EnableMultipleHttp2Connections = false
-                        }))
+                        using (HttpClient client2 = new(new SocketsHttpHandler() { ConnectTimeout = TimeSpan.FromSeconds(2.0), KeepAlivePingTimeout = TimeSpan.FromSeconds(5.0), EnableMultipleHttp2Connections = false }))
                         {
                             string url = "https://api.spotify.com/v1/me/player/currently-playing";
                             client2.DefaultRequestHeaders.Clear();
@@ -188,12 +207,15 @@ namespace CompanionDisplayWinUI
                             {
                                 try
                                 {
-                                    Title = response.Result.ToString();
-                                    Globals.SpotifyFullStatus = Title;
-                                    if (Title.Contains("https://api.spotify.com/v1/tracks/") && Title.Contains("\"is_playing\" : true"))
+                                    if (responsedecode != null)
+                                    {
+                                        responsedecode.RemoveAll();
+                                    }
+                                    if (response.Result.ToString().Contains("https://api.spotify.com/v1/tracks/") && response.Result.ToString().Contains("\"is_playing\" : true"))
                                     {
                                         Globals.IsSpotify = true;
-                                        responsedecode = JObject.Parse(Title);
+                                        Globals.sessionManager.CurrentSessionChanged -= OnCurrentSessionChanged;
+                                        responsedecode = JObject.Parse(response.Result.ToString());
                                         SongID = responsedecode["item"]["id"].ToString();
                                         SongTitleReloadedAlgo = responsedecode["item"]["name"].ToString();
                                         timestamp2 = responsedecode["item"]["duration_ms"].ToString();
@@ -220,10 +242,9 @@ namespace CompanionDisplayWinUI
                                                         using (var reader2 = new StringReader(Lyrics))
                                                         {
                                                         startchicanery:
-                                                            Lyrics2 = reader2.ReadLine();
+                                                            string Lyrics2 = reader2.ReadLine();
                                                             if (Lyrics2.Contains("startTimeMs"))
                                                             {
-
                                                                 Lyrics2 = Lyrics2.Remove(0, 15);
                                                                 Lyrics2 = Lyrics2.Remove(Lyrics2.Length - 2, 2);
                                                                 int lyrictimestamp = int.Parse(Lyrics2);
@@ -298,7 +319,7 @@ namespace CompanionDisplayWinUI
                                                 LyricCache = "";
                                             }
                                         }
-                                        else if (!Title.Contains("\"progress_ms\" : 0"))
+                                        else if (!response.Result.ToString().Contains("\"progress_ms\" : 0"))
                                         {
                                             try
                                             {
@@ -317,7 +338,7 @@ namespace CompanionDisplayWinUI
                                                     Lyrics = Lyrics.Replace("{", "{\n");
                                                     using (var reader2 = new StringReader(Lyrics))
                                                     {
-                                                        Lyrics2 = reader2.ReadLine();
+                                                        string Lyrics2 = reader2.ReadLine();
                                                     startchicanery:
                                                         if (Lyrics2.Contains("startTimeMs"))
                                                         {
@@ -387,7 +408,7 @@ namespace CompanionDisplayWinUI
                                                         {
                                                             throw new MusixMatchToken(string.Format("Error"));
                                                         }
-                                                        string songidmxm = (string)JObject.Parse(idresult)["message"]["body"]["track"]["track_id"];
+                                                        string songidmxm = JObject.Parse(idresult)["message"]["body"]["track"]["track_id"].ToString();
                                                         string toHash = "https://apic.musixmatch.com/ws/1.1/macro.subtitles.get?tags=playing&f_subtitle_length_max_deviation=1&subtitle_format=mxm&page_size=1&track_id=" + songidmxm + "&usertoken=" + Globals.MusixMatchToken + "&app_id=android-player-v1.0&country=pt&language_iso_code=1&format=json" + DateTime.Now.ToString("yyyyMMdd");
                                                         byte[] toHashBytes = Encoding.UTF8.GetBytes(toHash);
                                                         using (HMACSHA1 hmac = new(keyBytes))
@@ -399,6 +420,7 @@ namespace CompanionDisplayWinUI
                                                         using (Task<string> response2 = client2.GetStringAsync(toHash))
                                                         {
                                                             string lyricsformat = response2.Result.Replace("track.subtitles.get", "track_subtitles_get").Replace("track.lyrics.get", "track_lyrics_get").Replace("track.snippet.get", "track_snippet_get");
+                                                            responsedecode = null;
                                                             responsedecode = JObject.Parse(lyricsformat);
                                                             string totalstring = responsedecode["message"]["body"]["macro_calls"]["track_subtitles_get"]["message"]["body"]["subtitle_list"][0]["subtitle"]["subtitle_body"].ToString().Replace("\",", "\",\n").Replace("[", "").Replace("]", "").Replace("{", "").Replace("}", "").Replace(",\"", ",\n\"");
                                                             Lyrics = totalstring.ToString();
@@ -465,6 +487,7 @@ namespace CompanionDisplayWinUI
                                                     {
                                                         Thread thread4 = new(RefreshToken);
                                                         thread4.Start();
+                                                        ex2.Data.Clear();
                                                     }
                                                     Exception nn2 = ex2;
                                                     nn2.Data.Clear();
@@ -533,9 +556,8 @@ namespace CompanionDisplayWinUI
                                     }
                                     else
                                     {
-                                        client.ClearPresence();
-                                        Thread thread3 = new(OfflinePlayer);
-                                        thread3.Start();
+                                        var t = Task.Run(() => OfflinePlayer());
+                                        t.Wait();
                                     }
                                 }
                                 catch
@@ -558,8 +580,6 @@ namespace CompanionDisplayWinUI
                         throw new Exception();
                     }
                     Thread.Sleep(1000);
-                    Thread thread2 = new(PerformLyricShit);
-                    thread2.Start();
                 }
                 catch
                 {
@@ -573,17 +593,20 @@ namespace CompanionDisplayWinUI
                         Toki = TokiO;
                     }
                     Thread.Sleep(30000);
-                    Thread thread3 = new(PerformLyricShit);
-                    thread3.Start();
                 }
             }
             else
             {
-                Thread thread = new(OfflinePlayer);
-                thread.Start();
+                var t = Task.Run(() => OfflinePlayer());
+                t.Wait();
                 Thread.Sleep(1000);
-                Thread thread2 = new(PerformLyricShit);
-                thread2.Start();
+            }
+        }
+        public async void PerformLyricShit()
+        {
+            while (Globals.StartedPlayer)
+            {
+                await ActuallyDoShit();
             }
         }
         public class MusixMatchToken(string message) : Exception(message)
@@ -604,34 +627,36 @@ namespace CompanionDisplayWinUI
                 else
                 {
                     SpotifyClientConfig config = SpotifyClientConfig.CreateDefault();
-                    EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543);
-                    server.AuthorizationCodeReceived += async delegate (object sender, AuthorizationCodeResponse response)
+                    using(EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543))
                     {
-                        AuthorizationCodeTokenResponse tokenResponse = await new OAuthClient(config).RequestToken(new AuthorizationCodeTokenRequest(Globals._clientId, Globals._secretId, response.Code, BaseUri));
-                        await server.Stop();
-                        TokiO = tokenResponse.AccessToken;
-                        TokiRefresh = tokenResponse.RefreshToken;
-                        Globals.RefreshToken = tokenResponse.RefreshToken;
-                        File.WriteAllText(Globals.RefreshTokenPath, tokenResponse.RefreshToken);
-                        if (Globals._clientId2 != "" && Globals._secretId2 != "")
+                        server.AuthorizationCodeReceived += async delegate (object sender, AuthorizationCodeResponse response)
                         {
-                            Thread thread5 = new(InitializeB);
-                            thread5.Start();
-                        }
-                        else
+                            AuthorizationCodeTokenResponse tokenResponse = await new OAuthClient(config).RequestToken(new AuthorizationCodeTokenRequest(Globals._clientId, Globals._secretId, response.Code, BaseUri));
+                            await server.Stop();
+                            TokiO = tokenResponse.AccessToken;
+                            TokiRefresh = tokenResponse.RefreshToken;
+                            Globals.RefreshToken = tokenResponse.RefreshToken;
+                            File.WriteAllText(Globals.RefreshTokenPath, tokenResponse.RefreshToken);
+                            if (Globals._clientId2 != "" && Globals._secretId2 != "")
+                            {
+                                Thread thread5 = new(InitializeB);
+                                thread5.Start();
+                            }
+                            else
+                            {
+                                Thread thread3 = new(PerformLyricShit);
+                                thread3.Start();
+                                Thread thread4 = new(RefreshAPI);
+                                thread4.Start();
+                            }
+                        };
+                        await server.Start();
+                        LoginRequest loginRequest = new(server.BaseUri, Globals._clientId, LoginRequest.ResponseType.Code)
                         {
-                            Thread thread3 = new(PerformLyricShit);
-                            thread3.Start();
-                            Thread thread4 = new(RefreshAPI);
-                            thread4.Start();
-                        }
-                    };
-                    await server.Start();
-                    LoginRequest loginRequest = new(server.BaseUri, Globals._clientId, LoginRequest.ResponseType.Code)
-                    {
-                        Scope = ["user-read-currently-playing", "user-read-playback-state", "user-read-recently-played"]
-                    };
-                    BrowserUtil.Open(loginRequest.ToUri());
+                            Scope = ["user-read-currently-playing", "user-read-playback-state", "user-read-recently-played"]
+                        };
+                        BrowserUtil.Open(loginRequest.ToUri());
+                    }
                 }
                 Toki = TokiO;
             }
@@ -657,7 +682,6 @@ namespace CompanionDisplayWinUI
                 }
                 else
                 {
-                    
                     SpotifyClientConfig config = SpotifyClientConfig.CreateDefault();
                     using (EmbedIOAuthServer server = new(new Uri("http://localhost:5543/callback"), 5543))
                     {

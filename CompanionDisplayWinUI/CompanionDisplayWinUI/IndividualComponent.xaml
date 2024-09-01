@@ -11,7 +11,7 @@
     <Grid Margin="10">
         <TextBlock Name="ComponentType" Text="-" FontSize="30"/>
         <ScrollViewer Margin="0,45,0,0">
-            <StackPanel Name="ComponentSensorStack" Padding="10" Spacing="2">
+            <StackPanel Name="ComponentSensorStack" Spacing="2">
                 <TextBlock Name="NoSensorsWarning" Text="No Sensors Detected&#x0a;Try runnning Companion Display as an administrator." Foreground="{StaticResource SystemBaseMediumColor}" TextWrapping="Wrap" HorizontalAlignment="Center" HorizontalTextAlignment="Center" FontSize="30" Height="150" VerticalAlignment="Top" Visibility="Collapsed"/>
             </StackPanel>
         </ScrollViewer>

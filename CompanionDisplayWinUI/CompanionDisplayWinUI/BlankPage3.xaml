@@ -10,7 +10,7 @@
 
     <ScrollViewer Name="MainScroll" Padding="10,35,10,0">
         <StackPanel Spacing="10">
-            <TextBlock Text="Settings" FontSize="28" Padding="0" FontFamily="Segoe Variable Display" FontWeight="SemiBold"/>
+            <TextBlock Text="Settings" FontSize="28" Padding="0" FontWeight="SemiBold"/>
             <Expander HorizontalAlignment="Stretch"
      IsExpanded="False"
      ExpandDirection="Down"
@@ -73,6 +73,15 @@
                                 </Expander>
                             </StackPanel>
                         </Expander>
+                        <Grid>
+                            <TextBlock Text="Global font" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                            <DropDownButton Name="FontSelector" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                                <DropDownButton.Flyout>
+                                    <MenuFlyout x:Name="FontSelectorActually" Placement="Bottom">
+                                    </MenuFlyout>
+                                </DropDownButton.Flyout>
+                            </DropDownButton>
+                        </Grid>
                     </StackPanel>
                 </Expander.Content>
             </Expander>
@@ -85,6 +94,10 @@
                     <Grid>
                         <TextBlock Text="Hide Add Widget Button" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                         <ToggleSwitch Name="AddButtonToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="AddButtonToggle_Toggled" Margin="0,0,-110,0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Lock Layout" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <ToggleSwitch Name="LockToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="LockToggle_Toggled" Margin="0,0,-110,0"/>
                     </Grid>
                     <Grid>
                         <TextBlock Text="Launch on startup" HorizontalAlignment="Left" VerticalAlignment="Center"/>

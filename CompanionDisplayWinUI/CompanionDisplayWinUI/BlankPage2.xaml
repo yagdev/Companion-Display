@@ -20,6 +20,6 @@
         <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,58,0" FontFamily="Segoe Fluent Icons" Content="&#xe896;" HorizontalAlignment="Right" Click="Button_Click_3"/>
         <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,5,0" FontFamily="Segoe Fluent Icons" Content="&#xf738;" HorizontalAlignment="Right" Click="Button_Click_4"/>
         <TextBox Name="AddressBar" VerticalAlignment="Top" Height="30" Margin="164,4,111,0" FontFamily="Segoe UI Variable Display" HorizontalAlignment="Stretch" KeyDown="AddressBar_KeyDown" Padding="10,5,10,0" PlaceholderText="Search or insert URL" GotFocus="AddressBar_GotFocus"/>
-        <WebView2 Name="WebView" Grid.Row="2" Source="https://www.google.com/" NavigationCompleted="WebView_NavigationCompleted" Loaded="WebView_Loaded" KeyDown="WebView_KeyDown"/>
+        <WebView2 x:Name="WebView" Grid.Row="2" NavigationCompleted="WebView_NavigationCompleted" KeyDown="WebView_KeyDown"/>
     </Grid>
 </Page>

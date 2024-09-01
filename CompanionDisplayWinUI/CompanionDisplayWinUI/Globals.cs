@@ -1,5 +1,6 @@
 ﻿using LibreHardwareMonitor.Hardware;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Media.Control;
 
 namespace CompanionDisplayWinUI
 {
@@ -14,7 +16,7 @@ namespace CompanionDisplayWinUI
     {
         // Runtime variables
         public static bool IsAdmin = false;
-        public static string Version = "24.8.1";
+        public static string Version = "24.9";
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";
         public static string UpdateZipBeta = "https://www.dropbox.com/scl/fi/8h4099g1nstwe1f208so2/release.zip?rlkey=82gxpdb44ifafe26kn0pt3of4&st=neai1gxx&dl=1";
@@ -28,7 +30,6 @@ namespace CompanionDisplayWinUI
         public static string MusixMatchToken = "";
         public static string RefreshToken = "";
         public static string RefreshToken2 = "";
-        public static string SpotifyFullStatus = "";
         public static string SongID = "";
         public static bool ClearTab = false;
         public static string SongName, SongDetails, SongLyrics, SongTime, SongEnd, SongBackground;
@@ -39,8 +40,10 @@ namespace CompanionDisplayWinUI
         public static bool InjectedCustomAccent = false;
         public static bool ImageFailed = false;
         public static string LastWebPage = "";
-        public static Hardware CurrentHW;
+        public static IHardware CurrentHW;
         public static bool ResetHome = true;
+        public static GlobalSystemMediaTransportControlsSessionManager sessionManager;
+        public static GlobalSystemMediaTransportControlsSessionMediaProperties songInfo;
         // App config files
         public static string RefreshTokenPath = "Config/RefreshToken.crlh";
         public static string RefreshToken2Path = "Config/RefreshToken2.crlh";
@@ -59,6 +62,7 @@ namespace CompanionDisplayWinUI
         public static int Backdrop = 0;
         public static string BackgroundLink = "";
         public static string Wallpaper = "";
+        public static string FontFamily = "";
         public static bool Blur = true;
         public static bool StealFocus = false;
         public static bool IgnoreUpdates = false;
@@ -67,5 +71,6 @@ namespace CompanionDisplayWinUI
         public static bool IsBetaProgram = false;
         public static bool HideAddButton = false;
         public static bool LaunchOnStartup = false;
+        public static bool LockLayout = false;
     }
 }

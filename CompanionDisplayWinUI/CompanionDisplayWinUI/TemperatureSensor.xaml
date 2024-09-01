@@ -6,17 +6,18 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded" Height="35">
 
     <Grid>
         <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
-        <ProgressRing Name="TempProgress" Width="30" Height="30" Value="0" HorizontalAlignment="Right" Margin="0,0,10,0" 
-IsIndeterminate="False"
-Background="LightGray"/>
+        
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Temperature" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0"/>
             <TextBlock Name="SensorName"  Text="-" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="{ThemeResource SystemBaseMediumColor}"/>
         </StackPanel>
-        <TextBlock Name="LoadPercent" Text="-ºC" FontSize="20" VerticalAlignment="Center" Margin="0,0,50,0" HorizontalAlignment="Right"/>
+        <TextBlock Name="LoadPercent" Text="-ºC" FontSize="20" VerticalAlignment="Center" Margin="0,0,40,0" HorizontalAlignment="Right"/>
+        <ProgressRing Name="TempProgress" Width="25" Height="25" Value="0" HorizontalAlignment="Right" Margin="0,0,5,0" 
+IsIndeterminate="False"
+Background="LightGray"/>
     </Grid>
 </Page>

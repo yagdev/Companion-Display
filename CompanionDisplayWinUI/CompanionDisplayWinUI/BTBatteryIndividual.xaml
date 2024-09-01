@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.BTBatteryIndividual"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded">
+
+    <StackPanel Orientation="Horizontal" Height="25" Spacing="5" FlowDirection="RightToLeft">
+        <TextBlock x:Name="BattIcon" Width="25" Height="25" FontFamily="Segoe Fluent Icons" Text="&#xe83f;" FontSize="20" Margin="3,2,-4,0"/>
+        <TextBlock x:Name="Percentage" Width="35" VerticalAlignment="Center" Text="-%" Margin="0,-3,0,0"/>
+        <TextBlock x:Name="DevName" Width="160" FlowDirection="LeftToRight" VerticalAlignment="Center" Text="-" Margin="0,-3,0,0"/>
+        <TextBlock x:Name="DevIcon" VerticalAlignment="Center" Margin="0,0,0,-5" FontFamily="Segoe Fluent Icons" Text="&#xe702;" Width="20" Height="20"/>
+    </StackPanel>
+</Page>

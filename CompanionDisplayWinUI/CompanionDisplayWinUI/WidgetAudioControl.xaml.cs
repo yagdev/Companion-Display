@@ -1,4 +1,3 @@
-using CoreAudio;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -14,6 +13,7 @@ using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using CoreAudio;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,22 +34,20 @@ namespace CompanionDisplayWinUI
         {
             if (FTU)
             {
-                MMDeviceEnumerator DevEnum = new MMDeviceEnumerator(Guid.NewGuid());
-                using(MMDevice device = DevEnum.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia))
+                MMDeviceEnumerator DevEnum = new MMDeviceEnumerator();
+                var device = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+                foreach (var endpoint in DevEnum.EnumerateAudioEndPoints(EDataFlow.eRender, DEVICE_STATE.DEVICE_STATE_ACTIVE))
                 {
-                    foreach (var endpoint in DevEnum.EnumerateAudioEndPoints(DataFlow.Render, DeviceState.Active))
-                    {
-                        MenuFlyoutItem item = new MenuFlyoutItem();
-                        item.Text = endpoint.DeviceFriendlyName;
-                        item.Tag = endpoint;
-                        item.Click += MenuFlyoutItem_Click;
-                        ListOfDevices.Items.Add(item);
-                    }
-                    CurrentDevice.Content = device.DeviceFriendlyName;
-                    DeviceView.Tag = device;
-                    DeviceView.Navigate(typeof(AudioDevice));
-                    FTU = false;
+                    MenuFlyoutItem item = new MenuFlyoutItem();
+                    item.Text = endpoint.FriendlyName;
+                    item.Tag = endpoint;
+                    item.Click += MenuFlyoutItem_Click;
+                    ListOfDevices.Items.Add(item);
                 }
+                CurrentDevice.Content = device.FriendlyName;
+                DeviceView.Tag = device;
+                DeviceView.Navigate(typeof(AudioDevice));
+                FTU = false;
             }
         }
 

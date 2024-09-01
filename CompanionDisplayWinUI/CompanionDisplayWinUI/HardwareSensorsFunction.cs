@@ -38,10 +38,14 @@ namespace CompanionDisplayWinUI
         };
         public void Init()
         {
-            computer.Open();
-            computer.Accept(new UpdateVisitor());
-            Thread thread = new(UpdateSensor);
-            thread.Start();
+            try
+            {
+                computer.Open();
+                computer.Accept(new UpdateVisitor());
+                Thread thread = new(UpdateSensor);
+                thread.Start();
+            }
+            catch { }
         }
         public void UpdateSensor() 
         {

@@ -36,9 +36,9 @@ namespace CompanionDisplayWinUI
             {
                 var environmentOptions = new CoreWebView2EnvironmentOptions();
                 environmentOptions.AreBrowserExtensionsEnabled = true;
-                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync(null, null, environmentOptions);
+                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
                 await SpotifyBuiltin.EnsureCoreWebView2Async(environment);
-                await SpotifyBuiltin.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.57.2_0"));
+                await SpotifyBuiltin.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
                 SpotifyBuiltin.Source = new Uri("https://open.spotify.com/");
                 FTU = false;
             }

@@ -41,8 +41,8 @@ namespace CompanionDisplayWinUI
         /// </summary>
         public App()
         {
-            bool isElevated;
             System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+            bool isElevated;
             using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
             {
                 WindowsPrincipal principal = new(identity);
@@ -73,6 +73,8 @@ namespace CompanionDisplayWinUI
                 Globals.IsBetaProgram = bool.Parse(readerconfig.ReadLine());
                 Globals.HideAddButton = bool.Parse(readerconfig.ReadLine());
                 Globals.LaunchOnStartup = bool.Parse(readerconfig.ReadLine());
+                Globals.LockLayout = bool.Parse(readerconfig.ReadLine());
+                Globals.FontFamily = readerconfig.ReadLine();
             }
             catch
             {
@@ -119,6 +121,10 @@ namespace CompanionDisplayWinUI
                         SetAccentColor(Color.FromArgb(255, (byte)Globals.ColorSchemeSelectAccentR, (byte)Globals.ColorSchemeSelectAccentG, (byte)Globals.ColorSchemeSelectAccentB));
                         break;
                 }
+                if (Globals.FontFamily != "")
+                {
+                    SetFont(new Microsoft.UI.Xaml.Media.FontFamily(Globals.FontFamily));
+                }
             }
             catch
             {
@@ -143,6 +149,17 @@ namespace CompanionDisplayWinUI
             customResourceDictionary["SystemAccentColorDark1"] = color;
             customResourceDictionary["SystemAccentColorDark2"] = color;
             Application.Current.Resources = customResourceDictionary;
+        }
+        public static void SetFont(FontFamily fontFamily)
+        {
+            var customResourceDictionary = Application.Current.Resources;
+            customResourceDictionary["ContentControlThemeFontFamily"] = fontFamily;
+            Application.Current.Resources = customResourceDictionary;
+        }
+        public static string CurrentFont()
+        {
+            var customResourceDictionary = Application.Current.Resources;
+            return (customResourceDictionary["ContentControlThemeFontFamily"] as FontFamily).Source;
         }
         public static void RevertToSystemAccentColor()
         {

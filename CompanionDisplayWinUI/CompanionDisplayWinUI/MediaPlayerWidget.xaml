@@ -13,7 +13,7 @@
             <RowDefinition/>
             <RowDefinition Height="153"/>
         </Grid.RowDefinitions>
-        <Image Name="AlbumCoverImg" Margin="0,0,0,0" Stretch="Fill" Grid.RowSpan="2"/>
+        <Image Name="AlbumCoverImg" Margin="0,0,0,0" Grid.RowSpan="2" Stretch="UniformToFill"/>
         <Rectangle Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="2"/>
         <Grid Margin="1,54,0,0" Height="89" VerticalAlignment="Top" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -31,13 +31,18 @@
         <TextBlock x:Name="SongInfo" Text="-" Margin="10,65,10,0" FontSize="32" Height="45" VerticalAlignment="Top" Padding="0,0,0,0"/>
         <TextBlock Text="-" x:Name="SongLyrics" Margin="10,100,10,0" FontSize="32" VerticalAlignment="Top"/>
         <Image x:Name="Album" Margin="10,10,0,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114"/>
-        <Grid Margin="65,0,65,103" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost">
-            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Bottom"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
+        <Grid Margin="67,20,67,103" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost" VerticalAlignment="Bottom">
+            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
         </Grid>
-        <TextBlock x:Name="CurrentTime" Text="01:53" Margin="10,0,0,99" FontSize="20" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="1" />
-        <TextBlock x:Name="EndTime" Text="02:26" Margin="0,0,10,99" FontSize="20" Height="36" VerticalAlignment="Bottom" HorizontalAlignment="Right" Grid.Row="1" />
+        <Grid Margin="10,0,0,99" VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Row="1" Height="36">
+            <TextBlock x:Name="CurrentTime" Text="--:--" FontSize="20"  VerticalAlignment="Center" />
+        </Grid>
+        <Grid Margin="0,0,10,99" VerticalAlignment="Bottom" Height="36" HorizontalAlignment="Right" Grid.Row="1">
+            <TextBlock x:Name="EndTime" Text="--:--" FontSize="20"  VerticalAlignment="Center"/>
+        </Grid>
+        
         <Image x:Name="SpotifyLogo" Margin="0,20,10,0" Source="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" HorizontalAlignment="Right" Width="50" Height="50" VerticalAlignment="Top"/>
-        <Slider x:Name="VolumeBar" Margin="30,0,35,124" Maximum="100" SmallChange="1" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Grid.Row="0" Grid.RowSpan="2" ValueChanged="VolumeBar_ValueChanged" />
+        <Slider x:Name="VolumeBar" Margin="30,0,35,124" Maximum="100" SmallChange="1" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Grid.Row="0" Grid.RowSpan="2" ValueChanged="VolumeBar_ValueChanged" ManipulationCompleted="VolumeBar_ManipulationCompleted" ManipulationStarting="VolumeBar_ManipulationStarting" ManipulationMode="All"/>
         <TextBlock Text="&#xE993;" FontFamily="Segoe Fluent Icons" FontSize="20" RenderTransformOrigin="0.5,0.5" Padding="0,0,0,0" HorizontalAlignment="Left" Width="14" Height="24" VerticalAlignment="Bottom" Margin="10,0,0,126" Grid.Row="1" />
         <TextBlock Text="&#xE994;" FontFamily="Segoe Fluent Icons" FontSize="20" Margin="0,0,10,126" RenderTransformOrigin="0.5,0.5" Padding="0,0,0,0" HorizontalAlignment="Right" Width="17" Height="24" VerticalAlignment="Bottom" Grid.Row="1" />
     </Grid>

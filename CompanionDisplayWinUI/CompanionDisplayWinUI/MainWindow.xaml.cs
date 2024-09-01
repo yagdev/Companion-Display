@@ -24,7 +24,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI;
 using Windows.Media.Control;
 using Windows.UI;
-using Microsoft.Web.WebView2.Core;
 using Windows.UI.WebUI;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -65,7 +64,7 @@ namespace CompanionDisplayWinUI
                 IntPtr hWnd = WindowNative.GetWindowHandle(this);
                 switch (args.SelectedItemContainer.Tag.ToString())
                 {
-                    case "Musixmatch":
+                    case "SecretStuff":
                         contentFrame.Navigate(typeof(MusixmatchIntegrationProto), null, args.RecommendedNavigationTransitionInfo);
                         SetWindowLong(hWnd, -20, 256);
                         break;
@@ -94,6 +93,7 @@ namespace CompanionDisplayWinUI
         }
         private void Window_Closed(object sender, WindowEventArgs args)
         {
+            Globals.StartedPlayer = false;
             Environment.Exit(0);
         }
         string SongTitleCache = "";
@@ -120,17 +120,15 @@ namespace CompanionDisplayWinUI
                 {
                     try
                     {
-                        GlobalSystemMediaTransportControlsSessionManager sessionManager = await GlobalSystemMediaTransportControlsSessionManager.RequestAsync();
-                        GlobalSystemMediaTransportControlsSessionMediaProperties songInfo = await sessionManager.GetCurrentSession().TryGetMediaPropertiesAsync();
-                        if (SongTitleCache != songInfo.Title)
+                        if (SongTitleCache != Globals.songInfo.Title)
                         {
                             DispatcherQueue.TryEnqueue(() =>
                             {
                                 try
                                 {
                                     BackgroundImage.Source = null;
-                                    BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(songInfo.Thumbnail);
-                                    SongTitleCache = songInfo.Title;
+                                    BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
+                                    SongTitleCache = Globals.songInfo.Title;
                                 }
                                 catch
                                 {

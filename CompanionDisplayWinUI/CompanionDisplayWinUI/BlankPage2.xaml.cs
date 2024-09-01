@@ -160,9 +160,20 @@ namespace CompanionDisplayWinUI
 
             }
         }
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddressBar.Focus(FocusState.Programmatic);
+            if (FTU)
+            {
+                var environmentOptions = new CoreWebView2EnvironmentOptions();
+                environmentOptions.AreBrowserExtensionsEnabled = true;
+                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
+                await WebView.EnsureCoreWebView2Async(environment);
+                WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
+                WebView.Source = new Uri("https://www.google.com/");
+                WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+                FTU = false;
+            }
         }
         private bool FTU = true;
         public void ClearBrowser()
@@ -172,27 +183,6 @@ namespace CompanionDisplayWinUI
                 WebView.Close();
             });
             
-        }
-        private async void WebView_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (FTU)
-            {
-                var environmentOptions = new CoreWebView2EnvironmentOptions
-                {
-                    AreBrowserExtensionsEnabled = true
-                };
-                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", userDataFolder: null, environmentOptions);
-                await WebView.EnsureCoreWebView2Async(environment);
-                await WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.57.2_0"));
-                WebView.Source = new Uri("https://www.google.com/");
-                WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-                FTU = false;
-            }
-        }
-        public CoreWebView2 ReturnNewCoreWebView2Tab()
-        {
-            //WebView.EnsureCoreWebView2Async();
-            return WebView.CoreWebView2;
         }
         private void CoreWebView2_NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
         {

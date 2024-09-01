@@ -1,4 +1,5 @@
 using CoreAudio;
+using CoreAudio.Interfaces;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -50,6 +51,7 @@ namespace CompanionDisplayWinUI
                     try
                     {
                         mDevice = (this.Parent as Frame).Tag as MMDevice;
+                        mDevice.AudioEndpointVolume.OnVolumeNotification += UpdateVolStuff;
                         Volume.Value = mDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
                         SysIcon.Visibility = Visibility.Visible;
                         ProcessName.Text = "Master Volume";
@@ -65,6 +67,8 @@ namespace CompanionDisplayWinUI
                     try
                     {
                         audio = (this.Parent as Frame).Tag as AudioSessionControl2;
+                        audio.OnStateChanged += RemoveSesh;
+                        audio.OnSimpleVolumeChanged += VolumeChanged;
                         Volume.Value = audio.SimpleAudioVolume.MasterVolume * 100;
                         if (audio.IsSystemSoundsSession)
                         {
@@ -73,10 +77,10 @@ namespace CompanionDisplayWinUI
                         }
                         else
                         {
-                            using (var p = Process.GetProcessById((int)audio.ProcessID)) { ProcessName.Text = p.ProcessName; }
+                            using (var p = Process.GetProcessById((int)audio.GetProcessID)) { ProcessName.Text = p.ProcessName; }
                             SysIcon.Visibility = Visibility.Collapsed;
                         }
-                        using (var process = Process.GetProcessById((int)audio.ProcessID))
+                        using (var process = Process.GetProcessById((int)audio.GetProcessID))
                         using (Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(process.MainModule.FileName))
                         using (Bitmap bitmap = icon.ToBitmap())
                         using (MemoryStream iconStream = new())
@@ -95,121 +99,34 @@ namespace CompanionDisplayWinUI
                 }
                 IsStarted = true;
             }
-            Thread thread = new(UpdateUI);
-            thread.Start();
-        }
-        private void UpdateUI()
-        {
-            if (IsGlobal)
-            {
-                using (mDevice)
-                {
-                    if (mDevice.AudioEndpointVolume.MasterVolumeLevelScalar != LastValue)
-                    {
-                        LastValue = mDevice.AudioEndpointVolume.MasterVolumeLevelScalar;
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            Volume.Value = mDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100;
-                            if (mDevice.AudioEndpointVolume.Mute == true)
-                            {
-                                SysIcon.Symbol = Symbol.Mute;
-                            }
-                            else
-                            {
-                                SysIcon.Symbol = Symbol.Volume;
-                            }
-                        });
-                    }
-                }
-            }
-            else
-            {
-                using (audio)
-                {
-                    if (audio.SimpleAudioVolume.MasterVolume != LastValue)
-                    {
-                        LastValue = audio.SimpleAudioVolume.MasterVolume;
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            Volume.Value = audio.SimpleAudioVolume.MasterVolume * 100;
-                            if (audio.SimpleAudioVolume.Mute == true)
-                            {
-                                if (!audio.IsSystemSoundsSession)
-                                {
-                                    SysIcon.Visibility = Visibility.Visible;
-                                    ProcessImage.Visibility = Visibility.Collapsed;
-                                }
-                                SysIcon.Symbol = Symbol.Mute;
-                            }
-                            else
-                            {
-                                if (!audio.IsSystemSoundsSession)
-                                {
-                                    SysIcon.Visibility = Visibility.Collapsed;
-                                    ProcessImage.Visibility = Visibility.Visible;
-                                }
-                                SysIcon.Symbol = Symbol.Volume;
-                            }
-                        });
-                    }
-                }
-            }
-            if (IsVisible)
-            {
-                Thread.Sleep(1000);
-                Thread thread = new(UpdateUI);
-                thread.Start();
-            }
-        }
-        private void Volume_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (IsStarted)
-            {
-                if (IsGlobal)
-                {
-                    using (mDevice)
-                    {
-                        mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(Volume.Value / 100);
-                    }
-                }
-                else
-                {
-                    using (mDevice)
-                    {
-                        audio.SimpleAudioVolume.MasterVolume = (float)(Volume.Value / 100);
-                    }
-                }
-            }
         }
 
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        private void UpdateVolStuff(AudioVolumeNotificationData data)
         {
-
-        }
-
-        private void SysIcon_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            if(ProcessName.Text == "Master Volume")
+            if (!IsManipulative)
             {
-                using (mDevice)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (mDevice.AudioEndpointVolume.Mute == false)
+                    Volume.Value = data.MasterVolume * 100;
+                    if (data.Muted)
                     {
                         SysIcon.Symbol = Symbol.Mute;
-                        mDevice.AudioEndpointVolume.Mute = true;
                     }
                     else
                     {
                         SysIcon.Symbol = Symbol.Volume;
-                        mDevice.AudioEndpointVolume.Mute = false;
                     }
-                }
+                });
             }
-            else
+        }
+        private void VolumeChanged(object sender, float newVolume, bool newMute)
+        {
+            if (!IsManipulative)
             {
-                using (audio)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (audio.SimpleAudioVolume.Mute == false)
+                    Volume.Value = newVolume * 100;
+                    if (newMute)
                     {
                         if (!audio.IsSystemSoundsSession)
                         {
@@ -217,7 +134,6 @@ namespace CompanionDisplayWinUI
                             ProcessImage.Visibility = Visibility.Collapsed;
                         }
                         SysIcon.Symbol = Symbol.Mute;
-                        audio.SimpleAudioVolume.Mute = true;
                     }
                     else
                     {
@@ -227,8 +143,101 @@ namespace CompanionDisplayWinUI
                             ProcessImage.Visibility = Visibility.Visible;
                         }
                         SysIcon.Symbol = Symbol.Volume;
-                        audio.SimpleAudioVolume.Mute = false;
                     }
+                });
+            }
+        }
+        private bool Updating = false;
+        private void RemoveSesh(object sender, AudioSessionState state)
+        {
+            if (state == AudioSessionState.AudioSessionStateExpired)
+            {
+                Updating = true;
+                audio.OnStateChanged -= RemoveSesh;
+                audio.Dispose();
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    try
+                    {
+                        (((this as IndividualAudioControl).Parent as Frame).Parent as StackPanel).Children.Remove((this as IndividualAudioControl).Parent as Frame);
+                    }
+                    catch { }
+                });
+            }
+        }
+        private bool IsManipulative = false;
+        private void Volume_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        {
+            if (IsStarted && IsManipulative)
+            {
+                if (IsGlobal)
+                {
+                    mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)(Volume.Value / 100);
+                }
+                else
+                {
+                    audio.SimpleAudioVolume.MasterVolume = (float)(Volume.Value / 100);
+                }
+            }
+        }
+
+        private void Volume_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
+        {
+            IsManipulative = true;
+        }
+
+        private void Volume_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            IsManipulative = false;
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                mDevice.AudioEndpointVolume.OnVolumeNotification -= UpdateVolStuff;
+                audio.OnStateChanged -= RemoveSesh;
+                audio.OnSimpleVolumeChanged -= VolumeChanged;
+            }
+            catch { }
+        }
+
+        private void SysIcon_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if(ProcessName.Text == "Master Volume")
+            {
+                if (mDevice.AudioEndpointVolume.Mute == false)
+                {
+                    SysIcon.Symbol = Symbol.Mute;
+                    mDevice.AudioEndpointVolume.Mute = true;
+                }
+                else
+                {
+                    SysIcon.Symbol = Symbol.Volume;
+                    mDevice.AudioEndpointVolume.Mute = false;
+                }
+            }
+            else
+            {
+                if (audio.SimpleAudioVolume.Mute == false)
+                {
+                    if (!audio.IsSystemSoundsSession)
+                    {
+                        SysIcon.Visibility = Visibility.Visible;
+                        ProcessImage.Visibility = Visibility.Collapsed;
+                    }
+                    SysIcon.Symbol = Symbol.Mute;
+                    audio.SimpleAudioVolume.Mute = true;
+                }
+                else
+                {
+                    if (!audio.IsSystemSoundsSession)
+                    {
+                        SysIcon.Visibility = Visibility.Collapsed;
+                        ProcessImage.Visibility = Visibility.Visible;
+                    }
+                    SysIcon.Symbol = Symbol.Volume;
+                    audio.SimpleAudioVolume.Mute = false;
                 }
             }
         }

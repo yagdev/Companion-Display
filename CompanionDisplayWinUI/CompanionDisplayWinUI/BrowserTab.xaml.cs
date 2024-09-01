@@ -100,14 +100,5 @@ namespace CompanionDisplayWinUI
                 }
             });
         }
-        public CoreWebView2 CreateTab()
-        {
-            var tab = CreateNewTVI("New Tab", "New Tab");
-            BrowserTabs.TabItems.Add(tab);
-            BrowserTabs.SelectedItem = tab;
-            var nt = tab.Content as BlankPage2;
-            CoreWebView2 coreWebView2 = nt.ReturnNewCoreWebView2Tab();
-            return coreWebView2;
-        }
     }
 }

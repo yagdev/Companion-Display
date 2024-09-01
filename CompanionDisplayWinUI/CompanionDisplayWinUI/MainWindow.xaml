@@ -23,6 +23,7 @@
                 <NavigationViewItem Icon="Home" Content="Home" Tag="SamplePage1" x:Name="HomeItem"/>
                 <NavigationViewItem Icon="Globe" Content="Internet" Tag="SamplePage2" x:Name="BrowserPage"/>
                 <NavigationViewItem Icon="MusicInfo" Content="Spotify" Tag="SamplePage3" x:Name="SpotifyBuiltInPage"/>
+                <!--<NavigationViewItem Icon="ReportHacked" Content="Secret Stuff" Tag="SecretStuff" x:Name="SecretStuff"/>-->
             </NavigationView.MenuItems>
             <Frame x:Name="contentFrame" Margin="0,0,0,0" IsEnabledChanged="ContentFrame_IsEnabledChanged"/>
         </NavigationView>
