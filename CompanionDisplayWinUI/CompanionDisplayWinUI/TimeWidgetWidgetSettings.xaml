@@ -9,11 +9,10 @@
     mc:Ignorable="d" Width="500" Height="300">
 
     <Grid>
-        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
         <Grid>
             <TextBlock Text="Time Widget Settings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
-            <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,105" ShowsScrollingPlaceholders="False">
-                <StackPanel Spacing="2" Width="500">
+            <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,55" ShowsScrollingPlaceholders="False">
+                <StackPanel Spacing="2" Width="500" >
                     <TextBlock Text="Time Color" FontSize="22"/>
                     <ColorPicker Name="TimeColorPicker" HorizontalAlignment="Center" ColorSpectrumShape="Ring" IsColorPreviewVisible="False" IsMoreButtonVisible="True" IsColorSliderVisible="True" IsColorChannelTextInputVisible="True" IsHexInputVisible="True" IsAlphaEnabled="False" IsAlphaSliderVisible="False" IsAlphaTextInputVisible="True" Margin="30,0,0,0"/>
                     <TextBlock Text="Date Color" FontSize="22"/>
@@ -21,9 +20,18 @@
                 </StackPanel>
             </GridView>
             <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Restore Defaults" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_3"/>
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Cancel" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Save" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button Height="45" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" Content="Restore Defaults" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_3"/>
+                    <Button Height="45" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="0,0,1,0" Content="Cancel" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                    <Button Height="45" Grid.Column="2" HorizontalAlignment="Stretch" Margin="1,0,0,0" VerticalAlignment="Top" Content="Save" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                </Grid>
+                
             </StackPanel>
         </Grid>
     </Grid>

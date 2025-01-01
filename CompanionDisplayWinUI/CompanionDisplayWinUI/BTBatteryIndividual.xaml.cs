@@ -110,7 +110,7 @@ $Message
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
             }
             Thread.Sleep(10000);
@@ -169,81 +169,88 @@ $Message
         GattCharacteristic batteryLevelCharacteristic;
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (FTU)
+            try
             {
-                Name = (this.Parent as Frame).Name;
-                DevName.Text = Name;
-                if ((this.Parent as Frame).Tag as BluetoothLEDevice != null)
+                if (FTU)
                 {
-                    device = (this.Parent as Frame).Tag as BluetoothLEDevice;
-                    DevName.Text = device.Name;
-                    var batteryService = device.GetGattServicesForUuidAsync(GattServiceUuids.Battery).GetResults();
-                    var service = batteryService.Services.FirstOrDefault();
-                    // Get the Battery Level Characteristic
-                    var characteristics = await service.GetCharacteristicsForUuidAsync(GattCharacteristicUuids.BatteryLevel);
-                    batteryLevelCharacteristic = characteristics.Characteristics.FirstOrDefault();
-                    // Read the Battery Level
-                    var result = await batteryLevelCharacteristic.ReadValueAsync();
-                    batteryLevelCharacteristic.ValueChanged -= PercentageChanged;
-                    batteryLevelCharacteristic.ValueChanged += PercentageChanged;
-                    if (result.Status == GattCommunicationStatus.Success)
+                    Name = (this.Parent as Frame).Name;
+                    DevName.Text = Name;
+                    if ((this.Parent as Frame).Tag as BluetoothLEDevice != null)
                     {
-                        var reader = DataReader.FromBuffer(result.Value);
-                        string percentage = reader.ReadByte().ToString();
-                        Percentage.Text = percentage + "%";
-                        int DevBattery = int.Parse(percentage);
-                        string DevBatteryIcon = "%";
-                        switch (DevBattery)
+                        device = (this.Parent as Frame).Tag as BluetoothLEDevice;
+                        DevName.Text = device.Name;
+                        var batteryService = device.GetGattServicesForUuidAsync(GattServiceUuids.Battery).GetResults();
+                        var service = batteryService.Services.FirstOrDefault();
+                        // Get the Battery Level Characteristic
+                        var characteristics = await service.GetCharacteristicsForUuidAsync(GattCharacteristicUuids.BatteryLevel);
+                        batteryLevelCharacteristic = characteristics.Characteristics.FirstOrDefault();
+                        // Read the Battery Level
+                        var result = await batteryLevelCharacteristic.ReadValueAsync();
+                        batteryLevelCharacteristic.ValueChanged -= PercentageChanged;
+                        batteryLevelCharacteristic.ValueChanged += PercentageChanged;
+                        if (result.Status == GattCommunicationStatus.Success)
                         {
-                            case >= 0 and < 10:
-                                DevBatteryIcon = "\ue850";
-                                break;
-                            case >= 10 and < 20:
-                                DevBatteryIcon = "\ue851";
-                                break;
-                            case >= 20 and < 30:
-                                DevBatteryIcon = "\ue852";
-                                break;
-                            case >= 30 and < 40:
-                                DevBatteryIcon = "\ue853";
-                                break;
-                            case >= 40 and < 50:
-                                DevBatteryIcon = "\ue854";
-                                break;
-                            case >= 50 and < 60:
-                                DevBatteryIcon = "\ue855";
-                                break;
-                            case >= 60 and < 70:
-                                DevBatteryIcon = "\ue856";
-                                break;
-                            case >= 70 and < 80:
-                                DevBatteryIcon = "\ue857";
-                                break;
-                            case >= 80 and < 90:
-                                DevBatteryIcon = "\ue858";
-                                break;
-                            case >= 90 and < 100:
-                                DevBatteryIcon = "\ue859";
-                                break;
-                            case 100:
-                                DevBatteryIcon = "\ue83f";
-                                break;
+                            var reader = DataReader.FromBuffer(result.Value);
+                            string percentage = reader.ReadByte().ToString();
+                            Percentage.Text = percentage + "%";
+                            int DevBattery = int.Parse(percentage);
+                            string DevBatteryIcon = "%";
+                            switch (DevBattery)
+                            {
+                                case >= 0 and < 10:
+                                    DevBatteryIcon = "\ue850";
+                                    break;
+                                case >= 10 and < 20:
+                                    DevBatteryIcon = "\ue851";
+                                    break;
+                                case >= 20 and < 30:
+                                    DevBatteryIcon = "\ue852";
+                                    break;
+                                case >= 30 and < 40:
+                                    DevBatteryIcon = "\ue853";
+                                    break;
+                                case >= 40 and < 50:
+                                    DevBatteryIcon = "\ue854";
+                                    break;
+                                case >= 50 and < 60:
+                                    DevBatteryIcon = "\ue855";
+                                    break;
+                                case >= 60 and < 70:
+                                    DevBatteryIcon = "\ue856";
+                                    break;
+                                case >= 70 and < 80:
+                                    DevBatteryIcon = "\ue857";
+                                    break;
+                                case >= 80 and < 90:
+                                    DevBatteryIcon = "\ue858";
+                                    break;
+                                case >= 90 and < 100:
+                                    DevBatteryIcon = "\ue859";
+                                    break;
+                                case 100:
+                                    DevBatteryIcon = "\ue83f";
+                                    break;
+                            }
+                            BattIcon.Text = DevBatteryIcon;
                         }
-                        BattIcon.Text = DevBatteryIcon;
+                        else
+                        {
+                            ((this.Parent as Frame).Parent as StackPanel).Children.Remove((this.Parent) as Frame);
+                        }
                     }
                     else
                     {
-                        ((this.Parent as Frame).Parent as StackPanel).Children.Remove((this.Parent) as Frame);
+                        Thread thread = new(UpdateUI);
+                        thread.Start();
                     }
+                    FTU = false;
                 }
                 else
                 {
-                    Thread thread = new(UpdateUI);
-                    thread.Start();
+                    batteryLevelCharacteristic.ValueChanged -= PercentageChanged;
                 }
-                FTU = false;
             }
-            
+            catch { }
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {

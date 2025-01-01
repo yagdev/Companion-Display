@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Web.WebView2.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,17 @@ namespace CompanionDisplayWinUI
     {
         // Runtime variables
         public static bool IsAdmin = false;
-        public static string Version = "24.9";
+        public static string Version = "25.1";
+        public static ObsControls obsControls = new ObsControls();
+        public static CoreWebView2 CoreWebView2 = null;
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";
         public static string UpdateZipBeta = "https://www.dropbox.com/scl/fi/8h4099g1nstwe1f208so2/release.zip?rlkey=82gxpdb44ifafe26kn0pt3of4&st=neai1gxx&dl=1";
         public static string UpdateStringBeta = "https://www.dropbox.com/scl/fi/u2kkpucxvyg49467gje7b/release.txt?rlkey=1mvr3uz4e9wmhefhkrz8x6cjy&st=s97sjllw&dl=1";
         public static string DiscordID = "";
         public static string SP_DC = "";
+        public static string[] Lyrics;
+        public static int currentLyric = 0;
         public static string _clientId = "";
         public static string _secretId = "";
         public static string _clientId2 = "";
@@ -30,25 +35,31 @@ namespace CompanionDisplayWinUI
         public static string MusixMatchToken = "";
         public static string RefreshToken = "";
         public static string RefreshToken2 = "";
+        public static string obsIP = "ws://127.0.0.1:4455";
+        public static string obsPass = "";
         public static string SongID = "";
         public static bool ClearTab = false;
-        public static string SongName, SongDetails, SongLyrics, SongTime, SongEnd, SongBackground;
+        public static string SongName, SongDetails, SongLyrics, SongTime, SongEnd, SongBackground, AlbumName;
         public static bool BackgroundChanged, IsSpotify, StartedPlayer = false;
         public static double SongProgress;
         public static int currenttimestamp;
         public static bool IsAllApps = false;
         public static bool InjectedCustomAccent = false;
         public static bool ImageFailed = false;
-        public static string LastWebPage = "";
         public static IHardware CurrentHW;
         public static bool ResetHome = true;
         public static GlobalSystemMediaTransportControlsSessionManager sessionManager;
+        public static GlobalSystemMediaTransportControlsSession currentSession;
         public static GlobalSystemMediaTransportControlsSessionMediaProperties songInfo;
+        public static GlobalSystemMediaTransportControlsSessionTimelineProperties timelineInfo;
+        public static GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo;
+        public static int PiPAmount = 0;
         // App config files
         public static string RefreshTokenPath = "Config/RefreshToken.crlh";
         public static string RefreshToken2Path = "Config/RefreshToken2.crlh";
         public static string MediaConfigFile = "Config/MediaConfig.crlh";
         public static string TimeConfigFile = "Config/TimeConfig.crlh";
+        public static string TimeConfigFileQS = "Config/TimeConfigQS.crlh";
         public static string PhotoConfigFile = "Config/PhotoConfig.crlh";
         // Loaded Configs
         public static int ColorSchemeSelect = 0;
@@ -72,5 +83,12 @@ namespace CompanionDisplayWinUI
         public static bool HideAddButton = false;
         public static bool LaunchOnStartup = false;
         public static bool LockLayout = false;
+        public static double sleepModeOpacity = 10;
+        public static bool OverrideColor = false;
+        public static int SleepColorR = 0;
+        public static int SleepColorG = 0;
+        public static int SleepColorB = 0;
+        public static int NewTabBehavior = 0;
+        public static Uri SearchEngine = new Uri("https://www.google.com");
     }
 }

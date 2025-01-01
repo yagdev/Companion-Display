@@ -5,16 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Page_Loaded"
     mc:Ignorable="d">
-    <StackPanel x:Name="Test">
-        <Button Content="Pick Font" Click="Button_Click"/>
-        <DropDownButton Name="CurrentDevice" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Content="Select Audio Device">
-            <DropDownButton.Flyout>
-                <MenuFlyout x:Name="ListOfDevices" Placement="Bottom">
-                </MenuFlyout>
-            </DropDownButton.Flyout>
-        </DropDownButton>
-        <TextBlock x:Name="SampleTextBlock" Text="This is an example text block" TextWrapping="Wrap"/>
+    <StackPanel>
+        <FlipView Width="500" Height="300">
+            <Frame Height="300" Width="500" x:Name="Stack1"/>
+            <Frame Height="300" Width="500" x:Name="Stack2"/>
+            <Frame Height="300" Width="500" x:Name="Stack3"/>
+        </FlipView>
     </StackPanel>
 </Page>

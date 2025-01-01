@@ -4,6 +4,7 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
+using System.Web;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -28,19 +30,17 @@ namespace CompanionDisplayWinUI
     public sealed partial class BlankPage2 : Page
     {
         public Frame frame;
-        public BlankPage2()
+        public BlankPage2(Uri link)
         {
+            linkLoad = link;
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             if (this.Tag as string == "Unload")
             {
                 WebView.Close();
             }
-            if (Globals.LastWebPage != "")
-            {
-                WebView.Source = new Uri(Globals.LastWebPage);
-            }
         }
+        public Uri linkLoad;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             WebView.GoBack();
@@ -53,7 +53,7 @@ namespace CompanionDisplayWinUI
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            WebView.Source = new Uri("https://www.google.com/");
+            WebView.Source = Globals.SearchEngine;
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -88,15 +88,21 @@ namespace CompanionDisplayWinUI
                 }
                 else if (AddressBar.Text.Length > 3 && AddressBar.Text.Remove(0, 1).Contains('.') && AddressBar.Text.Remove(AddressBar.Text.Length - 2, 2).Contains('.') && AddressBar.Text.Contains(' ') == false)
                 {
-                    WebView.Source = new Uri("https://" + AddressBar.Text);
+                    try
+                    {
+                        WebView.Source = new System.Uri("https://" + AddressBar.Text);
+                    }
+                    catch
+                    {
+                        WebView.Source = new System.Uri(Globals.SearchEngine + "/search?q=" + HttpUtility.UrlEncode(AddressBar.Text));
+                    }
                 }
                 else
                 {
-                    WebView.Source = new Uri("https://www.google.com/search?q=" + AddressBar.Text.Replace(" ", "+"));
+                    WebView.Source = new Uri(Globals.SearchEngine + "/search?q=" + HttpUtility.UrlEncode(AddressBar.Text));
                 }
                 WebView.Focus(FocusState.Programmatic);
             }
-
         }
         private bool fullScreen = false;
         public bool FullScreen
@@ -140,7 +146,6 @@ namespace CompanionDisplayWinUI
                 {
                     AddressBar.SelectAll();
                 }
-                Globals.LastWebPage = WebView.Source.ToString();
             }
             catch { }
         }
@@ -163,17 +168,6 @@ namespace CompanionDisplayWinUI
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddressBar.Focus(FocusState.Programmatic);
-            if (FTU)
-            {
-                var environmentOptions = new CoreWebView2EnvironmentOptions();
-                environmentOptions.AreBrowserExtensionsEnabled = true;
-                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
-                await WebView.EnsureCoreWebView2Async(environment);
-                WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
-                WebView.Source = new Uri("https://www.google.com/");
-                WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
-                FTU = false;
-            }
         }
         private bool FTU = true;
         public void ClearBrowser()
@@ -207,6 +201,35 @@ namespace CompanionDisplayWinUI
 
         private void WebView_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+        }
+
+        private async void WebView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (FTU)
+            {
+                var environmentOptions = new CoreWebView2EnvironmentOptions();
+                environmentOptions.AreBrowserExtensionsEnabled = true;
+                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
+                await WebView.EnsureCoreWebView2Async(environment);
+                WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
+                if (linkLoad != null)
+                {
+                    WebView.Source = linkLoad;
+                }
+                else
+                {
+                    if (Globals.NewTabBehavior == 1)
+                    {
+                        WebView.Source = new Uri("about:blank");
+                    }
+                    else
+                    {
+                        WebView.Source = Globals.SearchEngine;
+                    }
+                }
+                WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+                FTU = false;
+            }
         }
     }
 }

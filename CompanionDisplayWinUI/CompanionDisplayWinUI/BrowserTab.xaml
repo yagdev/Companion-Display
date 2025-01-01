@@ -6,7 +6,7 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-    mc:Ignorable="d" >
+    mc:Ignorable="d" Background="{ThemeResource CustomAcrylicInAppLuminosity}" Loaded="Page_Loaded">
 
     <Page.Resources>
         <!-- Custom Style for TabView -->
@@ -121,13 +121,26 @@
             </Setter>
         </Style>
     </Page.Resources>
+
     <Grid>
-        <TextBlock Text="No Tabs" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Opacity="0.7"/>
+        
+        <ScrollViewer>
+            <Grid>
+                <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="Transparent" RightTapped="GridView_RightTapped" />
+                <StackPanel Margin="0,40,0,0" VerticalAlignment="Center" Spacing="25">
+                    <TextBox Name="AddressBar" Height="50" PlaceholderText="Search or insert URL" MinWidth="300" Padding="15,15,0,0" KeyDown="AddressBar_KeyDown"/>
+                    <Grid>
+                        <GridView Name="Launchpad" VerticalAlignment="Center" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsCompleted="Launchpad_LayoutUpdated" LayoutUpdated="Launchpad_LayoutUpdated_1"/>
+                        <TextBlock Name="NoItem" IsHitTestVisible="False" Text="No Items. Right click me to edit Launchpad." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Opacity="0.7" TextWrapping="Wrap" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
         <TabView x:Name="BrowserTabs"
-                         VerticalAlignment="Stretch"
-             AddTabButtonClick="Tabs_AddTabButtonClick"
-             TabCloseRequested="Tabs_TabCloseRequested"
-                         CanReorderTabs="True" >
+                 VerticalAlignment="Stretch"
+     AddTabButtonClick="Tabs_AddTabButtonClick"
+     TabCloseRequested="Tabs_TabCloseRequested"
+                 CanReorderTabs="True" >
             <TabView.TabStripHeader>
                 <Grid x:Name="ShellTitleBarInset" Background="Transparent"/>
             </TabView.TabStripHeader>

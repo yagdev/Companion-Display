@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="CompanionDisplayWinUI.LyricsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Closed="Window_Closed">
+
+    <Grid Margin="0,00,0,0" Loaded="Grid_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Visible" ImageOpened="BackgroundImage_ImageOpened" Grid.RowSpan="3"/>
+        <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity2}" Grid.RowSpan="3" Visibility="Visible"/>
+        <Grid Margin="65,70,65,0" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost" VerticalAlignment="Top">
+            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
+        </Grid>
+        <Grid Margin="20,66,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="1" Height="36">
+            <TextBlock x:Name="CurrentTime" Text="--:--" FontSize="16"  VerticalAlignment="Center" />
+        </Grid>
+        <Grid Margin="0,66,20,0" VerticalAlignment="Top" Height="36" HorizontalAlignment="Right" Grid.Row="1">
+            <TextBlock x:Name="EndTime" Text="--:--" FontSize="16"  VerticalAlignment="Center"/>
+        </Grid>
+        <StackPanel Margin="20" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Row="1">
+            <HyperlinkButton Content="&#xf8ad;" FontFamily="Segoe Fluent Icons" Tag="176" FontSize="15" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}" Height="50"/>
+            <HyperlinkButton x:Name="PlayPauseBtn" Tag="179" Content="&#xf8ae;" FontFamily="Segoe Fluent Icons" FontSize="25" Grid.Column="2" Margin="1,0,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
+            <HyperlinkButton Content="&#xf8ac;" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="15" Margin="1,0,1,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
+            <ToggleButton Width="50" Height="50" Grid.Row="2" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" FontFamily="Segoe Fluent Icons" Content="&#xece7;" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="10" VerticalAlignment="Top" Grid.Row="1" Margin="20">
+            <Grid HorizontalAlignment="Left" VerticalAlignment="Top" CornerRadius="5">
+                <Image x:Name="AlbumCoverImg" Width="50" Height="50" Margin="0"/>
+            </Grid>
+            <StackPanel VerticalAlignment="Center" >
+                <TextBlock x:Name="titleSong" Text="-" VerticalAlignment="Center"/>
+                <TextBlock x:Name="detailsSong" Text="-" VerticalAlignment="Center" Opacity="0.8"/>
+            </StackPanel>
+        </StackPanel>
+        <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,0,20,0" Grid.Row="2" >
+            <StackPanel x:Name="LyricsList">
+            </StackPanel>
+
+        </ScrollViewer>
+        <ToggleButton Content="&#xe718;" Margin="0,0,140,0" Height="32" FontSize="12" Width="30" VerticalAlignment="Top" Padding="0" HorizontalAlignment="Right" Background="Transparent" BorderBrush="Transparent" FontFamily="Segoe Fluent Icons" Checked="ToggleButton1_Checked" Unchecked="ToggleButton1_Unchecked" Grid.RowSpan="2"/>
+    </Grid>
+</Window>

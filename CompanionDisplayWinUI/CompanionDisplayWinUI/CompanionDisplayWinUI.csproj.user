@@ -21,6 +21,60 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="OBSStreamInfoWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ObsStreamControlsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ObsSceneControllerWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="LyricsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PopupWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PopOutPlayer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchUnbanWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchModActionsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchAutoModWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchActiveModsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchCollabWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchStreamHealthWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchStreamInfoWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchChatWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchActivityFeedWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchQuickActionsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="TwitchStreamMiniplayerWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SleepPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="BTLEIndividual.xaml">
       <SubType>Designer</SubType>
     </Page>

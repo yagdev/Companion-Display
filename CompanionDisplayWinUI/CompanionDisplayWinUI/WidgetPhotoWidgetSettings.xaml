@@ -9,7 +9,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded">
 
     <Grid>
-        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+        
         <Grid>
             <TextBlock Text="Photo Gallery Settings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
             <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,105">

@@ -34,15 +34,39 @@ namespace CompanionDisplayWinUI
         }
         private void Frame_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new();
-            MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-            MenuFlyoutItem secondItem = new() { Text = "Refresh", Name = senderElement.Name + "Edit" };
-            firstItem.Click += MenuFlyoutItem_Click;
-            secondItem.Click += MenuFlyoutEdit_Click;
-            myFlyout.Items.Add(firstItem);
-            myFlyout.Items.Add(secondItem);
-            myFlyout.ShowAt(senderElement, new Point(0, 0));
+            if ((this.Parent as Frame).Parent as Grid == null)
+            {
+                FrameworkElement senderElement = sender as FrameworkElement;
+                MenuFlyout myFlyout = new();
+                MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
+                MenuFlyoutItem secondItem = new() { Text = "Refresh", Name = senderElement.Name + "Edit" };
+                MenuFlyoutItem thirdItem = new() { Text = "Toggle Pin", Name = senderElement.Name + "Pin" };
+                MenuFlyoutItem fourthItem = new() { Text = "Picture in Picture", Name = senderElement.Name + "PiP" };
+                firstItem.Click += MenuFlyoutItem_Click;
+                secondItem.Click += MenuFlyoutEdit_Click;
+                thirdItem.Click += PinButton;
+                fourthItem.Click += PiPButton;
+                myFlyout.Items.Add(firstItem);
+                myFlyout.Items.Add(secondItem);
+                myFlyout.Items.Add(thirdItem);
+                myFlyout.Items.Add(fourthItem);
+                myFlyout.ShowAt(senderElement, new Point(0, 0));
+            }
+        }
+
+        private void PinButton(object sender, RoutedEventArgs e)
+        {
+            var frame = this.Parent as Frame;
+            frame.Tag = "pin";
+            frame.IsEnabled = false;
+            frame.IsEnabled = true;
+        }
+        private void PiPButton(object sender, RoutedEventArgs e)
+        {
+            var frame = this.Parent as Frame;
+            frame.Tag = "pip";
+            frame.IsEnabled = false;
+            frame.IsEnabled = true;
         }
         private void MenuFlyoutEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -53,7 +77,9 @@ namespace CompanionDisplayWinUI
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var frame = this.Parent as Frame;
+            frame.Tag = "";
             frame.IsEnabled = false;
+            frame.IsEnabled = true;
         }
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)

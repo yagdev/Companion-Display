@@ -9,7 +9,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded" Height="35">
 
     <Grid>
-        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+        
         <ProgressRing Name="TempProgress" Width="30" Height="30" Value="0" HorizontalAlignment="Right" Margin="0,0,10,0" 
 IsIndeterminate="False"
 Background="LightGray"/>

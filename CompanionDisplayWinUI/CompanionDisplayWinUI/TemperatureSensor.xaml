@@ -9,7 +9,7 @@
     mc:Ignorable="d" Loaded="Page_Loaded" Unloaded="Page_Unloaded" Height="35">
 
     <Grid>
-        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
+        
         
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="Temperature" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0"/>

@@ -55,8 +55,8 @@ namespace CompanionDisplayWinUI
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        Date.Text = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
                         FullDate.Text = DateOnly.FromDateTime(DateTime.Now).ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
+                        Date.Text = FullDate.Text;
                     });
                     DateStr = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
                 }
@@ -108,14 +108,14 @@ namespace CompanionDisplayWinUI
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            PlayPause.Content = "\ue768";
+                            PlayPause.Content = "\uf5b0";
                         });
                     }
                     else
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            PlayPause.Content = "\ue769";
+                            PlayPause.Content = "\uf8ae";
                         });
                     }
                 }
@@ -213,6 +213,29 @@ namespace CompanionDisplayWinUI
             {
 
             }
+            try
+            {
+                string config2 = File.ReadAllText(Globals.TimeConfigFileQS);
+                using StringReader readerconfig = new(config2);
+                WiFiToggleGrid.Tag = readerconfig.ReadLine();
+                BTToggleGrid.Tag = readerconfig.ReadLine();
+                DarkModeToggleGrid.Tag = readerconfig.ReadLine();
+                MuteToggleGrid.Tag = readerconfig.ReadLine();
+                AirPlaneToggleGrid.Tag = readerconfig.ReadLine();
+                ShutdownGrid.Tag = readerconfig.ReadLine();
+                RestartGrid.Tag = readerconfig.ReadLine();
+                SuspendGrid.Tag = readerconfig.ReadLine();
+                LockGrid.Tag = readerconfig.ReadLine();
+                LogoffGrid.Tag = readerconfig.ReadLine();
+                var sortedOrderItems = TogglesView.Items.OrderBy(item => (item as Grid).Tag).ToList();
+                // Clear the original collection and add the sorted items
+                TogglesView.Items.Clear();
+                foreach (var item in sortedOrderItems)
+                {
+                    TogglesView.Items.Add(item);
+                }
+            }
+            catch { }
             try
             {
                 if (FTU)
@@ -483,6 +506,45 @@ namespace CompanionDisplayWinUI
                     cmd.Start();
                 }
             }
+        }
+
+        private void Edit_Checked(object sender, RoutedEventArgs e)
+        {
+            Edit.Content = "\uf13e";
+            foreach(Grid grid in TogglesView.Items)
+            {
+                foreach (Control childControl in grid.Children)
+                {
+                    childControl.IsHitTestVisible = false;
+                }
+            }
+        }
+
+        private void Edit_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Edit.Content = "\ue70f";
+            int index = 0;
+            foreach (Grid grid in TogglesView.Items)
+            {
+                foreach (Control childControl in grid.Children)
+                {
+                    childControl.IsHitTestVisible = true;
+                }
+                grid.Tag = index;
+                index++;
+            }
+            Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Globals.TimeConfigFileQS));
+            File.Delete(Globals.TimeConfigFileQS);
+            File.AppendAllText(Globals.TimeConfigFileQS, WiFiToggleGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, BTToggleGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, DarkModeToggleGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, MuteToggleGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, AirPlaneToggleGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, ShutdownGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, RestartGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, SuspendGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, LockGrid.Tag + "\n");
+            File.AppendAllText(Globals.TimeConfigFileQS, LogoffGrid.Tag + "\n");
         }
 
         private void UpdateDarkMode(UISettings sender, object args)

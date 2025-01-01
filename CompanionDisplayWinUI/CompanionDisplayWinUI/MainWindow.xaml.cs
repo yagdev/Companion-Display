@@ -25,6 +25,8 @@ using Microsoft.UI;
 using Windows.Media.Control;
 using Windows.UI;
 using Windows.UI.WebUI;
+using Microsoft.Web.WebView2.Core;
+using static System.Net.WebRequestMethods;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -57,40 +59,74 @@ namespace CompanionDisplayWinUI
         }
         private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
-            try
+            if (sender.IsPaneToggleButtonVisible && sender.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto || sender.PaneDisplayMode == NavigationViewPaneDisplayMode.LeftMinimal && !sender.IsPaneToggleButtonVisible)
             {
-                GC.Collect();
-                Globals.IsAllApps = false;
-                IntPtr hWnd = WindowNative.GetWindowHandle(this);
-                switch (args.SelectedItemContainer.Tag.ToString())
+                try
                 {
-                    case "SecretStuff":
-                        contentFrame.Navigate(typeof(MusixmatchIntegrationProto), null, args.RecommendedNavigationTransitionInfo);
-                        SetWindowLong(hWnd, -20, 256);
-                        break;
-                    case "SamplePage1":
-                        contentFrame.Navigate(typeof(BlankPage1), null, args.RecommendedNavigationTransitionInfo);
-                        if (Globals.StealFocus)
-                        {
-                            SetWindowLong(hWnd, -20, GetWindowLong(hWnd, -20) | 134480128);
-                        }
-                        break;
-                    case "SamplePage2":
-                        contentFrame.Navigate(typeof(BrowserTab), null, args.RecommendedNavigationTransitionInfo);
-                        SetWindowLong(hWnd, -20, 256);
-                        break;
-                    case "SamplePage3":
-                        contentFrame.Navigate(typeof(SpotifyPlayer), null, args.RecommendedNavigationTransitionInfo);
-                        SetWindowLong(hWnd, -20, 256);
-                        break;
-                    case "Settings":
-                        SetWindowLong(hWnd, -20, 256);
-                        contentFrame.Navigate(typeof(BlankPage3), null, args.RecommendedNavigationTransitionInfo);
-                        break;
+                    GC.Collect();
+                    Globals.IsAllApps = false;
+                    IntPtr hWnd = WindowNative.GetWindowHandle(this);
+                    sender.PaneClosed -= ProcessShit;
+                    switch (args.SelectedItemContainer.Tag.ToString())
+                    {
+                        case "SecretStuff":
+                            contentFrame.Navigate(typeof(MusixmatchIntegrationProto), null, args.RecommendedNavigationTransitionInfo);
+                            SetWindowLong(hWnd, -20, 256);
+                            sender.PaneClosed += ProcessShit;
+                            break;
+                        case "SamplePage1":
+                            EvadeCringeBehavior = false;
+                            SleepReptangle.Visibility = Visibility.Collapsed;
+                            contentFrame.Navigate(typeof(BlankPage1), null, args.RecommendedNavigationTransitionInfo);
+                            if (Globals.StealFocus)
+                            {
+                                SetWindowLong(hWnd, -20, GetWindowLong(hWnd, -20) | 134480128);
+                            }
+                            sender.PaneClosed += ProcessShit;
+                            break;
+                        case "SamplePage2":
+                            SleepReptangle.Visibility = Visibility.Collapsed;
+                            contentFrame.Navigate(typeof(BrowserTab), null, args.RecommendedNavigationTransitionInfo);
+                            SetWindowLong(hWnd, -20, 256);
+                            sender.PaneClosed += ProcessShit;
+                            break;
+                        case "SamplePage3":
+                            SleepReptangle.Visibility = Visibility.Collapsed;
+                            contentFrame.Navigate(typeof(SpotifyPlayer), null, args.RecommendedNavigationTransitionInfo);
+                            SetWindowLong(hWnd, -20, 256);
+                            sender.PaneClosed += ProcessShit;
+                            break;
+                        case "SleepMode":
+                            SleepReptangle.Visibility = Visibility.Visible;
+                            contentFrame.Navigate(typeof(SleepPage), null, args.RecommendedNavigationTransitionInfo);
+                            if (Globals.StealFocus)
+                            {
+                                SetWindowLong(hWnd, -20, GetWindowLong(hWnd, -20) | 134480128);
+                            }
+                            break;
+                        case "Settings":
+                            SleepReptangle.Visibility = Visibility.Collapsed;
+                            SetWindowLong(hWnd, -20, 256);
+                            contentFrame.Navigate(typeof(BlankPage3), null, args.RecommendedNavigationTransitionInfo);
+                            sender.PaneClosed += ProcessShit;
+                            break;
+                    }
                 }
+                catch { }
             }
-            catch { }
         }
+
+        private void ProcessShit(NavigationView sender, object args)
+        {
+            if (!sender.IsPaneToggleButtonVisible)
+            {
+                sender.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
+                sender.IsPaneToggleButtonVisible = true;
+                sender.PaneClosed -= ProcessShit;
+            }
+        }
+
+        private bool EvadeCringeBehavior = false;
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             Globals.StartedPlayer = false;
@@ -315,7 +351,6 @@ namespace CompanionDisplayWinUI
             {
 
             }
-            
         }
         private void ContentFrame_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -331,6 +366,18 @@ namespace CompanionDisplayWinUI
                 ImageOptionalBlur.Stretch = Stretch.None;
                 ImageOptionalBlur.Stretch = Stretch.UniformToFill;
             }
+            try
+            {
+                foreach (var children in ((contentFrame.Content as BlankPage1).FindName("BasicGridView") as GridView).Items)
+                {
+                    if (children as Frame != null)
+                    {
+                        (children as Frame).Background = null;
+                        (children as Frame).Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
+                    }
+                }
+            }
+            catch { }
         }
 
         private void DebugPage_Tapped(object sender, TappedRoutedEventArgs e)

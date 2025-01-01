@@ -10,7 +10,6 @@
     mc:Ignorable="d">
 
     <Grid Name="GridMain" Height="50">
-        <Rectangle RadiusX="2" RadiusY="2" Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
         <Image Height="30" Width="30" HorizontalAlignment="Left" Margin="10" Name="ProcessImage" Tapped="SysIcon_Tapped"/>
         <SymbolIcon Symbol="Volume" Height="30" Width="30" Margin="10" HorizontalAlignment="Left" Name="SysIcon" Tapped="SysIcon_Tapped"/>
         <TextBlock Margin="50,5,300,5" Text="-" VerticalAlignment="Center" Name="ProcessName"/>

@@ -24,6 +24,11 @@ using IWshRuntimeLibrary;
 using System.Net.Http;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Drawing.Text;
+using System.Threading.Tasks;
+using System.DirectoryServices.ActiveDirectory;
+using Windows.UI.WebUI;
+using System.Text;
+using Microsoft.Web.WebView2.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -66,6 +71,21 @@ namespace CompanionDisplayWinUI
             AddButtonToggle.IsOn = Globals.HideAddButton;
             StartupToggle.IsOn = Globals.LaunchOnStartup;
             LockToggle.IsOn = Globals.LockLayout;
+            Opacity.Value = Globals.sleepModeOpacity;
+            OvrColorSleepMode.IsChecked = Globals.OverrideColor;
+            SleepModeColor.Color = Color.FromArgb(255, (byte)Globals.SleepColorR, (byte)Globals.SleepColorG, (byte)Globals.SleepColorB);
+            SearchEngineCust.Text = Globals.SearchEngine.ToString();
+            NewTabBehavior.SelectedIndex = Globals.NewTabBehavior;
+            OBSIP.Text = Globals.obsIP;
+            OBSPass.Password = Globals.obsPass;
+            if (Globals.obsControls.connectionSuccessful)
+            {
+                OBSStatus.Text = "Status: Connected";
+            }
+            else
+            {
+                OBSStatus.Text = "Status: Disconnected";
+            }
             InstalledFontCollection fontCollection = new InstalledFontCollection();
             foreach (var fontFamily in fontCollection.Families)
             {
@@ -78,12 +98,19 @@ namespace CompanionDisplayWinUI
             FontSelector.Content = App.CurrentFont();
             LoadFinish = true;
         }
+        private void ProcessShit(NavigationView sender, object args)
+        {
+            sender.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
+            sender.PaneClosed -= ProcessShit;
+        }
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             App.SetFont(new Microsoft.UI.Xaml.Media.FontFamily((sender as MenuFlyoutItem).Text));
             FontSelector.Content = (sender as MenuFlyoutItem).Text;
             Thread thread = new(Save_Settings);
             thread.Start();
+            (mainframe.Parent as NavigationView).PaneClosed += ProcessShit;
+            (mainframe.Parent as NavigationView).PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
             mainframe.Navigate(typeof(BlankPage1));
             mainframe.Navigate(typeof(BlankPage3));
         }
@@ -206,8 +233,17 @@ namespace CompanionDisplayWinUI
             DispatcherQueue.TryEnqueue(() =>
             {
                 Globals.ResetHome = true;
-                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup + "\n" + Globals.LockLayout + "\n" + App.CurrentFont();
+                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup + "\n" + Globals.LockLayout + "\n" + App.CurrentFont() + "\n" + Globals.sleepModeOpacity + "\n" + Globals.OverrideColor + "\n" + Globals.SleepColorR + "\n" + Globals.SleepColorG + "\n" + Globals.SleepColorB + "\n" + Globals.SearchEngine + "\n" + Globals.NewTabBehavior;
                 System.IO.File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
+            });
+        }
+        private void Save_SettingsOBS()
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                Globals.ResetHome = true;
+                string settingsfile = Globals.obsIP + "\n" + Globals.obsPass;
+                System.IO.File.WriteAllText("Config/OBSSettings.crlh", settingsfile);
             });
         }
 
@@ -373,6 +409,160 @@ namespace CompanionDisplayWinUI
                 Thread thread = new(Save_Settings);
                 thread.Start();
             }
+        }
+
+        private async void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "https://www.paypal.com/paypalme/dinisp25";
+            await Launcher.LaunchUriAsync(new Uri(url));
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            if (LoadFinish == true)
+            {
+                Globals.SleepColorR = SleepModeColor.Color.R;
+                Globals.SleepColorG = SleepModeColor.Color.G;
+                Globals.SleepColorB = SleepModeColor.Color.B;
+                Thread thread = new(Save_Settings);
+                thread.Start();
+            }
+        }
+
+        private void OvrColorSleepMode_Checked(object sender, RoutedEventArgs e)
+        {
+            Globals.OverrideColor = true;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+        }
+
+        private void OvrColorSleepMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Globals.OverrideColor = false;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+        }
+
+        private void Opacity_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        {
+            Globals.sleepModeOpacity = (sender as Slider).Value;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+        }
+
+        private void SearchEngineCust_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                if((sender as TextBox).Text != "")
+                {
+                    Globals.SearchEngine = new Uri("https://" + (sender as TextBox).Text.Replace("https://", "").Replace("http://", ""));
+                }
+                else
+                {
+                    Globals.SearchEngine = new Uri("https://www.google.com/");
+                }
+                Thread thread = new(Save_Settings);
+                thread.Start();
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void NewTabBehavior_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Globals.NewTabBehavior = (sender as ComboBox).SelectedIndex;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+        }
+
+        private void SearchEngineCust_TextChanged_1(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private async void ResetTwitch_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.CreateNoWindow = true;
+            startInfo.Arguments = "/C taskkill /f /im msedgewebview2.exe";
+            process.StartInfo = startInfo;
+            process.Start();
+            process.WaitForExit();
+            resetTwitch.CoreWebView2Initialized += DeleteCookies;
+            var environmentOptions = new CoreWebView2EnvironmentOptions();
+            environmentOptions.AreBrowserExtensionsEnabled = true;
+            CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
+            await resetTwitch.EnsureCoreWebView2Async(environment);
+            resetTwitch.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
+            resetTwitch.Source = new Uri("https://google.com/");
+        }
+
+        private async void DeleteCookies(WebView2 sender, CoreWebView2InitializedEventArgs args)
+        {
+            System.Collections.Generic.IReadOnlyList<Microsoft.Web.WebView2.Core.CoreWebView2Cookie> cookies = await resetTwitch.CoreWebView2.CookieManager.GetCookiesAsync("https://twitch.tv");
+            foreach(var Cookie in cookies)
+            {
+                resetTwitch.CoreWebView2.Profile.CookieManager.DeleteCookie(Cookie);
+            }
+        }
+
+        private void Opacity_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            Globals.sleepModeOpacity = (sender as Slider).Value;
+            Thread thread = new(Save_Settings);
+            thread.Start();
+        }
+
+        private void OBSIP_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if((sender as TextBox).Text == "")
+            {
+                Globals.obsIP = (sender as TextBox).PlaceholderText;
+            }
+            else
+            {
+                Globals.obsIP = (sender as TextBox).Text;
+            }
+            Thread thread = new(Save_SettingsOBS);
+            thread.Start();
+        }
+
+        private void ReconnectOBS_Click(object sender, RoutedEventArgs e)
+        {
+            Thread thread = new(Globals.obsControls.manualConnectReq);
+            thread.Start();
+            System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+            (sender as Button).IsEnabled = false;
+            timer.Elapsed += (sender, args) =>
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (!Globals.obsControls.connectionSuccessful)
+                    {
+                        OBSStatus.Text = "Status: Disconnected";
+                        ReconnectOBS.Content = "Connection failed, try again.";
+                        timer.Dispose();
+                    }
+                    else
+                    {
+                        OBSStatus.Text = "Status: Connected";
+                        ReconnectOBS.Content = "Reconnect";
+                    }
+                    ReconnectOBS.IsEnabled = true;
+                });
+            };
+        }
+
+        private void OBSPass_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            Globals.obsPass = (sender as PasswordBox).Password;
+            Thread thread = new(Save_SettingsOBS);
+            thread.Start();
         }
     }
 }

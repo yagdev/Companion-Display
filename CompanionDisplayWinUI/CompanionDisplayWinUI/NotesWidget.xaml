@@ -6,7 +6,7 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Height="300" Width="500" Loaded="Page_Loaded">
+    mc:Ignorable="d" Height="300" Width="500" Loaded="Page_Loaded" Tag="UtilWidgets">
     <Page.Resources>
         <Style TargetType="TextBox" x:Name="NotesStyle">
             <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}" />
@@ -115,7 +115,6 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <Rectangle Fill="{ThemeResource SystemBaseLowColor}" Grid.RowSpan="2" Opacity="0.3"/>
         <TextBox Margin="10" Style="{StaticResource NotesStyle}" TextWrapping="Wrap" FontFamily="MV Boli" FontSize="32" PlaceholderText="Insert Note" Name="Notes" LostFocus="Notes_LostFocus" Tapped="Notes_Tapped"/>
     </Grid>
 </Page>

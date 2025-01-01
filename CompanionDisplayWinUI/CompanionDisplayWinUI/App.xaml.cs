@@ -75,11 +75,35 @@ namespace CompanionDisplayWinUI
                 Globals.LaunchOnStartup = bool.Parse(readerconfig.ReadLine());
                 Globals.LockLayout = bool.Parse(readerconfig.ReadLine());
                 Globals.FontFamily = readerconfig.ReadLine();
+                Globals.sleepModeOpacity = double.Parse(readerconfig.ReadLine());
+                Globals.OverrideColor = bool.Parse(readerconfig.ReadLine());
+                Globals.SleepColorR = int.Parse(readerconfig.ReadLine());
+                Globals.SleepColorG = int.Parse(readerconfig.ReadLine());
+                Globals.SleepColorB = int.Parse(readerconfig.ReadLine());
+                try
+                {
+                    Globals.SearchEngine = new Uri(readerconfig.ReadLine());
+                }
+                catch
+                {
+
+                }
+                Globals.NewTabBehavior = int.Parse(readerconfig.ReadLine());
+                string OBSConfig = File.ReadAllText("Config/OBSSettings.crlh");
+                using StringReader readerconfig1 = new(OBSConfig);
+                Globals.obsIP = readerconfig1.ReadLine();
+                Globals.obsPass = readerconfig1.ReadLine();
+                readerconfig.Close();
+                readerconfig1.Close();
             }
             catch
             {
             }
+            Globals.obsControls = new ObsControls();
+            Thread thread = new(Globals.obsControls.connect);
+            thread.Start();
             this.InitializeComponent();
+            
         }
 
         /// <summary>

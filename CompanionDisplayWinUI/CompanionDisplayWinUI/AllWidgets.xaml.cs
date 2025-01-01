@@ -40,9 +40,16 @@ namespace CompanionDisplayWinUI
                 {
                     Frame frame = new Frame();
                     frame.Name = "Widget" + i;
-                    BasicGridView.Items.Add(frame);
+                    frame.CornerRadius = new CornerRadius(10);
+                    frame.Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
                     frame.IsHitTestVisible = false;
                     frame.Navigate(item);
+                    try
+                    {
+                        String grouper = (frame.Content as Page).Tag.ToString();
+                        (AllCategories.FindName(grouper + "GridView") as GridView).Items.Add(frame);
+                    }
+                    catch { }
                 }
             }
         }
@@ -70,6 +77,15 @@ namespace CompanionDisplayWinUI
             {
                 Globals.IsAllApps = true;
             }
+        }
+
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            foreach(GridView gridView in AllCategories.Children)
+            {
+                gridView.Visibility = Visibility.Collapsed;
+            }
+            (AllCategories.FindName((sender.SelectedItem as NavigationViewItem).Name + "GridView") as GridView).Visibility = Visibility.Visible;
         }
     }
 }

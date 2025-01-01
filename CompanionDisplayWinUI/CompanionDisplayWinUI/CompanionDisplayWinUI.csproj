@@ -1,21 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-	<WindowsSdkPackageVersion>10.0.19041.35-preview</WindowsSdkPackageVersion>
-    <RootNamespace>CompanionDisplayWinUI</RootNamespace>
-    <ApplicationManifest>app1.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <UseWinUI>true</UseWinUI>
-	<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <EnableMsixTooling>true</EnableMsixTooling>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <Configurations>Debug;Release;Remote</Configurations>
-    <BaseOutputPath></BaseOutputPath>
-    <ApplicationIcon>CompanionDisplay2024.ico</ApplicationIcon>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<RootNamespace>CompanionDisplayWinUI</RootNamespace>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Platforms>x86;x64;ARM64</Platforms>
+		<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &gt;= 8">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<RuntimeIdentifiers Condition="$([MSBuild]::GetTargetFrameworkVersion('$(TargetFramework)')) &lt; 8">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+		<PublishProfile>win-$(Platform).pubxml</PublishProfile>
+		<UseWinUI>true</UseWinUI>
+		<EnableMsixTooling>true</EnableMsixTooling>
+		<ApplicationIcon>CompanionDisplay2024.ico</ApplicationIcon>
+		<EnableMsixTooling>true</EnableMsixTooling>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<BaseOutputPath></BaseOutputPath>
+	</PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="WidgetAppsWidgetSettings.xaml.cs" />
   </ItemGroup>
@@ -37,6 +39,7 @@
     <None Remove="IndividualComponent.xaml" />
     <None Remove="IndividualMonitor.xaml" />
     <None Remove="LoadSensors.xaml" />
+    <None Remove="LyricsView.xaml" />
     <None Remove="MediaPlayerWidget.xaml" />
     <None Remove="MediaPlayerWidgetWidgetSettings.xaml" />
     <None Remove="MonitorBrightness.xaml" />
@@ -45,12 +48,28 @@
     <None Remove="NORC_WidgetPhone.xaml" />
     <None Remove="NotesWidget.xaml" />
     <None Remove="NumPadWidget.xaml" />
+    <None Remove="ObsStreamControlsWidget.xaml" />
+    <None Remove="OBSStreamInfoWidget.xaml" />
+    <None Remove="PopOutPlayer.xaml" />
+    <None Remove="PopupWidget.xaml" />
     <None Remove="PowerSensor.xaml" />
+    <None Remove="SleepPage.xaml" />
     <None Remove="SmallDataSensor.xaml" />
     <None Remove="SpotifyPlayer.xaml" />
     <None Remove="TemperatureSensor.xaml" />
     <None Remove="TimeWidget.xaml" />
     <None Remove="TimeWidgetWidgetSettings.xaml" />
+    <None Remove="TwitchActiveModsWidget.xaml" />
+    <None Remove="TwitchActivityFeedWidget.xaml" />
+    <None Remove="TwitchAutoModWidget.xaml" />
+    <None Remove="TwitchChatWidget.xaml" />
+    <None Remove="TwitchCollabWidget.xaml" />
+    <None Remove="TwitchModActionsWidget.xaml" />
+    <None Remove="TwitchQuickActionsWidget.xaml" />
+    <None Remove="TwitchStreamHealthWidget.xaml" />
+    <None Remove="TwitchStreamInfoWidget.xaml" />
+    <None Remove="TwitchStreamMiniplayerWidget.xaml" />
+    <None Remove="TwitchUnbanWidget.xaml" />
     <None Remove="UpdateWarning.xaml" />
     <None Remove="VoltageSensor.xaml" />
     <None Remove="WidgetAudioControl.xaml" />
@@ -82,17 +101,20 @@
 
   <ItemGroup>
     <PackageReference Include="DiscordRichPresence" Version="1.2.1.24" />
-    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre321" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.4" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2646-prerelease" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240701003-experimental2" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
+    <PackageReference Include="LibreHardwareMonitorLib" Version="0.9.4-pre350" />
+    <PackageReference Include="Microsoft.PowerShell.Commands.Diagnostics" Version="7.4.6" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.6" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2839-prerelease" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240923002" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="MimeMapping" Version="3.0.1" />
     <PackageReference Include="mjjames.CoreAudio" Version="1.0.19-g7ca39f7005" />
-    <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
-    <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.1.1" />
-    <PackageReference Include="System.Management" Version="9.0.0-preview.6.24327.7" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.4" />
+    <PackageReference Include="obs-websocket-dotnet" Version="5.0.0.3" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
+    <PackageReference Include="SpotifyAPI.Web.Auth" Version="7.2.1" />
+    <PackageReference Include="System.Management" Version="9.0.0-rc.2.24473.5" />
+    <PackageReference Include="System.Management.Automation" Version="7.4.6" />
+    <PackageReference Include="System.Private.Uri" Version="4.3.2" />
     <PackageReference Include="WindowsDisplayAPI" Version="1.3.0.13" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
@@ -313,6 +335,96 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="OBSStreamInfoWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ObsStreamControlsWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="ObsSceneControllerWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="LyricsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="PopupWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="PopOutPlayer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchUnbanWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchModActionsWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchAutoModWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchActiveModsWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchCollabWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchStreamHealthWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchStreamInfoWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchChatWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchActivityFeedWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchQuickActionsWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="TwitchStreamMiniplayerWidget.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="SleepPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="BTLEIndividual.xaml">

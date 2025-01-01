@@ -26,6 +26,7 @@ using System.Drawing;
 using Microsoft.UI.Xaml.Shapes;
 using System.Drawing.Imaging;
 using System.Security.Principal;
+using System.Runtime.InteropServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -63,15 +64,21 @@ namespace CompanionDisplayWinUI
                         Grid grid = new()
                         {
                             Name = "AppGrid" + i,
+                            CornerRadius = new CornerRadius(8),
                             Height = 77,
                             Width = 77
+                        };
+                        Grid grid0 = new()
+                        {
+                            CornerRadius = new CornerRadius(5),
                         };
                         Microsoft.UI.Xaml.Controls.Image appIcon = new()
                         {
                             Name = "App" + i + "Icon",
                             Stretch = Stretch.Uniform
                         };
-                        Button button1 = new() { Name = "App" + i, Content = appIcon, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = line };
+                        grid0.Children.Add(appIcon);
+                        Button button1 = new() { Name = "App" + i, Content = grid0, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = line };
                         button1.Loaded += GetIcons;
                         button1.Click += OpenShortcut;
                         button1.RightTapped += Button_RightTapped;
@@ -154,6 +161,7 @@ namespace CompanionDisplayWinUI
         {
             var frame = this.Parent as Frame;
             frame.IsEnabled = false;
+            frame.IsEnabled = true;
         }
         private void MenuFlyoutItem4_Click(object sender, RoutedEventArgs e)
         {
@@ -227,7 +235,7 @@ namespace CompanionDisplayWinUI
                 {
                     try
                     {
-                        using (Icon icon = System.Drawing.Icon.ExtractAssociatedIcon(((Button)sender).Tag.ToString()))
+                        using (Icon icon = GetFileIcon(((Button)sender).Tag.ToString(), true))
                         using(Bitmap bitmap = icon.ToBitmap())
                         using (MemoryStream iconStream = new())
                         {
@@ -245,6 +253,39 @@ namespace CompanionDisplayWinUI
                 }
             }
         }
+        public static Icon GetFileIcon(string fileName, bool largeIcon)
+        {
+            SHFILEINFO shinfo = new SHFILEINFO();
+            uint flags = SHGFI_ICON | (largeIcon ? 0x4 : SHGFI_SMALLICON);
+
+            IntPtr hImg = SHGetFileInfo(fileName, 0, ref shinfo, (uint)Marshal.SizeOf(shinfo), flags);
+
+            if (hImg != IntPtr.Zero)
+            {
+                return Icon.FromHandle(shinfo.hIcon);
+            }
+
+            return null;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SHFILEINFO
+        {
+            public IntPtr hIcon;
+            public int iIcon;
+            public uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+            public string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+            public string szTypeName;
+        };
+
+        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+
+        const uint SHGFI_ICON = 0x000000100;
+        const uint SHGFI_LARGEICON = 0x4; // Large icon
+        const uint SHGFI_SMALLICON = 0x4; // Small icon
         public static async Task<BitmapImage> GetThumbnailImageAsync(string filePath)
         {
             BitmapImage bitmapImage = new();
@@ -260,18 +301,43 @@ namespace CompanionDisplayWinUI
 
         private void MainGrid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            FrameworkElement senderElement = sender as FrameworkElement;
-            MenuFlyout myFlyout = new();
-            MenuFlyoutItem firstItem = new () { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-            MenuFlyoutItem fifthItem = new () { Text = "Edit", Name = senderElement.Name + "Edit" };
-            firstItem.Click += MenuFlyoutItem_Click;
-            fifthItem.Click += MenuFlyoutItem5_Click;
-            myFlyout.Items.Add(firstItem);
-            if(MainGrid.FindName("AddWidget") == null)
+            if ((this.Parent as Frame).Parent as Grid == null)
             {
-                myFlyout.Items.Add(fifthItem);
+                FrameworkElement senderElement = sender as FrameworkElement;
+                MenuFlyout myFlyout = new();
+                MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
+                MenuFlyoutItem fifthItem = new() { Text = "Edit", Name = senderElement.Name + "Edit" };
+                MenuFlyoutItem thirdItem = new() { Text = "Toggle Pin", Name = senderElement.Name + "Pin" };
+                MenuFlyoutItem fourthItem = new() { Text = "Picture in Picture", Name = senderElement.Name + "PiP" };
+                firstItem.Click += MenuFlyoutItem_Click;
+                fifthItem.Click += MenuFlyoutItem5_Click;
+                thirdItem.Click += PinButton;
+                fourthItem.Click += PiPButton;
+                myFlyout.Items.Add(firstItem);
+                if (MainGrid.FindName("AddWidget") == null)
+                {
+                    myFlyout.Items.Add(fifthItem);
+                }
+                myFlyout.Items.Add(thirdItem);
+                myFlyout.Items.Add(fourthItem);
+                myFlyout.ShowAt(senderElement, new Windows.Foundation.Point(0, 0));
             }
-            myFlyout.ShowAt(senderElement, new Windows.Foundation.Point(0, 0));
+        }
+
+        private void PiPButton(object sender, RoutedEventArgs e)
+        {
+            var frame = this.Parent as Frame;
+            frame.Tag = "pip";
+            frame.IsEnabled = false;
+            frame.IsEnabled = true;
+        }
+
+        private void PinButton(object sender, RoutedEventArgs e)
+        {
+            var frame = this.Parent as Frame;
+            frame.Tag = "pin";
+            frame.IsEnabled = false;
+            frame.IsEnabled = true;
         }
         private void MenuFlyoutItem5_Click(object sender, RoutedEventArgs e)
         {
@@ -290,6 +356,7 @@ namespace CompanionDisplayWinUI
                 Height = 77,
                 Width = 77,
                 Content = "+",
+                CornerRadius = new CornerRadius(5),
                 FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Segoe UI Variable Display Light"),
                 FontSize = 32,
                 AllowDrop = true,
@@ -300,6 +367,7 @@ namespace CompanionDisplayWinUI
                 Height = 77,
                 Width = 77,
                 Content = "\ue73e",
+                CornerRadius = new CornerRadius(8),
                 FontFamily = new Microsoft.UI.Xaml.Media.FontFamily("Segoe Fluent Icons"),
                 FontSize = 32,
                 AllowDrop = true,
@@ -346,14 +414,19 @@ namespace CompanionDisplayWinUI
                 {
                     Name = "AppGrid" + i,
                     Height = 77,
-                    Width = 77
+                    Width = 77,
+                };
+                Grid grid0 = new()
+                {
+                    CornerRadius = new CornerRadius(7),
                 };
                 Microsoft.UI.Xaml.Controls.Image appIcon = new ()
                 {
                     Name = "App" + i + "Icon",
                     Stretch = Stretch.Uniform
                 };
-                Button button1 = new() { Name = "App" + i, Content = appIcon, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = btntag };
+                grid0.Children.Add(appIcon);
+                Button button1 = new() { Name = "App" + i, Content = grid0, HorizontalAlignment = HorizontalAlignment.Stretch, VerticalAlignment = VerticalAlignment.Stretch, Tag = btntag };
                 button1.Click += OpenShortcut;
                 button1.RightTapped += Button_RightTapped;
                 button1.Loaded += GetIcons;

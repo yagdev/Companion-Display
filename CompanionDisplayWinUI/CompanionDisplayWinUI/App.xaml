@@ -11,7 +11,8 @@
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
             <!-- Other app resources here -->
-            <AcrylicBrush x:Key="CustomAcrylicInAppLuminosity" TintOpacity="0.1" TintColor="{ThemeResource SystemAltLowColor}" />
+            <AcrylicBrush x:Key="CustomAcrylicInAppLuminosity" TintOpacity="0" FallbackColor="{ThemeResource SystemAltMediumHighColor}" TintColor="{ThemeResource SystemAltLowColor}" />
+            <AcrylicBrush x:Key="CustomAcrylicInAppLuminosity2" TintOpacity="0.5" FallbackColor="{ThemeResource SystemAltMediumHighColor}" TintColor="{ThemeResource SystemAltLowColor}" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

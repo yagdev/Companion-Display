@@ -21,7 +21,7 @@
                 </StackPanel>
             </GridView>
             <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
-                <Button Name="UpdateBtn" Height="45" Width="480" VerticalAlignment="Top" Content="Update" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                <Button Name="UpdateBtn" Height="45" Width="480" VerticalAlignment="Top" Content="Update" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click" CornerRadius="8"/>
             </StackPanel>
         </Grid>
     </Grid>

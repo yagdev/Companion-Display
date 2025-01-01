@@ -20,6 +20,8 @@ using Windows.Media.Control;
 using Windows.Storage.Streams;
 using CoreAudio;
 using Windows.Media;
+using Windows.System;
+using System.Runtime.InteropServices;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -71,37 +73,44 @@ namespace CompanionDisplayWinUI
         }
         private async void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                await Globals.sessionManager.GetCurrentSession().TryTogglePlayPauseAsync();
-            }
-            catch
-            {
-            }
+            PressKey(sender, null);
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                await Globals.sessionManager.GetCurrentSession().TrySkipPreviousAsync();
-            }
-            catch
-            {
-            }
+            PressKey(sender, null);
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            PressKey(sender, null);
+        }
+        [LibraryImport("user32.dll", SetLastError = true)]
+        static partial void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
+        public static void PressKey(VirtualKey key, bool up)
+        {
+            const int KEYEVENTF_EXTENDEDKEY = 0x1;
+            const int KEYEVENTF_KEYUP = 0x2;
+            if (up)
+                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, (UIntPtr)0);
+            else
+                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
+        }
+        private bool Updating = false;
+        private void PressKey(object sender, RoutedEventArgs e)
+        {
+            Windows.UI.Core.CoreVirtualKeyStates numkey = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.NumberKeyLock);
             try
             {
-                await Globals.sessionManager.GetCurrentSession().TrySkipNextAsync();
+                PressKey((VirtualKey)int.Parse(((HyperlinkButton)sender).Tag.ToString()), up: false);
+                PressKey((VirtualKey)int.Parse(((HyperlinkButton)sender).Tag.ToString()), up: true);
             }
             catch
             {
+
             }
         }
-        private bool Updating = false;
+
         private void VolumeBar_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (IsManipulative)
@@ -209,7 +218,18 @@ namespace CompanionDisplayWinUI
                 IsDragging = false;
             }
         }
-        private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-";
+        private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-", LastAlbum = "-";
+
+        private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenWindow.IsEnabled = false;
+            LyricsView m_window = new LyricsView();
+            m_window.Closed += (s, e) =>
+            {
+                OpenWindow.IsEnabled = true;
+            };
+            m_window.Activate();
+        }
 
         private void VolumeBar_ManipulationStarting(object sender, ManipulationStartingRoutedEventArgs e)
         {
@@ -233,6 +253,14 @@ namespace CompanionDisplayWinUI
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         SongTitle.Text = Globals.SongName;
+                    });
+                }
+                if (LastAlbum != Globals.AlbumName)
+                {
+                    LastAlbum = Globals.AlbumName;
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        AlbumName.Text = Globals.AlbumName;
                     });
                 }
                 if (LastDetail != Globals.SongDetails)
@@ -329,15 +357,19 @@ namespace CompanionDisplayWinUI
                                 }
                                 catch
                                 {
-                                    SongTitle.Text = "No media playing"; 
-                                    SongInfo.Text = "";
-                                    SongLyrics.Text = "";
-                                    EndTime.Text = "00:00";
-                                    SongTitleCache = "";
-                                    LastDetail = "";
-                                    LastTitle = "";
-                                    LastLyric = "";
-                                    LastTime = "";
+                                    SongTitle.Text = "-"; 
+                                    SongInfo.Text = "-";
+                                    SongLyrics.Text = "-";
+                                    AlbumName.Text = "-";
+                                    EndTime.Text = "--:--";
+                                    CurrentTime.Text = "--:--";
+                                    SongTitleCache = "-";
+                                    LastDetail = "-";
+                                    LastTitle = "-";
+                                    LastLyric = "-";
+                                    LastTime = "-";
+                                    LastEnd = "-";
+                                    LastAlbum = "-";
                                 }
                             });
                         }
@@ -349,18 +381,18 @@ namespace CompanionDisplayWinUI
             }
             try
             {
-                if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused)
+                if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing)
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        PlayPauseBtn.Content = "\ue768";
+                        PlayPauseBtn.Content = "\uf8ae";
                     });
                 }
                 else
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        PlayPauseBtn.Content = "\ue769";
+                        PlayPauseBtn.Content = "\uf5b0";
                     });
                 }
             }

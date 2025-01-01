@@ -6,8 +6,10 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
+using Microsoft.Web.WebView2.Core;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SpotifyAPI.Web;
@@ -19,6 +21,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.DirectoryServices.ActiveDirectory;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Globalization;
@@ -38,7 +41,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using System.Windows.Forms;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Devices.Bluetooth.Rfcomm;
@@ -49,6 +51,13 @@ using Windows.Media.Protection.PlayReady;
 using Windows.Networking.Sockets;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using Windows.System;
+using Windows.UI.Text;
+using Windows.UI.WebUI;
+using OBSWebsocketDotNet;
+using OBSWebsocketDotNet.Types;
+using OBSWebsocketDotNet.Types.Events;
+using static CompanionDisplayWinUI.MediaPlayerWidget;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -66,22 +75,12 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            InstalledFontCollection fontCollection = new InstalledFontCollection();
-            foreach (var fontFamily in fontCollection.Families)
-            {
-                MenuFlyoutItem item = new MenuFlyoutItem();
-                item.Text = fontFamily.Name;
-                item.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(fontFamily.Name);
-                item.Click += MenuFlyoutItem_Click;
-                ListOfDevices.Items.Add(item);
-            }
-        }
 
-        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            App.SetFont(new Microsoft.UI.Xaml.Media.FontFamily((sender as MenuFlyoutItem).Text));
+            Stack1.Navigate(typeof(MediaPlayerWidget));
+            Stack2.Navigate(typeof(TimeWidget));
+            Stack3.Navigate(typeof(MediaPlayerWidget));
         }
     }
 }

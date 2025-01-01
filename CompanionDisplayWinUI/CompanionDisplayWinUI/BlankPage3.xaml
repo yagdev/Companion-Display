@@ -105,6 +105,60 @@
                     </Grid>
                 </StackPanel>
             </Expander>
+            <Expander HorizontalAlignment="Stretch" Header="Browser" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="20">
+                    <Grid>
+                        <TextBlock Text="Search Engine" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <TextBox Name="SearchEngineCust" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" TextChanged="SearchEngineCust_TextChanged" PlaceholderText="https://www.google.com/"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="New tab behavior" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                        <ComboBox Name="NewTabBehavior" SelectedIndex="0" PlaceholderText="Launchpad" HorizontalAlignment="Right"  VerticalAlignment="Top" SelectionChanged="NewTabBehavior_SelectionChanged">
+                            <x:String>Launchpad</x:String>
+                            <x:String>Blank Page</x:String>
+                            <x:String>Search Engine Homepage</x:String>
+                        </ComboBox>
+                    </Grid>
+                </StackPanel>
+            </Expander>
+            <Expander HorizontalAlignment="Stretch" Header="Integrations" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="20">
+                    <Grid>
+                        <TextBlock Text="Reset Twitch login" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button Name="ResetTwitch" Content="Reset" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ResetTwitch_Click"/>
+                        <WebView2 Name="resetTwitch" Height="0" Width="0"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Reconnect OBS" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Button Name="ReconnectOBS" Content="Reconnect" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ReconnectOBS_Click"/>
+                    </Grid>
+                    <Expander HorizontalAlignment="Stretch" Header="Connection Details" HorizontalContentAlignment="Stretch">
+                        <StackPanel Spacing="20">
+                            <TextBlock x:Name="OBSStatus" Text="Status: " HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                            <TextBox x:Name="OBSIP" PlaceholderText="ws://127.0.0.1:4455" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="OBSIP_TextChanged"/>
+                            <PasswordBox x:Name="OBSPass" PlaceholderText="Password" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChanged="OBSPass_PasswordChanged"/>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </Expander>
+            <Expander HorizontalAlignment="Stretch" Header="Sleep Mode" HorizontalContentAlignment="Stretch">
+                <StackPanel Spacing="20">
+                    <Grid>
+                        <TextBlock Text="Text opacity" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <Slider Name="Opacity" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" Value="10" ManipulationCompleted="Opacity_ManipulationCompleted" ManipulationMode="All" Tapped="Opacity_Tapped"/>
+                    </Grid>
+                    <Grid>
+                        <TextBlock Text="Override text color" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                        <CheckBox Name="OvrColorSleepMode" FlowDirection="RightToLeft" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="OvrColorSleepMode_Checked" Unchecked="OvrColorSleepMode_Unchecked"/>
+                    </Grid>
+                    <Expander HorizontalAlignment="Stretch" Header="Custom Color">
+                        <StackPanel>
+                            <ColorPicker Name="SleepModeColor"/>
+                            <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_5"/>
+                        </StackPanel>
+                    </Expander>
+                </StackPanel>
+            </Expander>
             <Expander HorizontalAlignment="Stretch" Header="About &amp; Updates" HorizontalContentAlignment="Stretch">
                 <StackPanel Spacing="20">
                     <Image Name="AppIconImg" Source="https://i.imgur.com/Llq7YZA.png" Height="100" Margin="0,-10,0,0"/>
@@ -123,7 +177,11 @@
                     </Grid>
                     <Grid>
                         <TextBlock Text="Made with ❤︎ by YAG-dev" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                        <HyperlinkButton Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <HyperlinkButton Content="Donate" HorizontalAlignment="Right" VerticalAlignment="Center" Click="HyperlinkButton_Click"/>
+                            <HyperlinkButton Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2"/>
+                        </StackPanel>
+                        
                     </Grid>
                 </StackPanel>
             </Expander>
