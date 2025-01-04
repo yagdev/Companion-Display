@@ -1,4 +1,4 @@
-# Companion Display
+![image](https://github.com/user-attachments/assets/f2d678d9-ace5-4bbf-a841-778d683e3653)# Companion Display
 Companion Display is an app designed to give life to a secondary monitor or old device. 
 ![CompanionDisplay](https://github.com/yagdev/Companion-Display/assets/53407061/9e9dfc31-f0f6-4a6c-aff6-2722d5ac6e07)
 
@@ -17,30 +17,73 @@ Another thing that does not work on Windows 10 builds is the Mica Backdrop.
 ## Getting started with Widgets
 To add Widgets simply tap the + button and choose a widget. Currently there are the following Widgets available:
 ### Date & Time
-![image](https://github.com/yagdev/Companion-Display/assets/53407061/e1ae5fcf-872a-4ee1-8476-37f143772bfc)
+![image](https://github.com/user-attachments/assets/4383fc7a-5570-4545-a347-e13844eaaf07)
 ### Media controls with Spotify & Discord integration for synced lyrics
-![image](https://github.com/yagdev/Companion-Display/assets/53407061/610aa0c9-5334-45ba-b26d-74d15d2bdf12)
+![image](https://github.com/user-attachments/assets/75f54a8b-3f0c-4036-912c-28a46c43ccbb)
 ### Launchpad
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/cb25992c-2238-4bb5-867b-ec7f8a9d9539)
 ### Image Slideshow
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/e14409e6-f7e5-4a1a-a336-3590dcbae7bc)
 ### Hardware Monitor
-![image](https://github.com/yagdev/Companion-Display/assets/53407061/4c38aa0f-16af-43a4-a219-9f197bbbe60d)
+![image](https://github.com/user-attachments/assets/419d0513-a0da-4fdc-a7f3-b75f041d65b2)
 ### Monitor brightness controls
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/4e160220-1a50-4a8d-a45a-dcd213a1e008)
 ### Android control widget with Battery info, Brightness controls and shutdown/restart controls
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/c73dcff6-49eb-4225-806d-e7b806fff960)
 ### Virtual Numpad
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/9e3903c3-d212-4712-881f-6bad3804e206)
+### Notepad Widget
+![image](https://github.com/user-attachments/assets/95724ebe-532a-4175-8a2e-4a2432029d7a)
+### Volume Mixer
+![image](https://github.com/user-attachments/assets/0819c656-2127-49db-9075-56bb372b3ad8)
+### Twitch Integration Widgets
+![image](https://github.com/user-attachments/assets/34715216-18c2-4209-8e32-29898a9736d9)
+### OBS Integration Widgets
+![image](https://github.com/user-attachments/assets/6617f1c9-94b6-4d22-8f61-793f8f90585b)
+
+## Pins
+· Pins allow you to keep selected Widgets on top while letting you scroll unpinned ones at the same time:
+![image](https://github.com/user-attachments/assets/4b94520d-090b-48fd-a64c-0b47a3fab30d)
+
+## Picture-in-Picture support
+· Companion Display allows you to open Widgets in Picture-in-Picture mode, allowing you to keep the Widget pinned above other apps too like so:
+![image](https://github.com/user-attachments/assets/bdd342be-694c-48d7-9cfe-e58114d4cc91)
 
 ## Widget Configuration:
-· To customize Widgets, right click the widget and press Edit and the configuration page for the respective widget will pop up. For now the Media Player widget requires a restart.
+· To customize Widgets, right click the widget and press Edit and the configuration page for the respective widget will pop up. Making changes in the Media Player widget requires a restart.
 
 ## App Configuration
-· To configure Companion Display, press the settings button on the bottom left corner. Here you can find the available settings separated by category. While they should work without a restart, however this is a work in progress so a restart is recommended after changing settings
+· To configure Companion Display, press the settings button on the bottom left corner. Here you can find the available settings separated by category. A restart is recommended after making changes but not mandatory.
+![image](https://github.com/user-attachments/assets/0e8c8b61-db45-456b-a456-7a73354d67b3)
+### Theme
+· This category allows you to change the color scheme, background, accent color and font used across the interface.
+### Behavior
+· This category allows you to toggle behaviors such as disabling focus takeover, hiding the Add Widget button, disabling the ability to reorder Widgets (Lock Layout) and launching on startup.
+### Browser
+· This category allows you to change your search engine and behavior when opening a new tab.
+### Integrations
+· Here you can manage integrations with Twitch and OBS.
+### Sleep Mode
+· Here you can change the Sleep Mode text opacity and color.
+### About & Updates
+· Here you can check the current version, toggle participation in the Beta Program, manage updates and donate.
+
+## Lyric Viewer
+· By pressing the pop-out button in the Media Player Widget, you can access a pane with the lyrics of the currently playing song with synced lyrics and autoscroll.
+![image](https://github.com/user-attachments/assets/f3c4c0ac-631c-419d-b82d-6e4f0bef5444)
+
 
 ## Browser
 · Companion Display has a built in browser based on WebView2. You can access it by pressing the Browser icon.
+· The Browser also includes Launchpad, a place to bookmark websites that can be edited by right-clicking an empty space while on a new tab.
+![image](https://github.com/user-attachments/assets/b44d583f-4fd5-4001-85ac-62ab6289f5b9)
+
+## Spotify
+· The Spotify tab is the web version of Spotify easily accessible.
+
+## Sleep mode
+· Companion Display offers a customizeable sleep mode, which is a minimalistic interface that displays the time, date and current song info. You can customize the text color and opacity in Settings and it features built-in burn-in prevention for OLED displays.
+![image](https://github.com/user-attachments/assets/b2c954df-bdb3-4d2a-8827-b82b9d193eab)
 
 ## Updating
 · Whenever an update is available, it will automatically show up in the home screen. If you wanna force an update, you can do so by going to the settings, About & Update and pressing Update.
