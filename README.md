@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/f2d678d9-ace5-4bbf-a841-778d683e3653)# Companion Display
+# Companion Display
 Companion Display is an app designed to give life to a secondary monitor or old device. 
 ![CompanionDisplay](https://github.com/yagdev/Companion-Display/assets/53407061/9e9dfc31-f0f6-4a6c-aff6-2722d5ac6e07)
 
