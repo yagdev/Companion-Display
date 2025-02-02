@@ -67,13 +67,6 @@ namespace CompanionDisplayWinUI
                         timer.Dispose();
                     });
                 }
-                else
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        revertLayout();
-                    });
-                }
             };
         }
 
@@ -82,6 +75,7 @@ namespace CompanionDisplayWinUI
             DispatcherQueue.TryEnqueue(() =>
             {
                 OBSError.Visibility = Visibility.Collapsed;
+                Page_Unloaded(null, null);
                 Page_Loaded(null, null);
             });
         }

@@ -104,9 +104,8 @@ namespace CompanionDisplayWinUI
                             {
                                 switch (deedify)
                                 {
-                                    case var s when deedify.Contains("CompanionDisplayWinUI.NotesWidget"):
-                                        var NotesWidget = item.Content as NotesWidget;
-                                        File.AppendAllText("Config/WidgetOrder.crlh", Order + deedify + "ID" + item.Tag.ToString() + Environment.NewLine);
+                                    case var s when (deedify.Contains("CompanionDisplayWinUI.NotesWidget") || deedify.Contains("CompanionDisplayWinUI.WidgetStack")):
+                                        Order = Order + deedify + "ID" + item.Name.ToString() + Environment.NewLine;
                                         break;
                                     case var s when deedify.Contains("CompanionDisplayWinUI.WidgetPhoto"):
                                         Order = Order + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine;
@@ -116,13 +115,12 @@ namespace CompanionDisplayWinUI
                                         break;
                                 }
                             }
-                            
                         }
                         catch
                         {
                         }
-                        File.WriteAllText("Config/WidgetOrder.crlh", Order);
                     }
+                    File.WriteAllText("Config/WidgetOrder.crlh", Order);
                     var Items2 = PinnedView.Items;
                     string Order2 = "";
                     foreach (var widget in Items2)
@@ -135,9 +133,8 @@ namespace CompanionDisplayWinUI
                             {
                                 switch (deedify)
                                 {
-                                    case var s when deedify.Contains("CompanionDisplayWinUI.NotesWidget"):
-                                        var NotesWidget = item.Content as NotesWidget;
-                                        File.AppendAllText("Config/WidgetOrder.crlh", Order + deedify + "ID" + item.Tag.ToString() + Environment.NewLine);
+                                    case var s when (deedify.Contains("CompanionDisplayWinUI.NotesWidget") || deedify.Contains("CompanionDisplayWinUI.WidgetStack")):
+                                        Order2 = Order2 + deedify + "ID" + item.Name.ToString() + Environment.NewLine;
                                         break;
                                     case var s when deedify.Contains("CompanionDisplayWinUI.WidgetPhoto"):
                                         Order2 = Order2 + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine;
@@ -151,8 +148,8 @@ namespace CompanionDisplayWinUI
                         catch
                         {
                         }
-                        File.WriteAllText("Config/PinnedOrder.crlh", Order2);
                     }
+                    File.WriteAllText("Config/PinnedOrder.crlh", Order2);
                 });
             }
         }
@@ -171,7 +168,6 @@ namespace CompanionDisplayWinUI
             {
                 Globals.IsAllApps = false;
             }
-            
         }
 
         private void Button_DropCompleted(UIElement sender, DropCompletedEventArgs args)
@@ -386,15 +382,6 @@ namespace CompanionDisplayWinUI
                                     };
                                     frame.IsEnabledChanged += Frame_IsEnabledChanged2;
                                     frame.Loaded += BugcheckAcrylic;
-                                    if (fix.Contains("NORC_") != true)
-                                    {
-                                        frame.RightTapped += Frame_RightTapped;
-                                    }
-                                    else
-                                    {
-                                        frame.Tag = this;
-                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                    }
                                     BasicGridView.Items.Add(frame);
                                     frame.Navigate(type1);
                                     i++;
@@ -415,17 +402,28 @@ namespace CompanionDisplayWinUI
                                     };
                                     frame.IsEnabledChanged += Frame_IsEnabledChanged2;
                                     frame.Loaded += BugcheckAcrylic;
-                                    if (fix.Contains("NORC_") != true)
-                                    {
-                                        frame.RightTapped += Frame_RightTapped;
-                                    }
-                                    else
-                                    {
-                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                        frame.Tag = this;
-                                    }
+                                    frame.RightTapped += Frame_RightTapped;
                                     BasicGridView.Items.Add(frame);
                                     frame.Navigate(type2);
+                                    i++;
+                                });
+                                break;
+                            case string c when c.Contains("CompanionDisplayWinUI.WidgetStackID"):
+                                string fix4 = "CompanionDisplayWinUI.WidgetStack";
+                                string ID2 = fix.Replace("CompanionDisplayWinUI.WidgetStackID", "");
+                                Type type3 = Type.GetType(fix4);
+                                DispatcherQueue.TryEnqueue(() =>
+                                {
+                                    Frame frame = new()
+                                    {
+                                        CornerRadius = new CornerRadius(10),
+                                        Name = ID2,
+                                        Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
+                                    };
+                                    frame.IsEnabledChanged += Frame_IsEnabledChanged;
+                                    frame.Loaded += BugcheckAcrylic;
+                                    BasicGridView.Items.Add(frame);
+                                    frame.Navigate(type3);
                                     i++;
                                 });
                                 break;
@@ -501,14 +499,6 @@ namespace CompanionDisplayWinUI
                                     };
                                     frame.IsEnabledChanged += Frame_IsEnabledChanged2;
                                     frame.Loaded += BugcheckAcrylic;
-                                    if (fix.Contains("NORC_") != true)
-                                    {
-                                        frame.RightTapped += Frame_RightTapped;
-                                    }
-                                    else
-                                    {
-                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                    }
                                     PinnedView.Items.Add(frame);
                                     frame.Navigate(type1);
                                     i++;
@@ -529,16 +519,28 @@ namespace CompanionDisplayWinUI
                                     };
                                     frame.IsEnabledChanged += Frame_IsEnabledChanged2;
                                     frame.Loaded += BugcheckAcrylic;
-                                    if (fix.Contains("NORC_") != true)
-                                    {
-                                        frame.RightTapped += Frame_RightTapped;
-                                    }
-                                    else
-                                    {
-                                        frame.IsEnabledChanged += Frame_IsEnabledChanged;
-                                    }
+                                    frame.RightTapped += Frame_RightTapped;
                                     PinnedView.Items.Add(frame);
                                     frame.Navigate(type2);
+                                    i++;
+                                });
+                                break;
+                            case string c when c.Contains("CompanionDisplayWinUI.WidgetStackID"):
+                                string fix4 = "CompanionDisplayWinUI.WidgetStack";
+                                string ID2 = fix.Replace("CompanionDisplayWinUI.WidgetStackID", "");
+                                Type type3 = Type.GetType(fix4);
+                                DispatcherQueue.TryEnqueue(() =>
+                                {
+                                    Frame frame = new()
+                                    {
+                                        CornerRadius = new CornerRadius(10),
+                                        Name = ID2,
+                                        Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
+                                    };
+                                    frame.IsEnabledChanged += Frame_IsEnabledChanged;
+                                    frame.Loaded += BugcheckAcrylic;
+                                    PinnedView.Items.Add(frame);
+                                    frame.Navigate(type3);
                                     i++;
                                 });
                                 break;
@@ -635,7 +637,7 @@ namespace CompanionDisplayWinUI
                     {
                         Globals.IsUpdateAvailable = true;
                     }
-                    if (Globals.IsUpdateAvailable == true)
+                    if (Globals.IsUpdateAvailable == true && !Globals.isConfidential)
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {

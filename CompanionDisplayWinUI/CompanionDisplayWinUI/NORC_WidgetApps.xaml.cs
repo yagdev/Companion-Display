@@ -160,6 +160,7 @@ namespace CompanionDisplayWinUI
         private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var frame = this.Parent as Frame;
+            frame.Tag = "";
             frame.IsEnabled = false;
             frame.IsEnabled = true;
         }
@@ -313,13 +314,16 @@ namespace CompanionDisplayWinUI
                 fifthItem.Click += MenuFlyoutItem5_Click;
                 thirdItem.Click += PinButton;
                 fourthItem.Click += PiPButton;
-                myFlyout.Items.Add(firstItem);
-                if (MainGrid.FindName("AddWidget") == null)
+                if(!(this.Frame.Parent is FlipView))
                 {
-                    myFlyout.Items.Add(fifthItem);
+                    if (MainGrid.FindName("AddWidget") == null)
+                    {
+                        myFlyout.Items.Add(fifthItem);
+                    }
+                    myFlyout.Items.Add(thirdItem);
+                    myFlyout.Items.Add(fourthItem);
                 }
-                myFlyout.Items.Add(thirdItem);
-                myFlyout.Items.Add(fourthItem);
+                myFlyout.Items.Add(firstItem);
                 myFlyout.ShowAt(senderElement, new Windows.Foundation.Point(0, 0));
             }
         }

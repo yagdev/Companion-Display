@@ -17,8 +17,10 @@ namespace CompanionDisplayWinUI
     {
         // Runtime variables
         public static bool IsAdmin = false;
-        public static string Version = "25.1";
+        public static string Version = "25.2";
+        public static bool isConfidential = false; // this is nothing too special, just disables update warnings for developer builds for sanity purposes :p
         public static ObsControls obsControls = new ObsControls();
+        public static ServerComponent serverComponent = new ServerComponent();
         public static CoreWebView2 CoreWebView2 = null;
         public static string UpdateZip = "https://www.dropbox.com/scl/fi/3pmay1a18v9wdi6y9ridh/release.zip?rlkey=9sbehxn68p4i18geb5acbe6y3&dl=1";
         public static string UpdateString = "https://www.dropbox.com/scl/fi/eftx6ql3107c1j0gywb90/release.txt?rlkey=lylcncrgnhtw2q3w1l439uc45&dl=1";

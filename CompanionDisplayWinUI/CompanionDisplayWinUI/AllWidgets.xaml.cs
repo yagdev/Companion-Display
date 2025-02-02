@@ -27,6 +27,7 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class AllWidgets : Page
     {
+        private string targetFile = "Config/WidgetOrder.crlh";
         public AllWidgets()
         {
             this.InitializeComponent();
@@ -55,27 +56,30 @@ namespace CompanionDisplayWinUI
         }
         private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Globals.ResetHome = true;
-            try
+            if(!((e.ClickedItem as Frame).Content.ToString().Contains("WidgetStack") && targetFile != "Config/WidgetOrder.crlh"))
             {
-                Globals.IsAllApps = false;
-                var frame = e.ClickedItem as Frame;
-                if (frame.Content.ToString().Contains("NotesWidget"))
+                Globals.ResetHome = true;
+                try
                 {
-                    File.AppendAllText("Config/WidgetOrder.crlh", frame.Content + "ID" + DateTime.Now.ToString("yyyymmddhhmmssff") + Environment.NewLine);
+                    Globals.IsAllApps = false;
+                    var frame = e.ClickedItem as Frame;
+                    if (frame.Content.ToString().Contains("NotesWidget") || frame.Content.ToString().Contains("WidgetStack"))
+                    {
+                        File.AppendAllText(targetFile, frame.Content + "ID" + DateTime.Now.ToString("yyyymmddhhmmssff") + Environment.NewLine);
+                    }
+                    else
+                    {
+                        File.AppendAllText(targetFile, frame.Content + Environment.NewLine);
+                    }
+                    var frame2 = this.Parent as Frame;
+                    var navviewparent = frame2.Parent as NavigationView;
+                    frame2.GoBack();
+                    navviewparent.SelectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)navviewparent.FindName("HomeItem");
                 }
-                else
+                catch
                 {
-                    File.AppendAllText("Config/WidgetOrder.crlh", frame.Content + Environment.NewLine);
+                    Globals.IsAllApps = true;
                 }
-                var frame2 = this.Parent as Frame;
-                var navviewparent = frame2.Parent as NavigationView;
-                navviewparent.SelectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)navviewparent.FindName("HomeItem");
-                frame2.Navigate(typeof(BlankPage1));
-            }
-            catch 
-            {
-                Globals.IsAllApps = true;
             }
         }
 
@@ -86,6 +90,19 @@ namespace CompanionDisplayWinUI
                 gridView.Visibility = Visibility.Collapsed;
             }
             (AllCategories.FindName((sender.SelectedItem as NavigationViewItem).Name + "GridView") as GridView).Visibility = Visibility.Visible;
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (((this.Parent as Frame).Parent as NavigationView).Tag != null && ((this.Parent as Frame).Parent as NavigationView).Tag != "")
+            {
+                targetFile = "Config/Stacks/" + ((this.Parent as Frame).Parent as NavigationView).Tag.ToString() + ".crlh";
+                ((this.Parent as Frame).Parent as NavigationView).Tag = "";
+            }
+            else
+            {
+                targetFile = "Config/WidgetOrder.crlh";
+            }
         }
     }
 }

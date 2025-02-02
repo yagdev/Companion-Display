@@ -10,8 +10,8 @@
     "CompanionDisplayWinUI (Unpackaged)": {
       "commandName": "Project",
       "remoteDebugEnabled": false,
-      "remoteDebugMachine": "172.22.229.60",
-      "authenticationMode": "None"
+      "remoteDebugMachine": "26.84.86.3",
+      "authenticationMode": "Windows"
     }
   }
 }

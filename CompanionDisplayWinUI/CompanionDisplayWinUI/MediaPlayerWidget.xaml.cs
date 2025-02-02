@@ -220,6 +220,30 @@ namespace CompanionDisplayWinUI
         }
         private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-", LastAlbum = "-";
 
+        private void HyperlinkButton_Tapped_1(object sender, RoutedEventArgs e)
+        {
+            if(VolumeBar.Value <= 98)
+            {
+                mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)((VolumeBar.Value + 2) / 100);
+            }
+            else
+            {
+                mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = 1;
+            }
+        }
+
+        private void HyperlinkButton_Tapped(object sender, RoutedEventArgs e)
+        {
+            if (VolumeBar.Value >= 2)
+            {
+                mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = (float)((VolumeBar.Value - 2) / 100);
+            }
+            else
+            {
+                mDevice.AudioEndpointVolume.MasterVolumeLevelScalar = 0;
+            }
+        }
+
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow.IsEnabled = false;
@@ -242,7 +266,6 @@ namespace CompanionDisplayWinUI
         }
 
         private bool LastSpotifyCheck = false;
-        private BitmapImage bitmapImage;
         private async void UpdateUI()
         {
             try
@@ -333,6 +356,7 @@ namespace CompanionDisplayWinUI
                     {
                         try
                         {
+                            AlbumCoverImg.Opacity = 0.2;
                             AlbumCoverImg.Source = new BitmapImage(new Uri(Globals.SongBackground));
                             AlbumCoverCache = Globals.SongBackground;
                         }
@@ -351,6 +375,7 @@ namespace CompanionDisplayWinUI
                             {
                                 try
                                 {
+                                    AlbumCoverImg.Opacity = 0.2;
                                     AlbumCoverImg.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
                                     AlbumCoverCache = "";
                                     SongTitleCache = Globals.songInfo.Title;

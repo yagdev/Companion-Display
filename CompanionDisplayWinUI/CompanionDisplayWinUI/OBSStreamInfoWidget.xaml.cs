@@ -164,13 +164,6 @@ namespace CompanionDisplayWinUI
                         timer.Dispose();
                     });
                 }
-                else
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        revertLayout();
-                    });
-                }
             };
         }
     }

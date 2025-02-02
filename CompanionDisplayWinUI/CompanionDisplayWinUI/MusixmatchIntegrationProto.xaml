@@ -7,11 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Page_Loaded"
     mc:Ignorable="d">
-    <StackPanel>
-        <FlipView Width="500" Height="300">
-            <Frame Height="300" Width="500" x:Name="Stack1"/>
-            <Frame Height="300" Width="500" x:Name="Stack2"/>
-            <Frame Height="300" Width="500" x:Name="Stack3"/>
-        </FlipView>
-    </StackPanel>
+    <ScrollViewer>
+        <StackPanel Margin="0,50,0,0">
+            <Button Content="Start Server" Tapped="Button_Tapped"/>
+            <Button Content="Send Command" Tapped="Button_Tapped_1"/>
+            <TextBlock x:Name="LogText" TextWrapping="WrapWholeWords"/>
+        </StackPanel>
+    </ScrollViewer>
+    
 </Page>

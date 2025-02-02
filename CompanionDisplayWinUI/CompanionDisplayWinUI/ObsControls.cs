@@ -25,15 +25,16 @@ namespace CompanionDisplayWinUI
         public bool connectionSuccessful = false;
         public bool initialized = false;
         public delegate void HandleStupidEvents();
+        public delegate void HandleStupidEvents2();
         public event HandleStupidEvents callUpdate;
-        public event HandleStupidEvents callUpdateStats;
+        public event HandleStupidEvents2 callUpdateStats;
         public void connect()
         {
             try
             {
-                obs.ConnectAsync(Globals.obsIP, Globals.obsPass);
                 obs.Connected += connectionstep2;
                 obs.Disconnected += disconnect;
+                obs.ConnectAsync(Globals.obsIP, Globals.obsPass);
             }
             catch (Exception ex)
             {

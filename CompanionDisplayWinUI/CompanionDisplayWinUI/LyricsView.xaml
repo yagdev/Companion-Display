@@ -14,7 +14,7 @@
             <RowDefinition Height="100"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Visible" ImageOpened="BackgroundImage_ImageOpened" Grid.RowSpan="3"/>
+        <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Visible" ImageOpened="BackgroundImage_ImageOpened" Grid.RowSpan="3" Opacity="0.5"/>
         <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity2}" Grid.RowSpan="3" Visibility="Visible"/>
         <Grid Margin="65,70,65,0" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost" VerticalAlignment="Top">
             <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>

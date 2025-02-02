@@ -78,6 +78,7 @@
     <None Remove="WidgetPhoto.xaml" />
     <None Remove="WidgetPhotoWidgetSettings.xaml" />
     <None Remove="WidgetSensors.xaml" />
+    <None Remove="WidgetStack.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Page Remove="WidgetAppsWidgetSettings.xaml" />
@@ -335,6 +336,16 @@
       <Isolated>false</Isolated>
       <EmbedInteropTypes>true</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="NORC_WidgetMacros.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="WidgetStack.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="OBSStreamInfoWidget.xaml">

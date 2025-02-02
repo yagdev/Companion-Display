@@ -48,8 +48,11 @@ namespace CompanionDisplayWinUI
                 fourthItem.Click += PiPButton;
                 myFlyout.Items.Add(firstItem);
                 myFlyout.Items.Add(secondItem);
-                myFlyout.Items.Add(thirdItem);
-                myFlyout.Items.Add(fourthItem);
+                if (!(this.Frame.Parent is FlipView))
+                {
+                    myFlyout.Items.Add(thirdItem);
+                    myFlyout.Items.Add(fourthItem);
+                }
                 myFlyout.ShowAt(senderElement, new Point(0, 0));
             }
         }
