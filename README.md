@@ -1,6 +1,6 @@
 # Companion Display
 Companion Display is an app designed to give life to a secondary monitor or old device. 
-![CompanionDisplay](https://github.com/yagdev/Companion-Display/assets/53407061/9e9dfc31-f0f6-4a6c-aff6-2722d5ac6e07)
+![Icon25Small](https://github.com/user-attachments/assets/3720d677-13ba-4be8-a42a-882688473aee)
 
 ## How can I set up Companion Display?
 It's really simple! Download the latest release here:
@@ -25,7 +25,7 @@ To add Widgets simply tap the + button and choose a widget. Currently there are 
 ### Image Slideshow
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/e14409e6-f7e5-4a1a-a336-3590dcbae7bc)
 ### Hardware Monitor
-![image](https://github.com/user-attachments/assets/419d0513-a0da-4fdc-a7f3-b75f041d65b2)
+![image](https://github.com/user-attachments/assets/83a89f41-4730-481b-9755-4be5897ecfdb)
 ### Monitor brightness controls
 ![image](https://github.com/yagdev/Companion-Display/assets/53407061/4e160220-1a50-4a8d-a45a-dcd213a1e008)
 ### Android control widget with Battery info, Brightness controls and shutdown/restart controls
@@ -43,7 +43,7 @@ To add Widgets simply tap the + button and choose a widget. Currently there are 
 
 ## Pins
 · Pins allow you to keep selected Widgets on top while letting you scroll unpinned ones at the same time:
-![image](https://github.com/user-attachments/assets/4b94520d-090b-48fd-a64c-0b47a3fab30d)
+![image](https://github.com/user-attachments/assets/58dbbb64-e248-4fa5-8be6-b6c12d034fba)
 
 ## Picture-in-Picture support
 · Companion Display allows you to open Widgets in Picture-in-Picture mode, allowing you to keep the Widget pinned above other apps too like so:
@@ -54,7 +54,7 @@ To add Widgets simply tap the + button and choose a widget. Currently there are 
 
 ## App Configuration
 · To configure Companion Display, press the settings button on the bottom left corner. Here you can find the available settings separated by category. A restart is recommended after making changes but not mandatory.
-![image](https://github.com/user-attachments/assets/0e8c8b61-db45-456b-a456-7a73354d67b3)
+![image](https://github.com/user-attachments/assets/9dbe0c72-1fa4-4a2a-841f-44859b9d731b)
 ### Theme
 · This category allows you to change the color scheme, background, accent color and font used across the interface.
 ### Behavior
@@ -70,13 +70,12 @@ To add Widgets simply tap the + button and choose a widget. Currently there are 
 
 ## Lyric Viewer
 · By pressing the pop-out button in the Media Player Widget, you can access a pane with the lyrics of the currently playing song with synced lyrics and autoscroll.
-![image](https://github.com/user-attachments/assets/f3c4c0ac-631c-419d-b82d-6e4f0bef5444)
-
+![image](https://github.com/user-attachments/assets/125c0431-e099-4562-9079-76516e0c65c2)
 
 ## Browser
 · Companion Display has a built in browser based on WebView2. You can access it by pressing the Browser icon.
 · The Browser also includes Launchpad, a place to bookmark websites that can be edited by right-clicking an empty space while on a new tab.
-![image](https://github.com/user-attachments/assets/b44d583f-4fd5-4001-85ac-62ab6289f5b9)
+![image](https://github.com/user-attachments/assets/9b3e8d6e-d3fe-4b98-86b0-3c824b819151)
 
 ## Spotify
 · The Spotify tab is the web version of Spotify easily accessible.
