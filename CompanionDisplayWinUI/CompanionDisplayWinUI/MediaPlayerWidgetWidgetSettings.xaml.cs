@@ -51,6 +51,14 @@ namespace CompanionDisplayWinUI
             File.AppendAllText(Globals.MediaConfigFile, CID2.Text + "\n");
             File.AppendAllText(Globals.MediaConfigFile, CS2.Text + "\n");
             File.AppendAllText(Globals.MediaConfigFile, DiscordAppID.Text);
+            if (File.Exists(Globals.RefreshTokenPath))
+            {
+                File.Delete(Globals.RefreshTokenPath);
+            }
+            if (File.Exists(Globals.RefreshToken2Path))
+            {
+                File.Delete(Globals.RefreshToken2Path);
+            }
             var frame = this.Parent as Frame;
             frame.Navigate(typeof(MediaPlayerWidget));
         }

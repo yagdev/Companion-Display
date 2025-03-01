@@ -5,14 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Loaded="Page_Loaded"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <ScrollViewer>
-        <StackPanel Margin="0,50,0,0">
-            <Button Content="Start Server" Tapped="Button_Tapped"/>
-            <Button Content="Send Command" Tapped="Button_Tapped_1"/>
-            <TextBlock x:Name="LogText" TextWrapping="WrapWholeWords"/>
-        </StackPanel>
-    </ScrollViewer>
-    
+    <StackPanel>
+        <Button Content="Is it admin?" Tapped="Button_Tapped_1"/>
+        <TextBlock x:Name="Result"/>
+    </StackPanel>
 </Page>

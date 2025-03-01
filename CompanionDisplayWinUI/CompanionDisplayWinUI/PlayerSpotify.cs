@@ -782,11 +782,17 @@ namespace CompanionDisplayWinUI
             }
             return presence;
         }
+        private RichPresence comparisonPresence = new RichPresence();
         private void pushPresenceDiscord(RichPresence presence)
         {
             if ((client != null && Globals.playbackInfo != null && Globals.playbackInfo.PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing) || Globals.IsSpotify)
             {
-                client.SetPresence(presence);
+                if (presence.State != comparisonPresence.State || presence.Details != comparisonPresence.Details)
+                {
+                    comparisonPresence.State = presence.State;
+                    comparisonPresence.Details = presence.Details;
+                    client.SetPresence(presence);
+                }
             }
             else if(client != null)
             {

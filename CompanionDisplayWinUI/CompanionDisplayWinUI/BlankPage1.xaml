@@ -13,11 +13,13 @@
             <RowDefinition Height="360" x:Name="PinnedRow"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <ScrollViewer x:Name="PinScrollView" Margin="0,45,0,0" HorizontalAlignment="Stretch" Height="300" Grid.Row="0" Background="Transparent">
-                    <GridView x:Name="PinnedView" Margin="0,0,0,-15" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch" SizeChanged="CompleteGrid_SizeChanged"/>
-                </ScrollViewer>
-        <ScrollViewer Margin="5,0,0,0" HorizontalAlignment="Stretch" Grid.Row="1">
+        <ScrollViewer Margin="5,0,0,0" HorizontalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" VerticalScrollBarVisibility="Hidden">
             <GridView x:Name="BasicGridView" Margin="0,45,0,0" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch"/>
         </ScrollViewer>
+        <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity}" Grid.RowSpan="1" Margin="0,-8,0,-20" Visibility="Visible" Grid.Row="0" Loaded="ImageOptionalBlur_Loaded" RadiusX="8" RadiusY="8"/>
+        <ScrollViewer x:Name="PinScrollView" Margin="0,0,0,-20" HorizontalAlignment="Stretch" Height="380" Grid.Row="0" Background="Transparent" VerticalScrollBarVisibility="Hidden">
+            <GridView x:Name="PinnedView" Margin="0,45,0,0" SelectionMode="None" Tag="HomePageGridView" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsStarting="GridView_DragItemsStarting" DragOver="GridView_DragOver" Drop="GridView_Drop" DragItemsCompleted="BasicGridView_DragItemsCompleted" ManipulationCompleted="BasicGridView_ManipulationCompleted" VerticalAlignment="Stretch" SizeChanged="CompleteGrid_SizeChanged"/>
+        </ScrollViewer>
+        
     </Grid>
 </Page>

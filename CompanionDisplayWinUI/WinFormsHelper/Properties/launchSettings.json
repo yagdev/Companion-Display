@@ -2,8 +2,7 @@
   "profiles": {
     "WinFormsHelper": {
       "commandName": "Project",
-      "workingDirectory": "\\\\25.1.22.96\\net8.0-windows10.0.19041.0",
-      "remoteDebugEnabled": true,
+      "remoteDebugEnabled": false,
       "remoteDebugMachine": "85.244.86.188:4026",
       "authenticationMode": "Windows"
     }

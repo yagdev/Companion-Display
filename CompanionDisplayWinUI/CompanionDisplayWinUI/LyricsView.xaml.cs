@@ -265,7 +265,7 @@ namespace CompanionDisplayWinUI
                                     {
                                         try
                                         {
-                                            (LyricsList.Children[i + 1] as TextBlock).StartBringIntoView();
+                                            (LyricsList.Children[i + 2] as TextBlock).StartBringIntoView();
                                             (LyricsList.Children[i] as TextBlock).StartBringIntoView();
                                         }
                                         catch

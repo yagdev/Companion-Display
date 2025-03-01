@@ -29,6 +29,7 @@ using System.DirectoryServices.ActiveDirectory;
 using Windows.UI.WebUI;
 using System.Text;
 using Microsoft.Web.WebView2.Core;
+using Microsoft.UI.Xaml.Media.Animation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -107,8 +108,7 @@ namespace CompanionDisplayWinUI
         {
             App.SetFont(new Microsoft.UI.Xaml.Media.FontFamily((sender as MenuFlyoutItem).Text));
             FontSelector.Content = (sender as MenuFlyoutItem).Text;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
             (mainframe.Parent as NavigationView).PaneClosed += ProcessShit;
             (mainframe.Parent as NavigationView).PaneDisplayMode = NavigationViewPaneDisplayMode.LeftMinimal;
             mainframe.Navigate(typeof(BlankPage1));
@@ -133,8 +133,7 @@ namespace CompanionDisplayWinUI
                         break;
                 }
                 Globals.ColorSchemeSelect = ColorSchemeSelect.SelectedIndex;
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
         private void ComboBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
@@ -153,8 +152,7 @@ namespace CompanionDisplayWinUI
                         break;
                 }
                 Globals.InjectCustomAccent = AccentSelect.SelectedIndex;
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
                 mainframe.Navigate(typeof(BlankPage1));
                 mainframe.Navigate(typeof(BlankPage3));
             }
@@ -176,8 +174,7 @@ namespace CompanionDisplayWinUI
                 {
                     App.SetAccentColor(Color.FromArgb(255, (byte)Globals.ColorSchemeSelectAccentR, (byte)Globals.ColorSchemeSelectAccentG, (byte)Globals.ColorSchemeSelectAccentB));
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -189,8 +186,7 @@ namespace CompanionDisplayWinUI
                 Globals.Backdrop = BackdropSelect.SelectedIndex;
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -204,8 +200,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.Wallpaper = btntag;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
             }
@@ -223,19 +218,8 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.StealFocus = false;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
-        }
-        
-        private void Save_Settings()
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                Globals.ResetHome = true;
-                string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup + "\n" + Globals.LockLayout + "\n" + App.CurrentFont() + "\n" + Globals.sleepModeOpacity + "\n" + Globals.OverrideColor + "\n" + Globals.SleepColorR + "\n" + Globals.SleepColorG + "\n" + Globals.SleepColorB + "\n" + Globals.SearchEngine + "\n" + Globals.NewTabBehavior;
-                System.IO.File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
-            });
         }
         private void Save_SettingsOBS()
         {
@@ -259,8 +243,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.Blur = false;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
             }
@@ -269,8 +252,7 @@ namespace CompanionDisplayWinUI
         private void BackgroundLink_LostFocus(object sender, RoutedEventArgs e)
         {
             Globals.BackgroundLink = BackgroundLink.Text;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
             mainframe.IsEnabled = false;
             mainframe.IsEnabled = true;
         }
@@ -313,8 +295,7 @@ namespace CompanionDisplayWinUI
                 Globals.BackgroundColorR = BackgroundColorPicker.Color.R;
                 Globals.BackgroundColorG = BackgroundColorPicker.Color.G;
                 Globals.BackgroundColorB = BackgroundColorPicker.Color.B;
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
                 mainframe.IsEnabled = false;
                 mainframe.IsEnabled = true;
             }
@@ -332,8 +313,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.IsBetaProgram = false;
                 }
-                Thread thread = new (Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -349,8 +329,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.HideAddButton = false;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -389,8 +368,7 @@ namespace CompanionDisplayWinUI
                     }
                     Globals.LaunchOnStartup = false;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -406,8 +384,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.LockLayout = false;
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
@@ -424,30 +401,26 @@ namespace CompanionDisplayWinUI
                 Globals.SleepColorR = SleepModeColor.Color.R;
                 Globals.SleepColorG = SleepModeColor.Color.G;
                 Globals.SleepColorB = SleepModeColor.Color.B;
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
         }
 
         private void OvrColorSleepMode_Checked(object sender, RoutedEventArgs e)
         {
             Globals.OverrideColor = true;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
         }
 
         private void OvrColorSleepMode_Unchecked(object sender, RoutedEventArgs e)
         {
             Globals.OverrideColor = false;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
         }
 
         private void Opacity_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
             Globals.sleepModeOpacity = (sender as Slider).Value;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
         }
 
         private void SearchEngineCust_TextChanged(object sender, TextChangedEventArgs e)
@@ -462,8 +435,7 @@ namespace CompanionDisplayWinUI
                 {
                     Globals.SearchEngine = new Uri("https://www.google.com/");
                 }
-                Thread thread = new(Save_Settings);
-                thread.Start();
+                Globals.Save_Settings();
             }
             catch
             {
@@ -474,8 +446,7 @@ namespace CompanionDisplayWinUI
         private void NewTabBehavior_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Globals.NewTabBehavior = (sender as ComboBox).SelectedIndex;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
         }
 
         private void SearchEngineCust_TextChanged_1(object sender, TextChangedEventArgs e)
@@ -514,8 +485,7 @@ namespace CompanionDisplayWinUI
         private void Opacity_Tapped(object sender, TappedRoutedEventArgs e)
         {
             Globals.sleepModeOpacity = (sender as Slider).Value;
-            Thread thread = new(Save_Settings);
-            thread.Start();
+            Globals.Save_Settings();
         }
 
         private void OBSIP_TextChanged(object sender, TextChangedEventArgs e)
@@ -563,6 +533,14 @@ namespace CompanionDisplayWinUI
             Globals.obsPass = (sender as PasswordBox).Password;
             Thread thread = new(Save_SettingsOBS);
             thread.Start();
+        }
+
+        private void SetupBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var frame = this.Parent as Frame;
+            var navviewparent = frame.Parent as NavigationView;
+            navviewparent.IsPaneVisible = false;
+            frame.Navigate(typeof(SetupStep0), null, new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight });
         }
     }
 }

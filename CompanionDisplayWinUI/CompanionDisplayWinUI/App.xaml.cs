@@ -89,6 +89,7 @@ namespace CompanionDisplayWinUI
 
                 }
                 Globals.NewTabBehavior = int.Parse(readerconfig.ReadLine());
+                Globals.triggerSetup = bool.Parse(readerconfig.ReadLine());
                 string OBSConfig = File.ReadAllText("Config/OBSSettings.crlh");
                 using StringReader readerconfig1 = new(OBSConfig);
                 Globals.obsIP = readerconfig1.ReadLine();
@@ -156,6 +157,10 @@ namespace CompanionDisplayWinUI
             }
         }
         internal Window m_window;
+        public ElementTheme GetTheme()
+        {
+            return (m_window.Content as FrameworkElement).ActualTheme;
+        }
         public void SetAppTheme(ElementTheme theme)
         {
             if (m_window.Content is FrameworkElement frameworkElement)

@@ -17,7 +17,7 @@ namespace CompanionDisplayWinUI
     {
         // Runtime variables
         public static bool IsAdmin = false;
-        public static string Version = "25.2";
+        public static string Version = "25.3";
         public static bool isConfidential = false; // this is nothing too special, just disables update warnings for developer builds for sanity purposes :p
         public static ObsControls obsControls = new ObsControls();
         public static ServerComponent serverComponent = new ServerComponent();
@@ -56,6 +56,8 @@ namespace CompanionDisplayWinUI
         public static GlobalSystemMediaTransportControlsSessionTimelineProperties timelineInfo;
         public static GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo;
         public static int PiPAmount = 0;
+        // Browser stuff
+        public static CoreWebView2 coreWeb;
         // App config files
         public static string RefreshTokenPath = "Config/RefreshToken.crlh";
         public static string RefreshToken2Path = "Config/RefreshToken2.crlh";
@@ -63,6 +65,13 @@ namespace CompanionDisplayWinUI
         public static string TimeConfigFile = "Config/TimeConfig.crlh";
         public static string TimeConfigFileQS = "Config/TimeConfigQS.crlh";
         public static string PhotoConfigFile = "Config/PhotoConfig.crlh";
+        // Save Config
+        public static void Save_Settings()
+        {
+            Globals.ResetHome = true;
+            string settingsfile = Globals.ColorSchemeSelect + "\n" + Globals.InjectCustomAccent + "\n" + Globals.ColorSchemeSelectAccentR + "\n" + Globals.ColorSchemeSelectAccentG + "\n" + Globals.ColorSchemeSelectAccentB + "\n" + Globals.Backdrop + "\n" + Globals.BackgroundLink + "\n" + Globals.Wallpaper + "\n" + Globals.Blur + "\n" + Globals.StealFocus + "\n" + Globals.BackgroundColorR + "\n" + Globals.BackgroundColorG + "\n" + Globals.BackgroundColorB + "\n" + Globals.IsBetaProgram + "\n" + Globals.HideAddButton + "\n" + Globals.LaunchOnStartup + "\n" + Globals.LockLayout + "\n" + App.CurrentFont() + "\n" + Globals.sleepModeOpacity + "\n" + Globals.OverrideColor + "\n" + Globals.SleepColorR + "\n" + Globals.SleepColorG + "\n" + Globals.SleepColorB + "\n" + Globals.SearchEngine + "\n" + Globals.NewTabBehavior + "\n" + Globals.triggerSetup;
+            System.IO.File.WriteAllText("Config/GlobalSettings.crlh", settingsfile);
+        }
         // Loaded Configs
         public static int ColorSchemeSelect = 0;
         public static int ColorSchemeSelectAccentR = 0;
@@ -92,5 +101,6 @@ namespace CompanionDisplayWinUI
         public static int SleepColorB = 0;
         public static int NewTabBehavior = 0;
         public static Uri SearchEngine = new Uri("https://www.google.com");
+        public static bool triggerSetup = true;
     }
 }

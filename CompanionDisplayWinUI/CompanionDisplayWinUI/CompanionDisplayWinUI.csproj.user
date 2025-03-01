@@ -21,6 +21,21 @@
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="SetupStep0.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetupStep4.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetupStep3.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetupStep2.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="SetupStep1.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="NORC_WidgetMacros.xaml">
       <SubType>Designer</SubType>
     </Page>

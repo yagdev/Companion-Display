@@ -163,7 +163,9 @@ namespace CompanionDisplayWinUI
 
         private void newTabLaunchpad(object sender, RoutedEventArgs e)
         {
-            TabViewItem tab = CreateNewTVI("New Tab", "New Tab", (sender as Button).Tag as System.Uri);
+            var frame = this.Parent as Frame;
+            var navviewparent = frame.Parent as NavigationView;
+            TabViewItem tab = CreateNewTVI("New Tab", "New Tab", (sender as Button).Tag as System.Uri, navviewparent);
             BrowserTabs.TabItems.Remove(BrowserTabs.SelectedItem);
             BrowserTabs.TabItems.Add(tab);
             BrowserTabs.SelectedItem = tab;
@@ -210,7 +212,7 @@ namespace CompanionDisplayWinUI
                 NoItem.Visibility = Visibility.Collapsed;
             }
         }
-        private static TabViewItem CreateNewTVI(string header, string dataContext, System.Uri uri)
+        private static TabViewItem CreateNewTVI(string header, string dataContext, System.Uri uri, NavigationView navigationView)
         {
             var newTab = new TabViewItem()
             {
@@ -219,7 +221,7 @@ namespace CompanionDisplayWinUI
                     Symbol = Symbol.Placeholder
                 },
                 Header = header,
-                Content = new BlankPage2(uri)
+                Content = new BlankPage2(uri, navigationView)
                 {
                     DataContext = dataContext
                 }
@@ -262,7 +264,9 @@ namespace CompanionDisplayWinUI
                 {
                     uri = new System.Uri(Globals.SearchEngine + "/search?q=" + HttpUtility.UrlEncode(AddressBar.Text));
                 }
-                TabViewItem tab = CreateNewTVI("New Tab", "New Tab", uri);
+                var frame = this.Parent as Frame;
+                var navviewparent = frame.Parent as NavigationView;
+                TabViewItem tab = CreateNewTVI("New Tab", "New Tab", uri, navviewparent);
                 BrowserTabs.TabItems.Add(tab);
                 BrowserTabs.TabItems.Remove(BrowserTabs.SelectedItem);
                 BrowserTabs.SelectedItem = tab;
@@ -270,6 +274,8 @@ namespace CompanionDisplayWinUI
         }
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
+            var frame = this.Parent as Frame;
+            var navviewparent = frame.Parent as NavigationView;
             TabViewItem tab;
             if(Globals.NewTabBehavior == 0)
             {
@@ -277,7 +283,7 @@ namespace CompanionDisplayWinUI
             }
             else
             {
-                tab = CreateNewTVI("New Tab", "New Tab", null);
+                tab = CreateNewTVI("New Tab", "New Tab", null, navviewparent);
             }
             sender.TabItems.Add(tab);
             sender.SelectedItem = tab;
@@ -412,6 +418,22 @@ namespace CompanionDisplayWinUI
                     }
                 });
                 FTU = false;
+                if (Globals.IsAdmin || Globals.LockLayout)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        Launchpad.CanReorderItems = false;
+                        Launchpad.CanDragItems = false;
+                    });
+                }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        Launchpad.CanReorderItems = true;
+                        Launchpad.CanDragItems = true;
+                    });
+                }
             }
         }
 

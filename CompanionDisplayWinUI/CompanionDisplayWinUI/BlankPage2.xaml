@@ -9,17 +9,18 @@
     mc:Ignorable="d"
     Unloaded="Page_Unloaded" Loaded="Page_Loaded" IsEnabledChanged="Page_IsEnabledChanged" Background="{ThemeResource SolidBackgroundFillColorTertiary}" >
 
-    <Grid>
+    <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" x:Name="ControlsRow"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="5,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76b;" Click="Button_Click"/>
-        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="58,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76c;" Click="Button_Click_1"/>
-        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="111,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe80f;" Click="Button_Click_2"/>
-        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,58,0" FontFamily="Segoe Fluent Icons" Content="&#xe896;" HorizontalAlignment="Right" Click="Button_Click_3"/>
-        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,5,0" FontFamily="Segoe Fluent Icons" Content="&#xf738;" HorizontalAlignment="Right" Click="Button_Click_4"/>
-        <TextBox Name="AddressBar" VerticalAlignment="Top" Height="30" Margin="164,4,111,0" FontFamily="Segoe UI Variable Display" HorizontalAlignment="Stretch" KeyDown="AddressBar_KeyDown" Padding="10,5,10,0" PlaceholderText="Search or insert URL" GotFocus="AddressBar_GotFocus"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="5,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76b;" Click="Button_Click" CornerRadius="8"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="58,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe76c;" Click="Button_Click_1" CornerRadius="8"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="111,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe72c;" Click="Button_Click_5" CornerRadius="8"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="164,4,0,0" FontFamily="Segoe Fluent Icons" Content="&#xe80f;" Click="Button_Click_2" CornerRadius="8"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,58,0" FontFamily="Segoe Fluent Icons" Content="&#xe896;" HorizontalAlignment="Right" Click="Button_Click_3" CornerRadius="8"/>
+        <Button Width="50" Height="32" VerticalAlignment="Top" Margin="0,4,5,0" FontFamily="Segoe Fluent Icons" Content="&#xf738;" HorizontalAlignment="Right" Click="Button_Click_4" CornerRadius="8"/>
+        <TextBox Name="AddressBar" VerticalAlignment="Top" Height="30" Margin="217,4,111,0" FontFamily="Segoe UI Variable Display" HorizontalAlignment="Stretch" KeyDown="AddressBar_KeyDown" Padding="10,5,10,0" PlaceholderText="Search or insert URL" CornerRadius="8" GotFocus="AddressBar_GotFocus"/>
         <WebView2 x:Name="WebView" Grid.Row="2" NavigationCompleted="WebView_NavigationCompleted" KeyDown="WebView_KeyDown" Loaded="WebView_Loaded"/>
     </Grid>
 </Page>

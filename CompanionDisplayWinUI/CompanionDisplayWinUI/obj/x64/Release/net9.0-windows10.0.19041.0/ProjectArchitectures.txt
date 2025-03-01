@@ -1,0 +1,1 @@
+C:\Users\Dinis\source\repos\CompanionDisplayWinUI\CompanionDisplayWinUI\CompanionDisplayWinUI.csproj;x64

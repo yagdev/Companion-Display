@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page x:ConnectionId='1'
+    x:Class="CompanionDisplayWinUI.AllWidgets"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                        
+    mc:Ignorable="d">
+
+    <Grid Margin="0,35,0,0">
+        
+        <Grid Margin="0,0,0,0">
+            <NavigationView x:ConnectionId='2' PaneDisplayMode="Top" IsSettingsVisible="False" IsBackButtonVisible="Collapsed"                                                                                                     >
+                <NavigationView.MenuItems>
+                    <NavigationViewItem Icon="Add" Content="Add Widget" SelectsOnInvoked="False" IsHitTestVisible="False" Opacity="1"/>
+                    <NavigationViewItem x:ConnectionId='3' Icon="Clock" Content="Utilities" Name="UtilWidgets"/>
+                    <NavigationViewItem x:ConnectionId='4' Icon="Edit" Content="Customization" Name="CustWidgets"/>
+                    <NavigationViewItem x:ConnectionId='5' Icon="Clock" Content="Sensors" Name="SensorWidgets"/>
+                    <NavigationViewItem x:ConnectionId='6' Icon="Setting" Content="Controls" Name="ControlWidgets"/>
+                    <NavigationViewItem x:ConnectionId='7' Icon="Play" Content="Twitch" Name="TwitchWidgets"/>
+                    <NavigationViewItem x:ConnectionId='8' Icon="XboxOneConsole" Content="OBS" Name="OBSWidgets"/>
+                </NavigationView.MenuItems>
+                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="9">
+                    <StackPanel x:ConnectionId='9' Name="AllCategories">
+                        <GridView x:ConnectionId='10' x:Name="UtilWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Visible"/>
+                        <GridView x:ConnectionId='11' x:Name="CustWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Collapsed"/>
+                        <GridView x:ConnectionId='12' x:Name="SensorWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Collapsed"/>
+                        <GridView x:ConnectionId='13' x:Name="ControlWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Collapsed"/>
+                        <GridView x:ConnectionId='14' x:Name="TwitchWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Collapsed"/>
+                        <GridView x:ConnectionId='15' x:Name="OBSWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True"                                     Visibility="Collapsed"/>
+                    </StackPanel>
+                </ScrollViewer>
+            </NavigationView>
+        </Grid>
+    </Grid>
+</Page>
+

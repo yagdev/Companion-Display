@@ -30,16 +30,18 @@ namespace CompanionDisplayWinUI
     public sealed partial class BlankPage2 : Page
     {
         public Frame frame;
-        public BlankPage2(Uri link)
+        public BlankPage2(Uri link, NavigationView controlFS)
         {
-            linkLoad = link;
             this.InitializeComponent();
             this.NavigationCacheMode = NavigationCacheMode.Required;
             if (this.Tag as string == "Unload")
             {
                 WebView.Close();
             }
+            linkLoad = link;
+            nv = controlFS;
         }
+        private NavigationView nv;
         public Uri linkLoad;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -113,10 +115,15 @@ namespace CompanionDisplayWinUI
                 fullScreen = value;
                 if (fullScreen == true)
                 {
+                    nv.IsPaneVisible = false;
+                    MainGrid.Margin = new Thickness(-1);
                     WebView.Margin = new Thickness(0, -80, 0, 0);
                 }
                 else
                 {
+                    nv.IsPaneVisible = true;
+                    nv.IsPaneOpen = false;
+                    MainGrid.Margin = new Thickness(0);
                     WebView.Margin = new Thickness(0, 0, 0, 0);
                 }
             }
@@ -230,6 +237,11 @@ namespace CompanionDisplayWinUI
                 WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
                 FTU = false;
             }
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            WebView.Reload();
         }
     }
 }

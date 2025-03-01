@@ -41,8 +41,9 @@ namespace CompanionDisplayWinUI
                 {
                     Frame frame = new Frame();
                     frame.Name = "Widget" + i;
-                    frame.CornerRadius = new CornerRadius(10);
+                    frame.CornerRadius = new CornerRadius(8);
                     frame.Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
+                    frame.Loaded += BugcheckAcrylic;
                     frame.IsHitTestVisible = false;
                     frame.Navigate(item);
                     try
@@ -104,5 +105,22 @@ namespace CompanionDisplayWinUI
                 targetFile = "Config/WidgetOrder.crlh";
             }
         }
+        private void BugcheckAcrylic(object sender, RoutedEventArgs e)
+        {
+            int Backdrop = Globals.Backdrop;
+            if (Globals.Backdrop == 0 || Globals.Backdrop == 1)
+            {
+                var uiSettings = new Windows.UI.ViewManagement.UISettings();
+                (sender as Frame).Background = null;
+                (sender as Frame).Background = new SolidColorBrush(uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background));
+                (sender as Frame).Background.Opacity = 0.3;
+            }
+            else
+            {
+                (sender as Frame).Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
+                (sender as Frame).Background.Opacity = 1;
+            }
+        }
+
     }
 }

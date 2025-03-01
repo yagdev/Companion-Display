@@ -265,19 +265,23 @@ namespace CompanionDisplayWinUI
             SaveTo();
             if (PinnedView.Items.Count > 0)
             {
+                ImageOptionalBlur.Visibility = Visibility.Visible;
                 PinnedRow.Height = new GridLength(calculatedPinHeight());
+                BasicGridView.Margin = new Thickness(0, 45 + calculatedPinHeight(), 0, 0);
             }
             else
             {
+                ImageOptionalBlur.Visibility = Visibility.Collapsed;
                 PinnedRow.Height = new GridLength();
+                BasicGridView.Margin = new Thickness(0, 45, 0, 0);
             }
         }
         
         public int calculatedPinHeight()
         {
-            int calculatedInitial = (int)Math.Ceiling(PinnedView.Items.Count / ((CompleteGrid.ActualWidth - 10) / 505)) * (300 + 10) + 50;
+            int calculatedInitial = (int)(Math.Ceiling((500 * PinnedView.Items.Count + PinnedView.Items.Count * 2 + 6) / (CompleteGrid.ActualWidth)) * 302 + 60);
             int convertedHeight = (int)CompleteGrid.ActualHeight;
-            if (calculatedInitial <= convertedHeight)
+            if (calculatedInitial <= convertedHeight - 360)
             {
                 if (convertedHeight - 360 < 360)
                 {
@@ -306,13 +310,19 @@ namespace CompanionDisplayWinUI
                 BasicGridView.Items.Add((sender as MenuFlyoutItem).Tag as Frame);
             }
             SaveTo();
-            if(PinnedView.Items.Count > 0)
+            if (PinnedView.Items.Count > 0)
             {
-                PinnedRow.Height = new GridLength(360);
+                ImageOptionalBlur.Visibility = Visibility.Visible;
+                PinnedRow.Height = new GridLength(calculatedPinHeight());
+                BasicGridView.Margin = new Thickness(0, 45 + calculatedPinHeight(), 0, 0);
+                PinScrollView.Height = PinnedRow.Height.Value - 60;
             }
             else
             {
+                ImageOptionalBlur.Visibility = Visibility.Collapsed;
                 PinnedRow.Height = new GridLength(0);
+                BasicGridView.Margin = new Thickness(0, 45, 0, 0);
+                PinScrollView.Height = 0;
             }
         }
 
@@ -376,7 +386,7 @@ namespace CompanionDisplayWinUI
                                     Frame frame = new()
                                     {
                                         Name = "Widget" + i,
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Tag = folderpath,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -396,7 +406,7 @@ namespace CompanionDisplayWinUI
                                     Frame frame = new()
                                     {
                                         Name = "Widget" + i,
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Tag = ID,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -416,7 +426,7 @@ namespace CompanionDisplayWinUI
                                 {
                                     Frame frame = new()
                                     {
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Name = ID2,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -436,7 +446,7 @@ namespace CompanionDisplayWinUI
                                         Frame frame = new()
                                         {
                                             Name = "Widget" + i,
-                                            CornerRadius = new CornerRadius(10),
+                                            CornerRadius = new CornerRadius(8),
                                             Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                         };
                                         frame.Loaded += BugcheckAcrylic;
@@ -493,7 +503,7 @@ namespace CompanionDisplayWinUI
                                     Frame frame = new()
                                     {
                                         Name = "Widget" + i,
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Tag = folderpath,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -513,7 +523,7 @@ namespace CompanionDisplayWinUI
                                     Frame frame = new()
                                     {
                                         Name = "Widget" + i,
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Tag = ID,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -533,7 +543,7 @@ namespace CompanionDisplayWinUI
                                 {
                                     Frame frame = new()
                                     {
-                                        CornerRadius = new CornerRadius(10),
+                                        CornerRadius = new CornerRadius(8),
                                         Name = ID2,
                                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                     };
@@ -553,7 +563,7 @@ namespace CompanionDisplayWinUI
                                         Frame frame = new()
                                         {
                                             Name = "Widget" + i,
-                                            CornerRadius = new CornerRadius(10),
+                                            CornerRadius = new CornerRadius(8),
                                             Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                                         };
                                         frame.Loaded += BugcheckAcrylic;
@@ -590,7 +600,7 @@ namespace CompanionDisplayWinUI
                     {
                         Height = 300,
                         Width = 500,
-                        CornerRadius = new CornerRadius(10),
+                        CornerRadius = new CornerRadius(8),
                         Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"],
                     };
                     grid.Loaded += BugcheckAcrylic;
@@ -603,7 +613,7 @@ namespace CompanionDisplayWinUI
                         Width = 500,
                         FontSize = 100,
                         Margin = new Thickness(0),
-                        CornerRadius = new CornerRadius(10),
+                        CornerRadius = new CornerRadius(8),
                         BorderThickness = new Thickness(0),
                         Background = new SolidColorBrush(Color.FromArgb(0,0,0,0)),
                         AllowDrop = false,
@@ -644,7 +654,7 @@ namespace CompanionDisplayWinUI
                             Frame frame = new()
                             {
                                 Name = "UpdateWidget1",
-                                CornerRadius = new CornerRadius(10),
+                                CornerRadius = new CornerRadius(8),
                             };
                             frame.RightTapped += Frame_RightTapped;
                             BasicGridView.Items.Insert(0,frame);
@@ -757,13 +767,42 @@ namespace CompanionDisplayWinUI
         {
             if (PinnedView.Items.Count > 0)
             {
+                ImageOptionalBlur.Visibility = Visibility.Visible;
                 PinnedRow.Height = new GridLength(calculatedPinHeight());
-                PinScrollView.Height = PinnedRow.Height.Value - 60;
+                BasicGridView.Margin = new Thickness(0, 45 + calculatedPinHeight(), 0, 0);
+                PinScrollView.Height = PinnedRow.Height.Value + 20;
             }
             else
             {
+                ImageOptionalBlur.Visibility = Visibility.Collapsed;
                 PinnedRow.Height = new GridLength(0);
+                BasicGridView.Margin = new Thickness(0, 45, 0, 0);
                 PinScrollView.Height = 0;
+            }
+        }
+
+        private void ImageOptionalBlur_Loaded(object sender, RoutedEventArgs e)
+        {
+            int Backdrop = Globals.Backdrop;
+            if (Globals.Backdrop == 0 || Globals.Backdrop == 1)
+            {
+                var uiSettings = new Windows.UI.ViewManagement.UISettings();
+                (sender as Rectangle).Fill = null;
+                Color uiDefault = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background);
+                if(((App)Application.Current).GetTheme() == ElementTheme.Dark)
+                {
+                    (sender as Rectangle).Fill = new SolidColorBrush(Color.FromArgb(255, 33, 33, 33));
+                }
+                else
+                {
+                    (sender as Rectangle).Fill = new SolidColorBrush(Color.FromArgb(255, 212, 212, 212));
+                }
+                (sender as Rectangle).Fill.Opacity = 1;
+            }
+            else
+            {
+                (sender as Rectangle).Fill = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
+                (sender as Rectangle).Fill.Opacity = 1;
             }
         }
     }

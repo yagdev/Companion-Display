@@ -59,6 +59,8 @@ using OBSWebsocketDotNet.Types;
 using OBSWebsocketDotNet.Types.Events;
 using static CompanionDisplayWinUI.MediaPlayerWidget;
 using System.Net.Sockets;
+using Microsoft.UI.Xaml.Media.Animation;
+using WinFormsHelper;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -76,26 +78,10 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            Globals.serverComponent.callReceived += updateLog;
-        }
-
-        private void updateLog(string reply)
-        {
-            LogText.Text += reply;
-        }
-
-        private async void Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            Globals.serverComponent.startServer();
-            LogText.Text = "Server started";
-        }
-
         private void Button_Tapped_1(object sender, TappedRoutedEventArgs e)
         {
-            Globals.serverComponent.SendCommandAsync("Hello from Companion Display Desktop");
+            Class1 class1 = new();
+            Result.Text = class1.isAdmin().ToString();
         }
     }
 }

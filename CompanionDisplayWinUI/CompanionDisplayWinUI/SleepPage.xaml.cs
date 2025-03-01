@@ -67,6 +67,7 @@ namespace CompanionDisplayWinUI
                 }
             }
             StackUnderflow.Opacity = Globals.sleepModeOpacity / 100;
+            Oppenheimer.Opacity = StackUnderflow.Opacity;
             Thread thread = new(UpdateUI);
             thread.Start();
             try

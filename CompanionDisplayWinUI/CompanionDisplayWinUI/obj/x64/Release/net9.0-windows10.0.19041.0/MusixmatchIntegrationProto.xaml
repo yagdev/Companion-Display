@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="CompanionDisplayWinUI.MusixmatchIntegrationProto"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:CompanionDisplayWinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <StackPanel>
+        <Button x:ConnectionId='2' Content="Is it admin?"                         />
+        <TextBlock x:ConnectionId='3' x:Name="Result"/>
+    </StackPanel>
+</Page>
+

@@ -47,6 +47,7 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
             this.ExtendsContentIntoTitleBar = true;
+            SetTitleBar(AppTitleBar);
             _appWindow = GetAppWindowForCurrentWindow();
             Thread thread = new(UpdateUI);
             thread.Start();
@@ -384,15 +385,30 @@ namespace CompanionDisplayWinUI
         {
             if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
             {
+                CornerMask.Visibility = Visibility.Visible;
+                AppTitleBar.Visibility = Visibility.Visible;
+                this.ExtendsContentIntoTitleBar = true;
                 _appWindow.SetPresenter(AppWindowPresenterKind.Default);
                 DebugPage.Content = "Enter Fullscreen";
                 DebugPage.Icon = new SymbolIcon(Symbol.FullScreen);
             }
             else
             {
+                this.ExtendsContentIntoTitleBar = false;
+                CornerMask.Visibility = Visibility.Collapsed;
+                AppTitleBar.Visibility = Visibility.Collapsed;
                 _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
                 DebugPage.Content = "Exit Fullscreen";
                 DebugPage.Icon = new SymbolIcon(Symbol.BackToWindow);
+            }
+        }
+
+        private void nvSample_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Globals.triggerSetup)
+            {
+                (sender as NavigationView).IsPaneVisible = false;
+                contentFrame.Navigate(typeof(SetupStep0));
             }
         }
     }
