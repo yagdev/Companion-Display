@@ -1,6 +1,6 @@
 # Companion Display
 Companion Display is an app designed to give life to a secondary monitor or old device. 
-![image](https://github.com/user-attachments/assets/800fb33e-46a1-449e-91f1-0c02d2ce57c4)
+![image](https://github.com/user-attachments/assets/14cc8733-3a51-42da-ac87-74bcb564280b)
 
 ## How can I set up Companion Display?
 It's really simple! Download the latest release here:
