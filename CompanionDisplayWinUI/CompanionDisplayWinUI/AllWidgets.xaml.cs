@@ -1,21 +1,12 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Core;
-using Windows.Media.Playback;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -39,11 +30,13 @@ namespace CompanionDisplayWinUI
             {
                 if (item.Name.Contains("Widget") && item.Name != "AllWidgets" && !item.Name.Contains("WidgetSettings") && !item.Name.Contains("Individual"))
                 {
-                    Frame frame = new Frame();
-                    frame.Name = "Widget" + i;
-                    frame.CornerRadius = new CornerRadius(8);
-                    frame.Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
-                    frame.Loaded += BugcheckAcrylic;
+                    Frame frame = new()
+                    {
+                        Name = "Widget" + i,
+                        CornerRadius = new CornerRadius(8),
+                        Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"]
+                    };
+                    frame.Loaded += Workarounds.BugcheckAcrylic;
                     frame.IsHitTestVisible = false;
                     frame.Navigate(item);
                     try
@@ -86,7 +79,7 @@ namespace CompanionDisplayWinUI
 
         private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            foreach(GridView gridView in AllCategories.Children)
+            foreach (GridView gridView in AllCategories.Children.Cast<GridView>())
             {
                 gridView.Visibility = Visibility.Collapsed;
             }
@@ -95,7 +88,7 @@ namespace CompanionDisplayWinUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (((this.Parent as Frame).Parent as NavigationView).Tag != null && ((this.Parent as Frame).Parent as NavigationView).Tag != "")
+            if (((this.Parent as Frame).Parent as NavigationView).Tag is not null and not (object)"")
             {
                 targetFile = "Config/Stacks/" + ((this.Parent as Frame).Parent as NavigationView).Tag.ToString() + ".crlh";
                 ((this.Parent as Frame).Parent as NavigationView).Tag = "";
@@ -105,22 +98,5 @@ namespace CompanionDisplayWinUI
                 targetFile = "Config/WidgetOrder.crlh";
             }
         }
-        private void BugcheckAcrylic(object sender, RoutedEventArgs e)
-        {
-            int Backdrop = Globals.Backdrop;
-            if (Globals.Backdrop == 0 || Globals.Backdrop == 1)
-            {
-                var uiSettings = new Windows.UI.ViewManagement.UISettings();
-                (sender as Frame).Background = null;
-                (sender as Frame).Background = new SolidColorBrush(uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background));
-                (sender as Frame).Background.Opacity = 0.3;
-            }
-            else
-            {
-                (sender as Frame).Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
-                (sender as Frame).Background.Opacity = 1;
-            }
-        }
-
     }
 }

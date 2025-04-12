@@ -1,24 +1,15 @@
-﻿using EmbedIO.Sessions;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.VisualBasic.Logging;
-using OBSWebsocketDotNet;
+﻿using OBSWebsocketDotNet;
 using OBSWebsocketDotNet.Communication;
 using OBSWebsocketDotNet.Types;
 using OBSWebsocketDotNet.Types.Events;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CompanionDisplayWinUI
 {
     internal class ObsControls
     {
-        public OBSWebsocket obs = new OBSWebsocket()
+        public OBSWebsocket obs = new()
         {
             WSTimeout = TimeSpan.FromSeconds(1),
         };
@@ -26,21 +17,19 @@ namespace CompanionDisplayWinUI
         public bool initialized = false;
         public delegate void HandleStupidEvents();
         public delegate void HandleStupidEvents2();
-        public event HandleStupidEvents callUpdate;
-        public event HandleStupidEvents2 callUpdateStats;
-        public void connect()
+        public event HandleStupidEvents CallUpdate;
+        public event HandleStupidEvents2 CallUpdateStats;
+        public void Connect()
         {
             try
             {
-                obs.Connected += connectionstep2;
-                obs.Disconnected += disconnect;
+                obs.Connected += Connectionstep2;
+                obs.Disconnected += Disconnect;
                 obs.ConnectAsync(Globals.obsIP, Globals.obsPass);
             }
-            catch (Exception ex)
-            {
-            }
+            catch { }
         }
-        private void reqStats()
+        private void ReqStats()
         {
             while (connectionSuccessful)
             {
@@ -49,7 +38,7 @@ namespace CompanionDisplayWinUI
                     obsData = obs.GetStats();
                     outputStatus = obs.GetStreamStatus();
                     recStatus = obs.GetRecordStatus();
-                    onUpdate();
+                    OnUpdate();
                 }
                 catch
                 {
@@ -58,33 +47,33 @@ namespace CompanionDisplayWinUI
                 Thread.Sleep(1000);
             }
         }
-        private void disconnect(object sender, ObsDisconnectionInfo e)
+        private void Disconnect(object sender, ObsDisconnectionInfo e)
         {
             connectionSuccessful = false;
         }
-        protected virtual void onUpdate()
+        protected virtual void OnUpdate()
         {
-            callUpdateStats?.Invoke(); // Pass EventArgs.Empty for no data
+            CallUpdateStats?.Invoke(); // Pass EventArgs.Empty for no data
         }
         protected virtual void OnMyEvent()
         {
-            callUpdate?.Invoke(); // Pass EventArgs.Empty for no data
+            CallUpdate?.Invoke(); // Pass EventArgs.Empty for no data
         }
-        private void connectionstep2(object sender, EventArgs e)
+        private void Connectionstep2(object sender, EventArgs e)
         {
-            obs.CurrentProgramSceneChanged += updateSelection;
-            Thread thread = new(reqStats);
+            obs.CurrentProgramSceneChanged += UpdateSelection;
+            Thread thread = new(ReqStats);
             thread.Start();
             connectionSuccessful = true;
-            updateSelection(sender, null);
+            UpdateSelection(sender, null);
         }
 
-        private void updateSelection(object sender, ProgramSceneChangedEventArgs e)
+        private void UpdateSelection(object sender, ProgramSceneChangedEventArgs e)
         {
             try
             {
                 currentSession = obs.GetCurrentProgramScene();
-                scenes = obs.ListScenes().ToArray();
+                scenes = [.. obs.ListScenes()];
                 OnMyEvent();
             }
             catch
@@ -92,10 +81,10 @@ namespace CompanionDisplayWinUI
                 connectionSuccessful = false;
             }
         }
-        public ObsStats obsData = new ObsStats();
-        public OutputStatus outputStatus = new OutputStatus();
-        public RecordingStatus recStatus = new RecordingStatus();
-        public void manualConnectReq()
+        public ObsStats obsData = new();
+        public OutputStatus outputStatus = new();
+        public RecordingStatus recStatus = new();
+        public void ManualConnectReq()
         {
             try
             {
@@ -108,7 +97,7 @@ namespace CompanionDisplayWinUI
         }
         public SceneBasicInfo[] scenes;
         public string currentSession = "";
-        public void setScene(string newScene)
+        public void SetScene(string newScene)
         {
             obs.SetCurrentProgramScene(newScene);
         }
@@ -128,24 +117,24 @@ namespace CompanionDisplayWinUI
         {
             obs.StopRecord();
         }
-        public void pauseToggle()
+        public void PauseToggle()
         {
             obs.ToggleRecordPause();
         }
-        public void cameraToggle()
+        public void CameraToggle()
         {
             obs.ToggleVirtualCam();
         }
-        public void bufferToggle()
+        public void BufferToggle()
         {
             obs.ToggleReplayBuffer();
         }
-        public void bufferSave()
+        public void BufferSave()
         {
             obs.SaveReplayBuffer();
         }
         public bool micMute = false;
-        public void micToggle()
+        public void MicToggle()
         {
             foreach(var input in obs.GetInputList())
             {
@@ -163,7 +152,7 @@ namespace CompanionDisplayWinUI
         public void Reconnect()
         {
             obs.Disconnect();
-            connect();
+            Connect();
         }
     }
 }

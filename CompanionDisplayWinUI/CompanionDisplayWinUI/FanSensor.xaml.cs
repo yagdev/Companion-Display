@@ -1,19 +1,8 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using LibreHardwareMonitor.Hardware;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,65 +21,31 @@ namespace CompanionDisplayWinUI
         private bool FTU = true;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            CleanUp = false;
-            var parent = this.Parent as Frame;
-            if (parent != null)
+            if (FTU)
             {
-                if (FTU)
+                var parent = this.Parent as Frame;
+                if (parent != null)
                 {
                     FTU = false;
                     SensorName.Text = parent.Name;
-                    var sensor = parent.Tag as ISensor;
-                    sensor1 = sensor;
+                    sensor1 = parent.Tag as ISensor;
                 }
-                Thread thread = new(UpdateUI);
-                thread.Start();
             }
+            HardwareSensorsFunction.UpdateSensorValue += UpdateUI;
+            Thread thread = new(UpdateUI);
+            thread.Start();
         }
         ISensor sensor1;
-        public string LoadValue2;
+        public double LoadValue, LoadMin, LoadMax;
+
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            CleanUp = true;
+            HardwareSensorsFunction.UpdateSensorValue -= UpdateUI;
         }
-        public bool CleanUp = false;
         private double LastValue = -1;
         private void UpdateUI()
         {
-            if (sensor1 != null)
-            {
-                string query = "";
-                try
-                {
-                    if (sensor1.Hardware.Parent != null)
-                    {
-                        query = sensor1.Hardware.Parent.Name;
-                    }
-                    if ((Globals.CurrentHW == sensor1.Hardware || Globals.CurrentHW == sensor1.Hardware.Parent) && Math.Round((float)sensor1.Value) != LastValue)
-                    {
-                        LastValue = Math.Round((float)sensor1.Value);
-                        try
-                        {
-                            LoadValue2 = (Math.Round((float)sensor1.Value)) + " RPM";
-                        }
-                        catch { }
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            LoadPercent.Text = LoadValue2;
-                        });
-                    }
-                }
-                catch
-                {
-
-                }
-            }
-            if (CleanUp == false)
-            {
-                Thread.Sleep(3000);
-                Thread thread = new(UpdateUI);
-                thread.Start();
-            }
+            Sensors.UpdateSensorValue(sensor1, LastValue, LoadPercent, TempProgress, AppStrings.sensorsRPM, DispatcherQueue, false);
         }
     }
 }

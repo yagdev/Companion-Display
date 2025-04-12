@@ -1,24 +1,11 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.WSMan.Management;
 using OBSWebsocketDotNet.Communication;
-using OBSWebsocketDotNet.Types;
-using OBSWebsocketDotNet.Types.Events;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.ViewManagement;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,18 +20,18 @@ namespace CompanionDisplayWinUI
         public ObsSceneControllerWidget()
         {
             this.InitializeComponent();
-            Globals.obsControls.obs.Disconnected += disconnectEvent;
-            Globals.obsControls.obs.Connected += connectedEvent;
+            Globals.obsControls.obs.Disconnected += DisconnectEvent;
+            Globals.obsControls.obs.Connected += ConnectedEvent;
         }
 
-        private void connectedEvent(object sender, EventArgs e)
+        private void ConnectedEvent(object sender, EventArgs e)
         {
-            revertLayout();
+            RevertLayout();
         }
 
-        private void disconnectEvent(object sender, ObsDisconnectionInfo e)
+        private void DisconnectEvent(object sender, ObsDisconnectionInfo e)
         {
-            Globals.obsControls.callUpdate -= updateUI;
+            Globals.obsControls.CallUpdate -= UpdateUI;
             DispatcherQueue.TryEnqueue(() =>
             {
                 OBSError.Visibility = Visibility.Visible;
@@ -52,9 +39,9 @@ namespace CompanionDisplayWinUI
         }
         private void Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Thread thread = new(Globals.obsControls.manualConnectReq);
+            Thread thread = new(Globals.obsControls.ManualConnectReq);
             thread.Start();
-            System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+            System.Timers.Timer timer = new(3000) { Enabled = true };
             (sender as Button).IsEnabled = false;
             timer.Elapsed += (sender, args) =>
             {
@@ -63,14 +50,14 @@ namespace CompanionDisplayWinUI
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         ReconnectBtn.IsEnabled = true;
-                        ReconnectBtn.Content = "Connection failed, try again.";
+                        ReconnectBtn.Content = AppStrings.obsConnectionFailed;
                         timer.Dispose();
                     });
                 }
             };
         }
 
-        private void revertLayout()
+        private void RevertLayout()
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -84,8 +71,8 @@ namespace CompanionDisplayWinUI
         {
             if (Globals.obsControls.connectionSuccessful)
             {
-                updateUI();
-                Globals.obsControls.callUpdate += updateUI;
+                UpdateUI();
+                Globals.obsControls.CallUpdate += UpdateUI;
             }
             else
             {
@@ -93,7 +80,7 @@ namespace CompanionDisplayWinUI
             }
         }
 
-        private void updateUI()
+        private void UpdateUI()
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -102,14 +89,18 @@ namespace CompanionDisplayWinUI
                     TotalScenes.Items.Clear();
                     for (int i = 0; i < Globals.obsControls.scenes.Length; i++)
                     {
-                        Grid grid = new Grid();
-                        grid.Width = 90;
-                        grid.Height = 90;
-                        TextBlock individualScene = new();
-                        individualScene.Text = Globals.obsControls.scenes[i].Name;
-                        individualScene.TextWrapping = TextWrapping.WrapWholeWords;
-                        individualScene.VerticalAlignment = VerticalAlignment.Center;
-                        individualScene.HorizontalAlignment = HorizontalAlignment.Center;
+                        Grid grid = new()
+                        {
+                            Width = 90,
+                            Height = 90
+                        };
+                        TextBlock individualScene = new()
+                        {
+                            Text = Globals.obsControls.scenes[i].Name,
+                            TextWrapping = TextWrapping.WrapWholeWords,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Center
+                        };
                         grid.Children.Add(individualScene);
                         TotalScenes.Items.Insert(0, grid);
                         if (Globals.obsControls.scenes[i].Name == Globals.obsControls.currentSession)
@@ -134,7 +125,7 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                Globals.obsControls.setScene(((TotalScenes.SelectedItem as Grid).Children[0] as TextBlock).Text);
+                Globals.obsControls.SetScene(((TotalScenes.SelectedItem as Grid).Children[0] as TextBlock).Text);
             }
             catch
             {
@@ -144,7 +135,7 @@ namespace CompanionDisplayWinUI
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Globals.obsControls.callUpdate -= updateUI;
+            Globals.obsControls.CallUpdate -= UpdateUI;
         }
     }
 }

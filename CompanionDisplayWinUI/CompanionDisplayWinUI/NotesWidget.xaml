@@ -115,6 +115,6 @@
         </Style>
     </Page.Resources>
     <Grid>
-        <TextBox Margin="10" Style="{StaticResource NotesStyle}" TextWrapping="Wrap" FontFamily="MV Boli" FontSize="32" PlaceholderText="Insert Note" Name="Notes" LostFocus="Notes_LostFocus" Tapped="Notes_Tapped"/>
+        <TextBox Margin="10" Style="{StaticResource NotesStyle}" TextWrapping="Wrap" FontFamily="MV Boli" FontSize="32" x:Uid="NotesPlaceholder" Name="Notes" LostFocus="Notes_LostFocus" Tapped="Notes_Tapped"/>
     </Grid>
 </Page>

@@ -1,18 +1,7 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -34,18 +23,13 @@ namespace CompanionDisplayWinUI
         {
             if (FTU)
             {
-                var environmentOptions = new CoreWebView2EnvironmentOptions();
-                environmentOptions.AreBrowserExtensionsEnabled = true;
-                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
-                await Player.EnsureCoreWebView2Async(environment);
-                Player.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
+                await BrowserClass.CreateWebviewProperly(Player, new Uri("https://dashboard.twitch.tv/popout/stream-manager/moderation-actions"));
                 FTU = false;
             }
-            Player.Source = new Uri("https://dashboard.twitch.tv/popout/stream-manager/moderation-actions");
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PopOutPlayer m_window = new PopOutPlayer(Player.Source);
+            PopOutPlayer m_window = new(Player.Source);
             m_window.Activate();
         }
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)

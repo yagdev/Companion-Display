@@ -10,7 +10,7 @@
 
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Text="Small Data" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0"/>
+            <TextBlock x:Uid="SmallData" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0"/>
             <TextBlock Name="SensorName" Text="-" FontSize="20" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="{ThemeResource SystemBaseMediumColor}"/>
         </StackPanel>
         <TextBlock Name="LoadPercent" Text="-MB" FontSize="20" VerticalAlignment="Center" Margin="0,0,10,0" HorizontalAlignment="Right"/>

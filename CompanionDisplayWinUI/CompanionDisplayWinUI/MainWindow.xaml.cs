@@ -1,32 +1,17 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Core;
-using Windows.Storage;
-using Windows.UI.ViewManagement;
 using WinRT.Interop;
-using static CompanionDisplayWinUI.MediaPlayerWidget;
 using Microsoft.UI.Windowing;
 using Microsoft.UI;
-using Windows.Media.Control;
 using Windows.UI;
-using Windows.UI.WebUI;
-using Microsoft.Web.WebView2.Core;
-using static System.Net.WebRequestMethods;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -46,6 +31,7 @@ namespace CompanionDisplayWinUI
         public MainWindow()
         {
             this.InitializeComponent();
+            CommonlyAccessedInstances.nvSample = nvSample;
             this.ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
             _appWindow = GetAppWindowForCurrentWindow();
@@ -76,7 +62,6 @@ namespace CompanionDisplayWinUI
                             sender.PaneClosed += ProcessShit;
                             break;
                         case "SamplePage1":
-                            EvadeCringeBehavior = false;
                             SleepReptangle.Visibility = Visibility.Collapsed;
                             contentFrame.Navigate(typeof(BlankPage1), null, args.RecommendedNavigationTransitionInfo);
                             if (Globals.StealFocus)
@@ -127,105 +112,44 @@ namespace CompanionDisplayWinUI
             }
         }
 
-        private bool EvadeCringeBehavior = false;
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             Globals.StartedPlayer = false;
             Environment.Exit(0);
         }
-        string SongTitleCache = "";
-        int SongCoverStarted = 0;
-        private async void SongCoverBackground()
+        private void SongCoverBackground()
         {
-            if (Globals.IsSpotify == true && Globals.SongName != SongTitleCache)
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    try
-                    {
-                        BackgroundImage.Source = new BitmapImage(new Uri(Globals.SongBackground));
-                        SongTitleCache = Globals.SongName;
-                    }
-                    catch
-                    {
-                    }
-                });
-            }
-            else
-            {
-                if(Globals.IsSpotify == false)
-                {
-                    try
-                    {
-                        if (SongTitleCache != Globals.songInfo.Title)
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                try
-                                {
-                                    BackgroundImage.Source = null;
-                                    BackgroundImage.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
-                                    SongTitleCache = Globals.songInfo.Title;
-                                }
-                                catch
-                                {
-
-                                }
-                            });
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-            }
-            Thread.Sleep(1000);
-            if(Globals.Backdrop == 3)
-            {
-                Thread thread = new(SongCoverBackground);
-                thread.Start();
-            }
-            else
-            {
-                SongCoverStarted = 0;
-            }
+            Media.GetCover(DispatcherQueue, BackgroundImage);
         }
-        private async void UpdateUI()
+        private void UpdateUI()
         {
             try
             {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    BackgroundImage.Visibility = Visibility.Collapsed;
+                    ImageOptionalBlur.Visibility = Visibility.Collapsed;
+                    SystemBackdrop = null;
+                    GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
+                });
                 switch (Globals.Backdrop)
                 {
                     case (0):
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0,0,0,0));
                             SystemBackdrop = new DesktopAcrylicBackdrop();
-                            BackgroundImage.Visibility = Visibility.Collapsed;
-                            ImageOptionalBlur.Visibility = Visibility.Collapsed;
-                            BackgroundVideo.Visibility = Visibility.Collapsed;
-                            BackgroundImage.Source = null;
-                            BackgroundVideo.Source = null;
                         });
                         break;
                     case (1):
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
                             SystemBackdrop = new MicaBackdrop();
-                            BackgroundImage.Visibility = Visibility.Collapsed;
-                            ImageOptionalBlur.Visibility = Visibility.Collapsed;
-                            BackgroundVideo.Visibility = Visibility.Collapsed;
-                            BackgroundImage.Source = null;
-                            BackgroundVideo.Source = null;
                         });
                         break;
                     case (2):
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                            SystemBackdrop = null;
-                            if (Globals.Blur == true)
+                            if (Globals.Blur)
                             {
                                 ImageOptionalBlur.Visibility = Visibility.Visible;
                             }
@@ -234,85 +158,37 @@ namespace CompanionDisplayWinUI
                                 ImageOptionalBlur.Visibility = Visibility.Collapsed;
                             }
                         });
-                        try
+                        DispatcherQueue.TryEnqueue(() =>
                         {
-                            DispatcherQueue.TryEnqueue(() =>
+                            try
                             {
-                                try
+                                if (Globals.BackgroundLink == "")
                                 {
-                                    if (Globals.BackgroundLink == "")
+                                    string imagePath = Globals.Wallpaper;
+                                    BitmapImage bitmapImage = new();
+                                    using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                                     {
-                                        string imagePath = Globals.Wallpaper;
-                                        BitmapImage bitmapImage = new();
-                                        using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                                        {
-                                            bitmapImage.SetSource(stream.AsRandomAccessStream());
-                                        }
-                                        BackgroundImage.Source = bitmapImage;
+                                        bitmapImage.SetSource(stream.AsRandomAccessStream());
                                     }
-                                    else
-                                    {
-                                        BitmapImage bitmapImage = new()
-                                        {
-                                            UriSource = new Uri(Globals.BackgroundLink)
-                                        };
-                                        BackgroundImage.Source = bitmapImage;
-                                    }
+                                    BackgroundImage.Source = bitmapImage;
                                     BackgroundImage.Visibility = Visibility.Visible;
-                                    BackgroundVideo.Visibility = Visibility.Collapsed;
-                                    BackgroundVideo.Source = null;
                                 }
-                                catch
+                                else
                                 {
-                                }
-                            });
-                            if (Globals.BackgroundLink == "")
-                            {
-                                StorageFile file = await StorageFile.GetFileFromPathAsync(Globals.Wallpaper);
-                                using (var mediaSource = MediaSource.CreateFromStorageFile(file))
-                                {
-                                    DispatcherQueue.TryEnqueue(() =>
+                                    BitmapImage bitmapImage = new()
                                     {
-                                        try
-                                        {
-                                            BackgroundVideo.Source = mediaSource;
-                                            BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
-                                            BackgroundVideo.Visibility = Visibility.Visible;
-                                            BackgroundVideo.MediaPlayer.Volume = 0;
-                                            BackgroundVideo.AutoPlay = true;
-                                        }
-                                        catch { }
-                                    });
+                                        UriSource = new Uri(Globals.BackgroundLink)
+                                    };
+                                    BackgroundImage.Source = bitmapImage;
                                 }
+                                BackgroundImage.Visibility = Visibility.Visible;
                             }
-                            else
-                            {
-                                DispatcherQueue.TryEnqueue(() =>
-                                {
-                                    using (MediaSource mediaSource = MediaSource.CreateFromUri(new Uri(Globals.BackgroundLink)))
-                                    {
-                                        try
-                                        {
-                                            BackgroundVideo.Source = mediaSource;
-                                            BackgroundVideo.ElementSoundMode = ElementSoundMode.Off;
-                                            BackgroundVideo.Visibility = Visibility.Visible;
-                                            BackgroundVideo.AutoPlay = true;
-                                        }
-                                        catch { }
-                                    }
-                                });
-                            }
-                        }
-                        catch
-                        {
-                        }
-
+                            catch { }
+                        });
                         break;
                     case (3):
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            GridMain.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                            SystemBackdrop = null;
                             BackgroundImage.Visibility = Visibility.Visible;
                             if (Globals.Blur == true)
                             {
@@ -322,29 +198,16 @@ namespace CompanionDisplayWinUI
                             {
                                 ImageOptionalBlur.Visibility = Visibility.Collapsed;
                             }
-                            BackgroundVideo.Visibility = Visibility.Collapsed;
                         });
-                        if(SongCoverStarted == 0)
-                        {
-                            SongCoverStarted = 1;
-                            Thread thread = new(SongCoverBackground);
-                            thread.Start();
-                        }
+                        Thread thread2 = new(SongCoverBackground);
+                        thread2.Start();
+                        Media.CallInfoUpdate += SongCoverBackground;
                         break;
                     case (4):
                         DispatcherQueue.TryEnqueue(() =>
                         {
-                            BackgroundImage.Visibility = Visibility.Collapsed;
-                            ImageOptionalBlur.Visibility = Visibility.Collapsed;
-                            BackgroundVideo.Visibility = Visibility.Collapsed;
                             GridMain.Background = new SolidColorBrush(Color.FromArgb(255, (byte)Globals.BackgroundColorR, (byte)Globals.BackgroundColorG, (byte)Globals.BackgroundColorB));
                         });
-                        if (SongCoverStarted == 0)
-                        {
-                            SongCoverStarted = 1;
-                            Thread thread = new(SongCoverBackground);
-                            thread.Start();
-                        }
                         break;
                 }
             }
@@ -353,9 +216,9 @@ namespace CompanionDisplayWinUI
 
             }
         }
-        private void ContentFrame_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        public void CallUpdate()
         {
-            Thread thread = new (UpdateUI);
+            Thread thread = new(UpdateUI);
             thread.Start();
         }
         private readonly AppWindow _appWindow;
@@ -369,41 +232,34 @@ namespace CompanionDisplayWinUI
             }
             try
             {
-                foreach (var children in ((contentFrame.Content as BlankPage1).FindName("BasicGridView") as GridView).Items)
-                {
-                    if (children as Frame != null)
-                    {
-                        (children as Frame).Background = null;
-                        (children as Frame).Background = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
-                    }
-                }
+                (contentFrame.Content as BlankPage1).ForceBugcheck();
             }
             catch { }
         }
 
         private void DebugPage_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (_appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen)
+            bool fullscreen = _appWindow.Presenter.Kind == AppWindowPresenterKind.FullScreen;
+            if (fullscreen)
             {
                 CornerMask.Visibility = Visibility.Visible;
                 AppTitleBar.Visibility = Visibility.Visible;
-                this.ExtendsContentIntoTitleBar = true;
                 _appWindow.SetPresenter(AppWindowPresenterKind.Default);
-                DebugPage.Content = "Enter Fullscreen";
+                DebugPage.Content = AppStrings.fullscrenEnter;
                 DebugPage.Icon = new SymbolIcon(Symbol.FullScreen);
             }
             else
             {
-                this.ExtendsContentIntoTitleBar = false;
                 CornerMask.Visibility = Visibility.Collapsed;
                 AppTitleBar.Visibility = Visibility.Collapsed;
                 _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-                DebugPage.Content = "Exit Fullscreen";
+                DebugPage.Content = AppStrings.fullscrenExit;
                 DebugPage.Icon = new SymbolIcon(Symbol.BackToWindow);
             }
+            this.ExtendsContentIntoTitleBar = fullscreen;
         }
 
-        private void nvSample_Loaded(object sender, RoutedEventArgs e)
+        private void NvSample_Loaded(object sender, RoutedEventArgs e)
         {
             if (Globals.triggerSetup)
             {

@@ -59,5 +59,23 @@ namespace CompanionDisplayWinUI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        internal static string BackBtn_Content {
+            get {
+                return ResourceManager.GetString("BackBtn.Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Próximo.
+        /// </summary>
+        internal static string NextBtn_Content {
+            get {
+                return ResourceManager.GetString("NextBtn.Content", resourceCulture);
+            }
+        }
     }
 }

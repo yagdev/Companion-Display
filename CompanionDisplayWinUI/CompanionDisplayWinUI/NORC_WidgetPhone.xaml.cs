@@ -1,21 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System.Threading;
-using System.Diagnostics;
-using System.Reflection.Metadata;
-using Microsoft.UI;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,17 +26,17 @@ namespace CompanionDisplayWinUI
             {
                 FrameworkElement senderElement = sender as FrameworkElement;
                 MenuFlyout myFlyout = new();
-                MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-                MenuFlyoutItem secondItem = new() { Text = "Refresh", Name = senderElement.Name + "Edit" };
-                MenuFlyoutItem thirdItem = new() { Text = "Toggle Pin", Name = senderElement.Name + "Pin" };
-                MenuFlyoutItem fourthItem = new() { Text = "Picture in Picture", Name = senderElement.Name + "PiP" };
+                MenuFlyoutItem firstItem = new() { Text = AppStrings.removeWidget, Name = senderElement.Name + "Flyout" };
+                MenuFlyoutItem secondItem = new() { Text = AppStrings.widgetRefresh, Name = senderElement.Name + "Edit" };
+                MenuFlyoutItem thirdItem = new() { Text = AppStrings.widgetPinUnpin, Name = senderElement.Name + "Pin" };
+                MenuFlyoutItem fourthItem = new() { Text = AppStrings.pipOpen, Name = senderElement.Name + "PiP" };
                 firstItem.Click += MenuFlyoutItem_Click;
                 secondItem.Click += MenuFlyoutEdit_Click;
                 thirdItem.Click += PinButton;
                 fourthItem.Click += PiPButton;
                 myFlyout.Items.Add(firstItem);
                 myFlyout.Items.Add(secondItem);
-                if (!(this.Frame.Parent is FlipView))
+                if (this.Frame.Parent is not FlipView)
                 {
                     myFlyout.Items.Add(thirdItem);
                     myFlyout.Items.Add(fourthItem);
@@ -96,21 +84,9 @@ namespace CompanionDisplayWinUI
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                using (Process process = new()
+                try
                 {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        FileName = "CMD.exe",
-                        CreateNoWindow = true
-                    }
-                })
-                {
-                    process.StartInfo.Arguments = "/C runtimes\\adb.exe devices";
-                    process.Start();
-                    process.WaitForExit();
-                    string output = process.StandardOutput.ReadToEnd().Replace("List of devices attached", "").Replace("\tdevice", "");
+                    string output = CMDOperations.GetCMDLog("runtimes\\adb.exe devices").Replace("List of devices attached", "").Replace("\tdevice", "");
                     foreach (string line in output.Split('\n'))
                     {
                         try
@@ -144,6 +120,7 @@ namespace CompanionDisplayWinUI
                         NoDevices.Visibility = Visibility.Collapsed;
                     }
                 }
+                catch { }
             });
         }
     }

@@ -1,22 +1,12 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using LibreHardwareMonitor.Hardware;
 using LibreHardwareMonitor.Hardware.Motherboard;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
-using static CompanionDisplayWinUI.WidgetSensors;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -55,42 +45,7 @@ namespace CompanionDisplayWinUI
                                     Tag = sensor,
                                     Name = sensor.Name
                                 };
-                                switch (sensor.SensorType)
-                                {
-                                    case SensorType.Load:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(LoadSensors));
-                                        break;
-                                    case SensorType.Clock:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(ClockSensor));
-                                        break;
-                                    case SensorType.Power:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(PowerSensor));
-                                        break;
-                                    case SensorType.SmallData:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(SmallDataSensor));
-                                        break;
-                                    case SensorType.Factor:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(FactorSensor));
-                                        break;
-                                    case SensorType.Fan:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(FanSensor));
-                                        break;
-                                    case SensorType.Temperature:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(TemperatureSensor));
-                                        break;
-                                    case SensorType.Voltage:
-                                        ComponentSensorStack.Children.Add(frame);
-                                        frame.Navigate(typeof(VoltageSensor));
-                                        break;
-
-                                }
+                                AddSensors(sensor, frame);
                             }
                         }
                         if (ComponentSensorStack.Children.Count == 1)
@@ -110,42 +65,7 @@ namespace CompanionDisplayWinUI
                             Tag = sensor,
                             Name = sensor.Name
                         };
-                        switch (sensor.SensorType)
-                        {
-                            case SensorType.Load:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(LoadSensors));
-                                break;
-                            case SensorType.Clock:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(ClockSensor));
-                                break;
-                            case SensorType.Power:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(PowerSensor));
-                                break;
-                            case SensorType.SmallData:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(SmallDataSensor));
-                                break;
-                            case SensorType.Factor:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(FactorSensor));
-                                break;
-                            case SensorType.Fan:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(FanSensor));
-                                break;
-                            case SensorType.Temperature:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(TemperatureSensor));
-                                break;
-                            case SensorType.Voltage:
-                                ComponentSensorStack.Children.Add(frame);
-                                frame.Navigate(typeof(VoltageSensor));
-                                break;
-
-                        }
+                        AddSensors(sensor, frame);
                     }
                     if(ComponentSensorStack.Children.Count == 1)
                     {
@@ -160,15 +80,51 @@ namespace CompanionDisplayWinUI
                 LoadFinished = true;
             }
         }
+        private void AddSensors(ISensor sensor, Frame frame)
+        {
+            switch (sensor.SensorType)
+            {
+                case SensorType.Load:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(LoadSensors));
+                    break;
+                case SensorType.Clock:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(ClockSensor));
+                    break;
+                case SensorType.Power:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(PowerSensor));
+                    break;
+                case SensorType.SmallData:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(SmallDataSensor));
+                    break;
+                case SensorType.Factor:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(FactorSensor));
+                    break;
+                case SensorType.Fan:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(FanSensor));
+                    break;
+                case SensorType.Temperature:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(TemperatureSensor));
+                    break;
+                case SensorType.Voltage:
+                    ComponentSensorStack.Children.Add(frame);
+                    frame.Navigate(typeof(VoltageSensor));
+                    break;
+
+            }
+        }
         private void ImageOptionalBlur_Loaded(object sender, RoutedEventArgs e)
         {
-            int Backdrop = Globals.Backdrop;
-            if (Globals.Backdrop == 0 || Globals.Backdrop == 1)
+            if (Globals.Backdrop <= 1)
             {
-                var uiSettings = new Windows.UI.ViewManagement.UISettings();
                 (sender as Rectangle).Fill = null;
-                Color uiDefault = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background);
-                if (((App)Application.Current).GetTheme() == ElementTheme.Dark)
+                if (ThemingAndColors.GetTheme() == ElementTheme.Dark)
                 {
                     (sender as Rectangle).Fill = new SolidColorBrush(Color.FromArgb(255, 33, 33, 33));
                 }
@@ -176,12 +132,10 @@ namespace CompanionDisplayWinUI
                 {
                     (sender as Rectangle).Fill = new SolidColorBrush(Color.FromArgb(255, 212, 212, 212));
                 }
-                (sender as Rectangle).Fill.Opacity = 1;
             }
             else
             {
                 (sender as Rectangle).Fill = (AcrylicBrush)Application.Current.Resources["CustomAcrylicInAppLuminosity"];
-                (sender as Rectangle).Fill.Opacity = 1;
             }
         }
     }

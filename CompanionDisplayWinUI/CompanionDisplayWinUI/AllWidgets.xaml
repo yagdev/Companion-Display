@@ -14,22 +14,22 @@
         <Grid Margin="0,0,0,0">
             <NavigationView PaneDisplayMode="Top" IsSettingsVisible="False" IsBackButtonVisible="Collapsed" SelectedItem="{x:Bind UtilWidgets, Mode=OneTime}" SelectionChanged="NavigationView_SelectionChanged">
                 <NavigationView.MenuItems>
-                    <NavigationViewItem Icon="Add" Content="Add Widget" SelectsOnInvoked="False" IsHitTestVisible="False" Opacity="1"/>
-                    <NavigationViewItem Icon="Clock" Content="Utilities" Name="UtilWidgets"/>
-                    <NavigationViewItem Icon="Edit" Content="Customization" Name="CustWidgets"/>
-                    <NavigationViewItem Icon="Clock" Content="Sensors" Name="SensorWidgets"/>
-                    <NavigationViewItem Icon="Setting" Content="Controls" Name="ControlWidgets"/>
+                    <NavigationViewItem Icon="Add" x:Uid="AddWidgets" SelectsOnInvoked="False" IsHitTestVisible="False" Opacity="1"/>
+                    <NavigationViewItem Icon="Clock" x:Uid="Utilities" Name="UtilWidgets"/>
+                    <NavigationViewItem Icon="Edit" x:Uid="Customization" Name="CustWidgets"/>
+                    <NavigationViewItem Icon="Clock" x:Uid="Sensors" Name="SensorWidgets"/>
+                    <NavigationViewItem Icon="Setting" x:Uid="Controls" Name="ControlWidgets"/>
                     <NavigationViewItem Icon="Play" Content="Twitch" Name="TwitchWidgets"/>
                     <NavigationViewItem Icon="XboxOneConsole" Content="OBS" Name="OBSWidgets"/>
                 </NavigationView.MenuItems>
-                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="9">
-                    <StackPanel Name="AllCategories">
-                        <GridView x:Name="UtilWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Visible"/>
-                        <GridView x:Name="CustWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
-                        <GridView x:Name="SensorWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
-                        <GridView x:Name="ControlWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
-                        <GridView x:Name="TwitchWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
-                        <GridView x:Name="OBSWidgetsGridView" SelectionMode="None" Margin="10,10,10,0" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+                    <StackPanel Name="AllCategories" Margin="0,30,0,0">
+                        <GridView x:Name="UtilWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Visible"/>
+                        <GridView x:Name="CustWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                        <GridView x:Name="SensorWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                        <GridView x:Name="ControlWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                        <GridView x:Name="TwitchWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                        <GridView x:Name="OBSWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
                     </StackPanel>
                 </ScrollViewer>
             </NavigationView>

@@ -1,20 +1,13 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,7 +25,7 @@ namespace CompanionDisplayWinUI
         }
         private string WidgetOrder = "";
 
-        private async void UpdateUI()
+        private void UpdateUI()
         {
             int i = 1;
             foreach (string line in WidgetOrder.Split('\n'))
@@ -152,7 +145,7 @@ namespace CompanionDisplayWinUI
                 Button button = new()
                 {
                     Name = "AddWidget",
-                    Content = "+ Add to stack",
+                    Content = AppStrings.addToStack,
                     FontFamily = new FontFamily("Segoe UI Variable Display Light"),
                     Height = 300,
                     Width = 500,
@@ -201,17 +194,17 @@ namespace CompanionDisplayWinUI
             {
                 FrameworkElement senderElement = sender as FrameworkElement;
                 MenuFlyout myFlyout = new();
-                MenuFlyoutItem firstItem = new() { Text = "Remove Stack", Name = senderElement.Name + "StackRemove" };
+                MenuFlyoutItem firstItem = new() { Text = AppStrings.removeStack, Name = senderElement.Name + "StackRemove" };
                 Frame frame = senderElement as Frame;
                 Type type1 = Type.GetType(frame.Content.ToString());
                 if (type1 != null)
                 {
-                    MenuFlyoutItem secondItem = new() { Text = "Open Stack Item Menu", Name = senderElement.Name + "ItemOpen", Tag = sender };
+                    MenuFlyoutItem secondItem = new() { Text = AppStrings.openStackItemMenu, Name = senderElement.Name + "ItemOpen", Tag = sender };
                     secondItem.Click += MenuFlyoutEdit_Click;
                     myFlyout.Items.Add(secondItem);
                 }
-                MenuFlyoutItem thirdItem = new() { Text = "Toggle Pin", Name = senderElement.Name + "Pin" };
-                MenuFlyoutItem fourthItem = new() { Text = "Picture in Picture", Name = senderElement.Name + "PiP" };
+                MenuFlyoutItem thirdItem = new() { Text = AppStrings.widgetPinUnpin, Name = senderElement.Name + "Pin" };
+                MenuFlyoutItem fourthItem = new() { Text = AppStrings.pipOpen, Name = senderElement.Name + "PiP" };
                 thirdItem.Click += PinButton;
                 fourthItem.Click += PiPButton;
                 Frame frame3 = senderElement as Frame;
@@ -243,12 +236,12 @@ namespace CompanionDisplayWinUI
             {
                 FrameworkElement senderElement = sender as FrameworkElement;
                 MenuFlyout myFlyout = new();
-                MenuFlyoutItem firstItem = new() { Text = "Remove", Name = senderElement.Name + "Flyout" };
+                MenuFlyoutItem firstItem = new() { Text = AppStrings.widgetRemove, Name = senderElement.Name + "Flyout" };
                 Frame frame = senderElement as Frame;
                 Type type1 = Type.GetType(frame.Content.ToString() + "WidgetSettings");
                 if (type1 != null)
                 {
-                    MenuFlyoutItem secondItem = new() { Text = "Edit", Name = senderElement.Name + "Edit" };
+                    MenuFlyoutItem secondItem = new() { Text = AppStrings.widgetEdit, Name = senderElement.Name + "Edit" };
                     secondItem.Click += EditItem;
                     myFlyout.Items.Add(secondItem);
                 }
@@ -262,7 +255,7 @@ namespace CompanionDisplayWinUI
         private void EditItem(object sender, RoutedEventArgs e)
         {
             var senderElement = sender as MenuFlyoutItem;
-            var childControl = (Microsoft.UI.Xaml.Controls.Frame)WidgetStackView.FindName(senderElement.Name.Remove(senderElement.Name.Length - 4, 4));
+            var childControl = (Microsoft.UI.Xaml.Controls.Frame)WidgetStackView.FindName(senderElement.Name[..^4]);
             var frame = childControl as Frame;
             Type type1 = Type.GetType(frame.Content + "WidgetSettings");
             frame.Navigate(type1);
@@ -283,18 +276,12 @@ namespace CompanionDisplayWinUI
                             string deedify = item.Content.ToString().Replace("WidgetSettings", "");
                             if (!deedify.Contains("CompanionDisplayWinUI.UpdateWarning") && !deedify.Contains("Microsoft.UI.Xaml.Controls.Button"))
                             {
-                                switch (deedify)
+                                Order = deedify switch
                                 {
-                                    case var s when (deedify.Contains("CompanionDisplayWinUI.NotesWidget") || deedify.Contains("CompanionDisplayWinUI.WidgetStack")):
-                                        Order = Order + deedify + "ID" + item.Tag.ToString() + Environment.NewLine;
-                                        break;
-                                    case var s when deedify.Contains("CompanionDisplayWinUI.WidgetPhoto"):
-                                        Order = Order + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine;
-                                        break;
-                                    default:
-                                        Order = Order + deedify + Environment.NewLine;
-                                        break;
-                                }
+                                    var s when (deedify.Contains("CompanionDisplayWinUI.NotesWidget") || deedify.Contains("CompanionDisplayWinUI.WidgetStack")) => Order + deedify + "ID" + item.Tag.ToString() + Environment.NewLine,
+                                    var s when deedify.Contains("CompanionDisplayWinUI.WidgetPhoto") => Order + deedify + "IMAGESOURCE" + item.Tag.ToString() + Environment.NewLine,
+                                    _ => Order + deedify + Environment.NewLine,
+                                };
                             }
                         }
                         catch
@@ -308,7 +295,7 @@ namespace CompanionDisplayWinUI
         private void RemoveWidget(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            var childControl = (Microsoft.UI.Xaml.Controls.Frame)WidgetStackView.FindName(senderElement.Name.Remove(senderElement.Name.Length - 6, 6));
+            var childControl = (Microsoft.UI.Xaml.Controls.Frame)WidgetStackView.FindName(senderElement.Name[..^6]);
             WidgetStackView.Items.Remove(childControl);
             try
             {
@@ -380,11 +367,6 @@ namespace CompanionDisplayWinUI
             }
             Thread thread = new(UpdateUI);
             thread.Start();
-        }
-
-        private void Button_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-
         }
     }
 }

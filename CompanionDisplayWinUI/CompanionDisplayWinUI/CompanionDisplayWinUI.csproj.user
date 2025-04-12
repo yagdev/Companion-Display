@@ -96,9 +96,6 @@
     <Page Update="SleepPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="BTLEIndividual.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="BTBatteryIndividual.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -174,9 +171,6 @@
     <Page Update="WidgetMonitorBrightness.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="MonitorBrightness.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="MusixmatchIntegrationProto.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -210,5 +204,10 @@
     <None Update="Package.appxmanifest">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Update="Strings\pt-PT\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
   </ItemGroup>
 </Project>

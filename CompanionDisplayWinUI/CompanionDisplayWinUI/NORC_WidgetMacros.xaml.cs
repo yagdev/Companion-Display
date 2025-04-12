@@ -1,34 +1,16 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage.FileProperties;
-using Windows.Storage.Pickers;
 using Windows.Storage;
-using WinRT.Interop;
 using System.Threading.Tasks;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Automation;
-using System.Drawing;
-using Microsoft.UI.Xaml.Shapes;
-using System.Drawing.Imaging;
-using System.Security.Principal;
 using System.Runtime.InteropServices;
 using Windows.System;
 using Microsoft.UI.Composition;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -48,8 +30,8 @@ namespace CompanionDisplayWinUI
         {
             FrameworkElement senderElement = sender as FrameworkElement;
             MenuFlyout myFlyout = new();
-            MenuFlyoutItem thirdItem = new() { Text = "Replace Image", Name = senderElement.Name + "ACTION1" };
-            MenuFlyoutItem fourthItem = new() { Text = "Remove Image", Name = senderElement.Name + "ACTION2" };
+            MenuFlyoutItem thirdItem = new() { Text = AppStrings.replaceImage, Name = senderElement.Name + "ACTION1" };
+            MenuFlyoutItem fourthItem = new() { Text = AppStrings.removeImage, Name = senderElement.Name + "ACTION2" };
             thirdItem.Click += ReplaceImageClick;
             fourthItem.Click += RemoveImageClick;
             myFlyout.Items.Add(thirdItem);
@@ -62,13 +44,13 @@ namespace CompanionDisplayWinUI
             {
                 FrameworkElement senderElement = sender as FrameworkElement;
                 MenuFlyout myFlyout = new();
-                MenuFlyoutItem firstItem = new() { Text = "Remove Widget", Name = senderElement.Name + "Flyout" };
-                MenuFlyoutItem thirdItem = new() { Text = "Toggle Pin", Name = senderElement.Name + "Pin" };
-                MenuFlyoutItem fourthItem = new() { Text = "Picture in Picture", Name = senderElement.Name + "PiP" };
+                MenuFlyoutItem firstItem = new() { Text = AppStrings.removeWidget, Name = senderElement.Name + "Flyout" };
+                MenuFlyoutItem thirdItem = new() { Text = AppStrings.widgetPinUnpin, Name = senderElement.Name + "Pin" };
+                MenuFlyoutItem fourthItem = new() { Text = AppStrings.pipOpen, Name = senderElement.Name + "PiP" };
                 firstItem.Click += MenuFlyoutItem_Click;
                 thirdItem.Click += PinButton;
                 fourthItem.Click += PiPButton;
-                if (!(this.Frame.Parent is FlipView))
+                if (this.Frame.Parent is not FlipView)
                 {
                     myFlyout.Items.Add(thirdItem);
                     myFlyout.Items.Add(fourthItem);
@@ -104,29 +86,28 @@ namespace CompanionDisplayWinUI
         private void RemoveImageClick(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            var childControl = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(senderElement.Name.Remove(senderElement.Name.Length - 7, 7) + "_Image");
+            var childControl = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(senderElement.Name[..^7] + "_Image");
             childControl.Tag = "";
             childControl.Source = null;
             ((childControl.Parent as Grid).Children[0] as Microsoft.UI.Xaml.Controls.TextBlock).Visibility = Visibility.Visible;
-            saveItems();
+            SaveItems();
         }
 
-        private async void ReplaceImageClick(object sender, RoutedEventArgs e)
+        private void ReplaceImageClick(object sender, RoutedEventArgs e)
         {
             FrameworkElement senderElement = sender as FrameworkElement;
-            var childControl = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(senderElement.Name.Remove(senderElement.Name.Length - 7, 7) + "_Image");
-            AppPicker appPicker = new();
-            string btntag = appPicker.SetIcon();
+            var childControl = (Microsoft.UI.Xaml.Controls.Image)MainGrid.FindName(senderElement.Name[..^7] + "_Image");
+            string btntag = FileFolderPicker.OpenFileDialog(false)[0];
             if (btntag != "")
             {
                 childControl.Tag = btntag;
                 childControl.Source = new BitmapImage(new Uri(childControl.Tag.ToString()));
                 ((childControl.Parent as Grid).Children[0] as Microsoft.UI.Xaml.Controls.TextBlock).Visibility = Visibility.Collapsed;
             }
-            saveItems();
+            SaveItems();
         }
 
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             int i = 1;
             string LoadImages = "";
@@ -161,7 +142,7 @@ namespace CompanionDisplayWinUI
                 i++;
             }
         }
-        private void saveItems()
+        private void SaveItems()
         {
             string finalFile = "";
             foreach(IVisualElement visualElement in MainGrid.Children)
@@ -174,7 +155,7 @@ namespace CompanionDisplayWinUI
                     }
                     catch
                     {
-                        finalFile = finalFile + Environment.NewLine;
+                        finalFile += Environment.NewLine;
                     }
                 }
             }
@@ -206,7 +187,6 @@ namespace CompanionDisplayWinUI
         }
         private void F13Btn_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            VirtualKey key = (VirtualKey)int.Parse(((Button)sender).Tag.ToString());
             PressKey((VirtualKey)int.Parse(((Button)sender).Tag.ToString()), up: false);
             PressKey((VirtualKey)int.Parse(((Button)sender).Tag.ToString()), up: true);
         }

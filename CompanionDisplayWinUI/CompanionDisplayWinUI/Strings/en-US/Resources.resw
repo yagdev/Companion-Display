@@ -1,0 +1,765 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutUpdatesHeader.Header" xml:space="preserve">
+    <value>About &amp; Updates</value>
+  </data>
+  <data name="AccentColor.Text" xml:space="preserve">
+    <value>Accent Color</value>
+  </data>
+  <data name="Acrylic.Text" xml:space="preserve">
+    <value>Acrylic</value>
+  </data>
+  <data name="AddWidgets.Content" xml:space="preserve">
+    <value>Add Widgets</value>
+  </data>
+  <data name="AlbumCover.Text" xml:space="preserve">
+    <value>Album Cover</value>
+  </data>
+  <data name="Background.Text" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="BackgroundImage.Text" xml:space="preserve">
+    <value>Background Image</value>
+  </data>
+  <data name="BackgroundLink.PlaceholderText" xml:space="preserve">
+    <value>Media URL</value>
+  </data>
+  <data name="BackupRestore.Text" xml:space="preserve">
+    <value>Backup &amp; Restore</value>
+  </data>
+  <data name="BackupTransferBanner.Text" xml:space="preserve">
+    <value>Transfer in progress... Do not close this window.</value>
+  </data>
+  <data name="BehaviorHeader.Header" xml:space="preserve">
+    <value>Behavior</value>
+  </data>
+  <data name="BlankPage.Text" xml:space="preserve">
+    <value>Blank Page</value>
+  </data>
+  <data name="Blur.Text" xml:space="preserve">
+    <value>Blur</value>
+  </data>
+  <data name="BrowserHeader.Header" xml:space="preserve">
+    <value>Browser</value>
+  </data>
+  <data name="CancelBtn.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CheckingUpdates.Content" xml:space="preserve">
+    <value>Checking for updates...</value>
+  </data>
+  <data name="ClientSecret.PlaceholderText" xml:space="preserve">
+    <value>Client Secret</value>
+  </data>
+  <data name="ClientSecret2.PlaceholderText" xml:space="preserve">
+    <value>Fallback Client Secret</value>
+  </data>
+  <data name="Clock.Text" xml:space="preserve">
+    <value>Clock</value>
+  </data>
+  <data name="ColorScheme.Text" xml:space="preserve">
+    <value>Color Scheme</value>
+  </data>
+  <data name="CompanionDisplayWelcome.Text" xml:space="preserve">
+    <value>Welcome to Companion Display</value>
+  </data>
+  <data name="ConnectionDetailsHeader.Header" xml:space="preserve">
+    <value>Connection Details</value>
+  </data>
+  <data name="Controls.Content" xml:space="preserve">
+    <value>Controls</value>
+  </data>
+  <data name="Custom.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="CustomBgHeader.Header" xml:space="preserve">
+    <value>Custom Background</value>
+  </data>
+  <data name="CustomColorHeader.Header" xml:space="preserve">
+    <value>Custom Color</value>
+  </data>
+  <data name="Customization.Content" xml:space="preserve">
+    <value>Customization</value>
+  </data>
+  <data name="Dark.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DiscordAppId.PlaceholderText" xml:space="preserve">
+    <value>Discord Application ID</value>
+  </data>
+  <data name="Donate.Content" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="EmptyApps.Text" xml:space="preserve">
+    <value>It's looking a little empty here. Right click and press edit to add shortcuts.</value>
+  </data>
+  <data name="EnableBetaUpdates.Text" xml:space="preserve">
+    <value>Enable Beta Updates</value>
+  </data>
+  <data name="EnableUISounds.Text" xml:space="preserve">
+    <value>Enable UI Sounds</value>
+  </data>
+  <data name="EnterFullscreen.Content" xml:space="preserve">
+    <value>Enter Fullscreen</value>
+  </data>
+  <data name="Factor.Text" xml:space="preserve">
+    <value>Factor</value>
+  </data>
+  <data name="Fan.Text" xml:space="preserve">
+    <value>Fan</value>
+  </data>
+  <data name="GetStarted.Text" xml:space="preserve">
+    <value>Get started using Companion Display</value>
+  </data>
+  <data name="GetStartedSetup.Content" xml:space="preserve">
+    <value>Get Started</value>
+  </data>
+  <data name="Globalfont.Text" xml:space="preserve">
+    <value>Global Font</value>
+  </data>
+  <data name="HideAdd.Text" xml:space="preserve">
+    <value>Hide Add Widget Button</value>
+  </data>
+  <data name="Home.Content" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Image.Text" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="IntegrationsHeader.Header" xml:space="preserve">
+    <value>Integrations</value>
+  </data>
+  <data name="Internet.Content" xml:space="preserve">
+    <value>Internet Browser</value>
+  </data>
+  <data name="Launchpad.Text" xml:space="preserve">
+    <value>Launchpad</value>
+  </data>
+  <data name="LaunchpadNoItems.Text" xml:space="preserve">
+    <value>No items. Right click to edit Launchpad.</value>
+  </data>
+  <data name="LaunchStartup.Text" xml:space="preserve">
+    <value>Launch on startup</value>
+  </data>
+  <data name="Light.Text" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Load.Text" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="LockLayout.Text" xml:space="preserve">
+    <value>Lock Layout</value>
+  </data>
+  <data name="Mica.Text" xml:space="preserve">
+    <value>Mica</value>
+  </data>
+  <data name="NewTabBehavior.Text" xml:space="preserve">
+    <value>New tab behavior</value>
+  </data>
+  <data name="NoDevices.Text" xml:space="preserve">
+    <value>No devices connected.
+Connect an Android device with ADB enabled.</value>
+  </data>
+  <data name="NoSensors.Text" xml:space="preserve">
+    <value>No sensors detected
+Try running Companion Display as an administrator.</value>
+  </data>
+  <data name="NotesPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Insert Note</value>
+  </data>
+  <data name="OBSAvgRender.Text" xml:space="preserve">
+    <value>Average Render Time</value>
+  </data>
+  <data name="OBSCongestion.Text" xml:space="preserve">
+    <value>Congestion</value>
+  </data>
+  <data name="OBSCPUUsage.Text" xml:space="preserve">
+    <value>OBS CPU Usage</value>
+  </data>
+  <data name="OBSDisconnected.Text" xml:space="preserve">
+    <value>OBS is not connected.</value>
+  </data>
+  <data name="OBSDuration.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="OBSFPS.Text" xml:space="preserve">
+    <value>Framerate</value>
+  </data>
+  <data name="OBSFramesRendered.Text" xml:space="preserve">
+    <value>Frames Rendered</value>
+  </data>
+  <data name="OBSMissedFrames.Text" xml:space="preserve">
+    <value>Missed Frames</value>
+  </data>
+  <data name="OBSOutputTotal.Text" xml:space="preserve">
+    <value>Total Frames Output</value>
+  </data>
+  <data name="OBSPass.PlaceholderText" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="OBSPaused.Text" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="OBSRAMUsage.Text" xml:space="preserve">
+    <value>OBS RAM Usage</value>
+  </data>
+  <data name="OBSReconnecting.Text" xml:space="preserve">
+    <value>Reconnecting...</value>
+  </data>
+  <data name="OBSRecording.Text" xml:space="preserve">
+    <value>Recording</value>
+  </data>
+  <data name="OBSRecordingInfo.Text" xml:space="preserve">
+    <value>Recording Info</value>
+  </data>
+  <data name="OBSRecordingSize.Text" xml:space="preserve">
+    <value>Recording Size</value>
+  </data>
+  <data name="OBSSkippedFrames.Text" xml:space="preserve">
+    <value>Skipped Frames</value>
+  </data>
+  <data name="OBSStats.Text" xml:space="preserve">
+    <value>OBS Stats</value>
+  </data>
+  <data name="OBSStatus.Text" xml:space="preserve">
+    <value>Status: </value>
+  </data>
+  <data name="OBSStreamInfo.Text" xml:space="preserve">
+    <value>Stream Info</value>
+  </data>
+  <data name="OBSStreaming.Text" xml:space="preserve">
+    <value>Streaming</value>
+  </data>
+  <data name="OBSTimeCode.Text" xml:space="preserve">
+    <value>Time Code</value>
+  </data>
+  <data name="OBSTotalFrames.Text" xml:space="preserve">
+    <value>Total Frames</value>
+  </data>
+  <data name="OBSUploadedBytes.Text" xml:space="preserve">
+    <value>Uploaded Bytes</value>
+  </data>
+  <data name="OverrideTextColor.Text" xml:space="preserve">
+    <value>Override Text Color</value>
+  </data>
+  <data name="Power.Text" xml:space="preserve">
+    <value>Power</value>
+  </data>
+  <data name="ReconnectOBS1.Content" xml:space="preserve">
+    <value>Try to reconnect</value>
+  </data>
+  <data name="ReconnectBtn.Content" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="ReconnectOBS.Text" xml:space="preserve">
+    <value>Reconnect OBS</value>
+  </data>
+  <data name="ResetBtn.Content" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="ResetTwitchlogin.Text" xml:space="preserve">
+    <value>Reset Twitch login</value>
+  </data>
+  <data name="RestoreBackupSetup.Content" xml:space="preserve">
+    <value>Restore From Backup</value>
+  </data>
+  <data name="SaveBtn.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SearchEngine.Text" xml:space="preserve">
+    <value>Search Engine</value>
+  </data>
+  <data name="SearchEngineHomepage.Text" xml:space="preserve">
+    <value>Search Engine Homepage</value>
+  </data>
+  <data name="SearchInsertURL.PlaceholderText" xml:space="preserve">
+    <value>Search or insert URL</value>
+  </data>
+  <data name="SelectImage.Content" xml:space="preserve">
+    <value>Select Image</value>
+  </data>
+  <data name="Sensors.Content" xml:space="preserve">
+    <value>Sensors</value>
+  </data>
+  <data name="Settings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Setup.Text" xml:space="preserve">
+    <value>Setup</value>
+  </data>
+  <data name="SetupBtn.Content" xml:space="preserve">
+    <value>Launch Setup</value>
+  </data>
+  <data name="SetupLater.Text" xml:space="preserve">
+    <value>Setup is also available in Settings</value>
+  </data>
+  <data name="SkipSetup.Content" xml:space="preserve">
+    <value>Skip Setup</value>
+  </data>
+  <data name="SleepMode.Content" xml:space="preserve">
+    <value>Sleep Mode</value>
+  </data>
+  <data name="SleepModeHeader.Header" xml:space="preserve">
+    <value>Sleep Mode</value>
+  </data>
+  <data name="SolidColor.Text" xml:space="preserve">
+    <value>Solid Color</value>
+  </data>
+  <data name="Spotify.Content" xml:space="preserve">
+    <value>Spotify</value>
+  </data>
+  <data name="SpotifyClientID.PlaceholderText" xml:space="preserve">
+    <value>Client ID</value>
+  </data>
+  <data name="SpotifyClientID2.PlaceholderText" xml:space="preserve">
+    <value>Secondary Client ID</value>
+  </data>
+  <data name="StopFocus.Text" xml:space="preserve">
+    <value>Stop app from stealing focus</value>
+  </data>
+  <data name="SystemAuto.Text" xml:space="preserve">
+    <value>System Automatic</value>
+  </data>
+  <data name="TextOpacity.Text" xml:space="preserve">
+    <value>Text opacity</value>
+  </data>
+  <data name="ThemeHeader.Header" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="TransferTool.Content" xml:space="preserve">
+    <value>Transfer Tool</value>
+  </data>
+  <data name="Update.Text" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Utilities.Content" xml:space="preserve">
+    <value>Utilities</value>
+  </data>
+  <data name="Version.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="YAGdev.Text" xml:space="preserve">
+    <value>Made with ❤︎ by YAG-dev</value>
+  </data>
+  <data name="MediaWidgetSetup.Text" xml:space="preserve">
+    <value>Setup Media Widget</value>
+  </data>
+  <data name="MediaWidgetDescription.Text" xml:space="preserve">
+    <value>Get more precise song info when using Spotify</value>
+  </data>
+  <data name="ClientIDLearn.Content" xml:space="preserve">
+    <value>Learn how to get Client ID</value>
+  </data>
+  <data name="SecretIDLearn.Content" xml:space="preserve">
+    <value>Learn how to get Client Secret</value>
+  </data>
+  <data name="DiscordIDLearn.Content" xml:space="preserve">
+    <value>Learn how to get Discord App ID</value>
+  </data>
+  <data name="BackBtn.Content" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="NextBtn.Content" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="SkipBtn.Content" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="StreamerIntegrationsSetup,Text" xml:space="preserve">
+    <value>Setup integrations for streamers</value>
+  </data>
+  <data name="StreamerIntegrationDialogue.Text" xml:space="preserve">
+    <value>Setup integrations for Twitch and OBS widgets</value>
+  </data>
+  <data name="OBSIPPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Insert WebSocket Server IP (ws://IP:Port)</value>
+  </data>
+  <data name="OBSPasswordPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Insert Websocket Password</value>
+  </data>
+  <data name="BrowserTwitchSetup.Text" xml:space="preserve">
+    <value>Use the browser below to log in/out of Twitch</value>
+  </data>
+  <data name="SleepModeSetup.Text" xml:space="preserve">
+    <value>Set up sleep mode</value>
+  </data>
+  <data name="SleepModeSetupDescription.Text" xml:space="preserve">
+    <value>Customize sleep mode here</value>
+  </data>
+  <data name="SetupComplete.Text" xml:space="preserve">
+    <value>You're all set!</value>
+  </data>
+  <data name="DoneTooltip.Text" xml:space="preserve">
+    <value>To customize Companion Display further, go to Settings</value>
+  </data>
+  <data name="FinishBtn.Content" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="SmallData.Text" xml:space="preserve">
+    <value>Small Data</value>
+  </data>
+  <data name="Temperature.Text" xml:space="preserve">
+    <value>Temperature</value>
+  </data>
+  <data name="TimeWidgetSettings.Text" xml:space="preserve">
+    <value>Time Widget Settings</value>
+  </data>
+  <data name="TimeColor.Text" xml:space="preserve">
+    <value>Time Color</value>
+  </data>
+  <data name="DateColor.Text" xml:space="preserve">
+    <value>Date Color</value>
+  </data>
+  <data name="UpdateBtn.Content" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Changelog.Text" xml:space="preserve">
+    <value>Changelog</value>
+  </data>
+  <data name="Voltage.Text" xml:space="preserve">
+    <value>Voltage</value>
+  </data>
+  <data name="SelectAudioDevice.Content" xml:space="preserve">
+    <value>Select Audio Device</value>
+  </data>
+  <data name="NoImages.Text" xml:space="preserve">
+    <value>No image.
+Right click and press edit to add an image.</value>
+  </data>
+  <data name="SelectFileBtn.Content" xml:space="preserve">
+    <value>Select File</value>
+  </data>
+  <data name="SelectFolderBtn.Content" xml:space="preserve">
+    <value>Select Folder</value>
+  </data>
+  <data name="SmartFlip.Text" xml:space="preserve">
+    <value>Smart Flip</value>
+  </data>
+  <data name="DirectoryPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>File/Directory</value>
+  </data>
+  <data name="PhotoGallerySettings.Text" xml:space="preserve">
+    <value>Photo Gallery Settings</value>
+  </data>
+  <data name="NoHardware.Text" xml:space="preserve">
+    <value>No hardware detected.</value>
+  </data>
+  <data name="FullScreenExit" xml:space="preserve">
+    <value>Exit Fullscreen</value>
+  </data>
+  <data name="FullScreenEnter" xml:space="preserve">
+    <value>Enter Fullscreen</value>
+  </data>
+  <data name="backupFilters" xml:space="preserve">
+    <value>Companion Display Backup|*.pcht</value>
+  </data>
+  <data name="backupTitleBar" xml:space="preserve">
+    <value>Save Backup</value>
+  </data>
+  <data name="backupPerformString" xml:space="preserve">
+    <value>Backing Up...</value>
+  </data>
+  <data name="restoringString" xml:space="preserve">
+    <value>Restoring...</value>
+  </data>
+  <data name="backupString" xml:space="preserve">
+    <value>Backup</value>
+  </data>
+  <data name="restoreString" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="restoreHeaderString" xml:space="preserve">
+    <value>Choose what to restore</value>
+  </data>
+  <data name="backupHeaderString" xml:space="preserve">
+    <value>Choose what to backup or restore</value>
+  </data>
+  <data name="configTypeGeneralSettings" xml:space="preserve">
+    <value>General Settings</value>
+  </data>
+  <data name="configTypeWidgetLayout" xml:space="preserve">
+    <value>Widget Layout</value>
+  </data>
+  <data name="configTypeWidgetSettings" xml:space="preserve">
+    <value>Widget Settings</value>
+  </data>
+  <data name="configTypeBrowserData" xml:space="preserve">
+    <value>Browser data</value>
+  </data>
+  <data name="cancelString" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="MasterVolume" xml:space="preserve">
+    <value>Master Volume</value>
+  </data>
+  <data name="SystemSounds" xml:space="preserve">
+    <value>System Sounds</value>
+  </data>
+  <data name="Update2" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpToDate" xml:space="preserve">
+    <value>Up To Date</value>
+  </data>
+  <data name="Updating" xml:space="preserve">
+    <value>Updating...</value>
+  </data>
+  <data name="StatusConnected" xml:space="preserve">
+    <value>Status: Connected</value>
+  </data>
+  <data name="StatusDisconnected" xml:space="preserve">
+    <value>Status: Disconnected</value>
+  </data>
+  <data name="ConnectionFailed" xml:space="preserve">
+    <value>Connection failed, try again.</value>
+  </data>
+  <data name="Reconnect" xml:space="preserve">
+    <value>Reconnect</value>
+  </data>
+  <data name="StartupObject" xml:space="preserve">
+    <value>Companion Display launch on startup object</value>
+  </data>
+  <data name="PiPOpen" xml:space="preserve">
+    <value>This item is open in PiP mode</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>Pin</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>Remove Pin</value>
+  </data>
+  <data name="AddLaunchpadTile" xml:space="preserve">
+    <value>Add Launchpad Tile</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="InsertURLHere" xml:space="preserve">
+    <value>Insert URL here</value>
+  </data>
+  <data name="NewTab" xml:space="preserve">
+    <value>New Tab</value>
+  </data>
+  <data name="Launchpad2" xml:space="preserve">
+    <value>Launchpad</value>
+  </data>
+  <data name="Unknown" xml:space="preserve">
+    <value>Unknown</value>
+  </data>
+  <data name="Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="EndSleepTimer" xml:space="preserve">
+    <value>End Sleep Timer</value>
+  </data>
+  <data name="SleepTimerAlreadyActive" xml:space="preserve">
+    <value>A sleep timer is already active. Do you want to turn it off?</value>
+  </data>
+  <data name="SleepTimer" xml:space="preserve">
+    <value>Sleep Timer</value>
+  </data>
+  <data name="StartSleepTimer" xml:space="preserve">
+    <value>Start Sleep Timer</value>
+  </data>
+  <data name="MinsPlaceholder" xml:space="preserve">
+    <value>Duration in minutes (leave blank for 5 minutes)</value>
+  </data>
+  <data name="NoSongPlaying" xml:space="preserve">
+    <value>No Song Playing</value>
+  </data>
+  <data name="NoLyricsAvailable" xml:space="preserve">
+    <value>No lyrics are available for this song.</value>
+  </data>
+  <data name="RemoveWidget" xml:space="preserve">
+    <value>Remove Widget</value>
+  </data>
+  <data name="ShortcutsRemoveAll" xml:space="preserve">
+    <value>Remove All Shortcuts</value>
+  </data>
+  <data name="PinToggle" xml:space="preserve">
+    <value>Toggle Pin</value>
+  </data>
+  <data name="ReplaceImage" xml:space="preserve">
+    <value>Replace Image</value>
+  </data>
+  <data name="RemoveImage" xml:space="preserve">
+    <value>Remove Image</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="DoYouWant" xml:space="preserve">
+    <value>Do you want to </value>
+  </data>
+  <data name="ConfirmOBS" xml:space="preserve">
+    <value>Confirming will perform this action in OBS.</value>
+  </data>
+  <data name="TrueString" xml:space="preserve">
+    <value>True</value>
+  </data>
+  <data name="FalseString" xml:space="preserve">
+    <value>False</value>
+  </data>
+  <data name="yourPC" xml:space="preserve">
+    <value> your PC</value>
+  </data>
+  <data name="AddToStack" xml:space="preserve">
+    <value>+ Add to stack</value>
+  </data>
+  <data name="RemoveStack" xml:space="preserve">
+    <value>Remove Stack</value>
+  </data>
+  <data name="OpenStackItemMenu" xml:space="preserve">
+    <value>Open Stack Item Menu</value>
+  </data>
+  <data name="UpdateString" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Shutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Suspend" xml:space="preserve">
+    <value>Suspend</value>
+  </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
+  <data name="Logoff" xml:space="preserve">
+    <value>Log Off</value>
+  </data>
+  <data name="MediaPlayerSettings.Text" xml:space="preserve">
+    <value>Media Controls Settings</value>
+  </data>
+</root>

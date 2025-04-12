@@ -1,20 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System.Runtime.InteropServices;
-using Windows.UI;
-using Windows.Graphics.Display;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -59,7 +47,7 @@ namespace CompanionDisplayWinUI
             style &= ~(WS_SIZEBOX | WS_MAXIMIZEBOX | WS_MINIMIZEBOX);
 
             // Apply the updated style
-            SetWindowLong(hwnd, GWL_STYLE, style);
+            _ = SetWindowLong(hwnd, GWL_STYLE, style);
             
         }
 
@@ -68,8 +56,8 @@ namespace CompanionDisplayWinUI
         private const int WS_SIZEBOX = 0x00040000;   // Enables resizing
         private const int WS_MAXIMIZEBOX = 0x00010000; // Enables maximize button
         private const int WS_MINIMIZEBOX = 0x00020000; // Enables minimize button
-        private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
-        private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        private static readonly IntPtr HWND_TOPMOST = new(-1);
+        private static readonly IntPtr HWND_NOTOPMOST = new(-2);
         private const uint SWP_NOMOVE = 0x0002;
         private const uint SWP_NOSIZE = 0x0001;
 
@@ -108,7 +96,6 @@ namespace CompanionDisplayWinUI
             {
                 int placeholderIndex = gridViewPiPTemp.Items.IndexOf(placeholder);
                 gridViewPiPTemp.Items.RemoveAt(placeholderIndex);
-                Frame frame = WidgetGrid.Children[0] as Frame;
                 gridViewPiPTemp.Items.Insert(placeholderIndex, widgetFrame);
             }
         }

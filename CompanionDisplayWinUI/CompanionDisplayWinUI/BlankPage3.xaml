@@ -10,71 +10,74 @@
     <Grid>
         <ScrollViewer Name="MainScroll" Padding="10,0,10,0">
             <StackPanel Spacing="10" Padding="0,35,0,10">
-                <TextBlock Text="Settings" FontSize="28" Padding="0" FontWeight="SemiBold"/>
+                <TextBlock x:Uid="Settings" FontSize="24" Padding="2,0,0,0" FontWeight="Normal"/>
                 <Expander CornerRadius="8" HorizontalAlignment="Stretch"
  IsExpanded="False"
  ExpandDirection="Down"
  VerticalAlignment="Top"
  HorizontalContentAlignment="Stretch"
- Header="Theme">
+ x:Uid="ThemeHeader">
                     <Expander.Content>
                         <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Spacing="20">
                             <Grid>
-                                <TextBlock Text="Color Scheme" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
-                                <ComboBox Name="ColorSchemeSelect" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged" PlaceholderText="System Automatic" HorizontalAlignment="Right"  VerticalAlignment="Top">
-                                    <x:String>System Automatic</x:String>
-                                    <x:String>Dark</x:String>
-                                    <x:String>Light</x:String>
+                                <TextBlock x:Uid="ColorScheme" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                <ComboBox Name="ColorSchemeSelect" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                                    <TextBlock x:Uid="SystemAuto"/>
+                                    <TextBlock x:Uid="Dark"/>
+                                    <TextBlock x:Uid="Light"/>
                                 </ComboBox>
                             </Grid>
                             <Grid>
-                                <TextBlock Text="Accent Color" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
-                                <ComboBox Name="AccentSelect" SelectionChanged="ComboBox_SelectionChanged_1" PlaceholderText="System Automatic" HorizontalAlignment="Right"  VerticalAlignment="Top">
-                                    <x:String>System Automatic</x:String>
-                                    <x:String>Custom</x:String>
+                                <TextBlock x:Uid="AccentColor" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                <ComboBox Name="AccentSelect" SelectionChanged="ComboBox_SelectionChanged_1" SelectedIndex="0" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                                    <TextBlock x:Uid="SystemAuto"/>
+                                    <TextBlock x:Uid="Custom"/>
                                 </ComboBox>
                             </Grid>
                             <Grid>
                                 <StackPanel>
-                                    <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Custom Color">
+                                    <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="CustomColorHeader">
                                         <StackPanel>
                                             <ColorPicker Name="AccentColorPicker"/>
-                                            <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                                            <Button x:Uid="SaveBtn" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
                                         </StackPanel>
                                     </Expander>
                                 </StackPanel>
                             </Grid>
                             <Grid>
-                                <TextBlock Text="Background " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
-                                <ComboBox Name="BackdropSelect" SelectionChanged="ComboBox_SelectionChanged_2" PlaceholderText="Acrylic" HorizontalAlignment="Right"  VerticalAlignment="Top" SelectedIndex="1">
-                                    <x:String>Acrylic</x:String>
-                                    <x:String>Mica</x:String>
-                                    <x:String>Image</x:String>
-                                    <x:String>Album Cover</x:String>
-                                    <x:String>Solid Color</x:String>
+                                <TextBlock x:Uid="Background" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                <ComboBox Name="BackdropSelect" SelectionChanged="ComboBox_SelectionChanged_2"  HorizontalAlignment="Right"  VerticalAlignment="Top" SelectedIndex="1">
+                                    <TextBlock x:Uid="Acrylic"/>
+                                    <TextBlock x:Uid="Mica"/>
+                                    <TextBlock x:Uid="Image"/>
+                                    <TextBlock x:Uid="AlbumCover"/>
+                                    <TextBlock x:Uid="SolidColor"/>
                                 </ComboBox>
                             </Grid>
-                            <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Custom" HorizontalContentAlignment="Stretch">
+                            <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="CustomBgHeader" HorizontalContentAlignment="Stretch">
                                 <StackPanel HorizontalAlignment="Stretch" Spacing="10">
                                     <Grid>
-                                        <TextBlock HorizontalAlignment="Left" Text="Background Image" VerticalAlignment="Center"/>
-                                        <TextBox Name="BackgroundLink" Margin="0,0,110,0" Width="300" HorizontalAlignment="Right" PlaceholderText="Media URL" VerticalAlignment="Center" LostFocus="BackgroundLink_LostFocus"/>
-                                        <Button HorizontalAlignment="Right" Content="Select Image" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                                        <TextBlock HorizontalAlignment="Left" x:Uid="BackgroundImage" VerticalAlignment="Center"/>
+                                        <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft" Spacing="10">
+                                            <Button HorizontalAlignment="Right" x:Uid="SelectImage" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                                            <TextBox Name="BackgroundLink" Width="300" HorizontalAlignment="Right" x:Uid="BackgroundLink" VerticalAlignment="Center" LostFocus="BackgroundLink_LostFocus"/>
+                                        </StackPanel>
+                                        
                                     </Grid>
                                     <Grid>
-                                        <TextBlock Text="Blur" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,0"/>
+                                        <TextBlock x:Uid="Blur" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,5,0,0"/>
                                         <ToggleSwitch Name="ImageBlurToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ImageBlurToggle_Toggled" Margin="0,0,-110,0"/>
                                     </Grid>
-                                    <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Custom Color">
+                                    <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="CustomColorHeader">
                                         <StackPanel>
                                             <ColorPicker Name="BackgroundColorPicker"/>
-                                            <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_4"/>
+                                            <Button x:Uid="SaveBtn" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_4"/>
                                         </StackPanel>
                                     </Expander>
                                 </StackPanel>
                             </Expander>
                             <Grid>
-                                <TextBlock Text="Global font" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                                <TextBlock x:Uid="Globalfont" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
                                 <DropDownButton Name="FontSelector" HorizontalAlignment="Right"  VerticalAlignment="Top">
                                     <DropDownButton.Flyout>
                                         <MenuFlyout x:Name="FontSelectorActually" Placement="Bottom">
@@ -85,104 +88,112 @@
                         </StackPanel>
                     </Expander.Content>
                 </Expander>
-                <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Behavior" HorizontalContentAlignment="Stretch">
+                <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="BehaviorHeader" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="20">
                         <Grid>
-                            <TextBlock Text="Stop app from stealing focus" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="EnableUISounds" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ToggleSwitch Name="SoundsToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" Toggled="SoundsToggle_Toggled" Margin="0,0,-110,0"/>
+                        </Grid>
+                        <Grid>
+                            <TextBlock x:Uid="StopFocus" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ToggleSwitch Name="FocusToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="True" Toggled="ToggleSwitch_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Hide Add Widget Button" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="HideAdd" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ToggleSwitch Name="AddButtonToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="AddButtonToggle_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Lock Layout" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="LockLayout" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ToggleSwitch Name="LockToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="LockToggle_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Launch on startup" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="LaunchStartup" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ToggleSwitch Name="StartupToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="StartupToggle_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
                     </StackPanel>
                 </Expander>
-                <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Browser" HorizontalContentAlignment="Stretch">
+                <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="BrowserHeader" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="20">
                         <Grid>
-                            <TextBlock Text="Search Engine" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="SearchEngine" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBox Name="SearchEngineCust" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" TextChanged="SearchEngineCust_TextChanged" PlaceholderText="https://www.google.com/"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="New tab behavior" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
+                            <TextBlock x:Uid="NewTabBehavior" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0"/>
                             <ComboBox Name="NewTabBehavior" SelectedIndex="0" PlaceholderText="Launchpad" HorizontalAlignment="Right"  VerticalAlignment="Top" SelectionChanged="NewTabBehavior_SelectionChanged">
-                                <x:String>Launchpad</x:String>
-                                <x:String>Blank Page</x:String>
-                                <x:String>Search Engine Homepage</x:String>
+                                <TextBlock x:Uid="Launchpad"/>
+                                <TextBlock x:Uid="BlankPage"/>
+                                <TextBlock x:Uid="SearchEngineHomepage"/>
                             </ComboBox>
                         </Grid>
                     </StackPanel>
                 </Expander>
-                <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Integrations" HorizontalContentAlignment="Stretch">
+                <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="IntegrationsHeader" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="20">
                         <Grid>
-                            <TextBlock Text="Reset Twitch login" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <Button Name="ResetTwitch" Content="Reset" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ResetTwitch_Click"/>
+                            <TextBlock x:Uid="ResetTwitchlogin" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button x:Uid="ResetBtn" Name="ResetTwitch" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ResetTwitch_Click"/>
                             <WebView2 Name="resetTwitch" Height="0" Width="0"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Reconnect OBS" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <Button Name="ReconnectOBS" Content="Reconnect" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ReconnectOBS_Click"/>
+                            <TextBlock x:Uid="ReconnectOBS" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Name="ReconnectOBS" x:Uid="ReconnectBtn" Content="Reconnect" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="ReconnectOBS_Click"/>
                         </Grid>
-                        <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Connection Details" HorizontalContentAlignment="Stretch">
+                        <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="ConnectionDetailsHeader" HorizontalContentAlignment="Stretch">
                             <StackPanel Spacing="20">
-                                <TextBlock x:Name="OBSStatus" Text="Status: " HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="OBSStatus" x:Uid="OBSStatus" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                                 <TextBox x:Name="OBSIP" PlaceholderText="ws://127.0.0.1:4455" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextChanged="OBSIP_TextChanged"/>
-                                <PasswordBox x:Name="OBSPass" PlaceholderText="Password" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChanged="OBSPass_PasswordChanged"/>
+                                <PasswordBox x:Name="OBSPass" x:Uid="OBSPass" HorizontalAlignment="Stretch" VerticalAlignment="Center" PasswordChanged="OBSPass_PasswordChanged"/>
                             </StackPanel>
                         </Expander>
                     </StackPanel>
                 </Expander>
-                <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Sleep Mode" HorizontalContentAlignment="Stretch">
+                <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="SleepModeHeader" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="20">
                         <Grid>
-                            <TextBlock Text="Text opacity" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="TextOpacity" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <Slider Name="Opacity" Width="300" HorizontalAlignment="Right" VerticalAlignment="Center" Value="10" ManipulationCompleted="Opacity_ManipulationCompleted" ManipulationMode="All" Tapped="Opacity_Tapped"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Override text color" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <CheckBox Name="OvrColorSleepMode" FlowDirection="RightToLeft" HorizontalAlignment="Right" VerticalAlignment="Center" Checked="OvrColorSleepMode_Checked" Unchecked="OvrColorSleepMode_Unchecked"/>
+                            <TextBlock x:Uid="OverrideTextColor" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <ToggleSwitch Name="OvrColorSleepMode" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent=""  Toggled="OvrColorSleepMode_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
-                        <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="Custom Color">
+                        <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="CustomColorHeader">
                             <StackPanel>
                                 <ColorPicker Name="SleepModeColor"/>
-                                <Button Content="Save" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_5"/>
+                                <Button x:Uid="SaveBtn" HorizontalAlignment="Stretch" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_5"/>
                             </StackPanel>
                         </Expander>
                     </StackPanel>
                 </Expander>
-                <Expander CornerRadius="8" HorizontalAlignment="Stretch" Header="About &amp; Updates" HorizontalContentAlignment="Stretch">
+                <Expander CornerRadius="8" HorizontalAlignment="Stretch" x:Uid="AboutUpdatesHeader" HorizontalContentAlignment="Stretch">
                     <StackPanel Spacing="20">
                         <Image Name="AppIconImg" Source="https://i.imgur.com/EXoHTmI.png" Height="100" Margin="0,-10,0,0"/>
                         <TextBlock Text="Companion Display" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe UI Variable Display" FontWeight="Normal" Margin="0,-20,0,0"/>
                         <Grid>
-                            <TextBlock Text="Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="Version" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <TextBlock Name="VersionString" Text="-" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Enable Beta Updates" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <TextBlock x:Uid="EnableBetaUpdates" HorizontalAlignment="Left" VerticalAlignment="Center"/>
                             <ToggleSwitch Name="UpdateToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="UpdateToggle_Toggled" Margin="0,0,-110,0"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Update" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <Button Name="UpdateBtn" IsEnabled="False" Content="Checking for updates..." HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_3"/>
+                            <TextBlock x:Uid="Update" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Name="UpdateBtn" IsEnabled="False" x:Uid="CheckingUpdates" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_3"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Setup" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <Button Name="SetupBtn" Content="Launch Setup" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="SetupBtn_Click"/>
+                            <TextBlock x:Uid="Setup" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Name="SetupBtn" x:Uid="SetupBtn" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="SetupBtn_Click"/>
                         </Grid>
                         <Grid>
-                            <TextBlock Text="Made with ❤︎ by YAG-dev" HorizontalAlignment="Left" VerticalAlignment="Center"/>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                <HyperlinkButton Content="Donate" HorizontalAlignment="Right" VerticalAlignment="Center" Click="HyperlinkButton_Click"/>
+                            <TextBlock x:Uid="BackupRestore" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <Button Name="BackupBtn" x:Uid="TransferTool" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource AccentButtonStyle}" Click="BackupBtn_Click"/>
+                        </Grid>
+                        <Grid>
+                            <TextBlock x:Uid="YAGdev" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                                <HyperlinkButton x:Uid="Donate" HorizontalAlignment="Right" VerticalAlignment="Center" Click="HyperlinkButton_Click"/>
                                 <HyperlinkButton Content="GitHub" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_2"/>
                             </StackPanel>
 
@@ -191,6 +202,10 @@
                 </Expander>
             </StackPanel>
         </ScrollViewer>
+        <Grid Name="BackupGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Collapsed"> 
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource CustomAcrylicInAppLuminosity}"/>
+            <TextBlock x:Uid="BackupTransferBanner" Opacity="0.8" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
     </Grid>
     
 </Page>

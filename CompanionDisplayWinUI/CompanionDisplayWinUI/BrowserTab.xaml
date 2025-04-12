@@ -125,10 +125,10 @@
             <Grid>
                 <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="Transparent" RightTapped="GridView_RightTapped" />
                 <StackPanel Margin="0,40,0,0" VerticalAlignment="Center" Spacing="25">
-                    <TextBox Name="AddressBar" Height="50" PlaceholderText="Search or insert URL" MinWidth="300" Padding="15,15,0,0" KeyDown="AddressBar_KeyDown" CornerRadius="8"/>
+                    <TextBox Name="AddressBar" Height="50" x:Uid="SearchInsertURL" MinWidth="300" Padding="15,15,0,0" KeyDown="AddressBar_KeyDown" CornerRadius="8"/>
                     <Grid>
                         <GridView Name="Launchpad" VerticalAlignment="Center" HorizontalAlignment="Center" CanDragItems="True" CanReorderItems="True" AllowDrop="True" DragItemsCompleted="Launchpad_LayoutUpdated" LayoutUpdated="Launchpad_LayoutUpdated_1"/>
-                        <TextBlock Name="NoItem" IsHitTestVisible="False" Text="No Items. Right click me to edit Launchpad." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Opacity="0.7" TextWrapping="Wrap" HorizontalTextAlignment="Center"/>
+                        <TextBlock Name="NoItem" IsHitTestVisible="False" x:Uid="LaunchpadNoItems" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="48" Opacity="0.7" TextWrapping="Wrap" HorizontalTextAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </Grid>

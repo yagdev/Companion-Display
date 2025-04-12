@@ -1,35 +1,21 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Management;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Devices.Radios;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Media.Control;
-using Windows.Networking.Connectivity;
-using Windows.Networking.NetworkOperators;
-using Windows.UI.Notifications.Management;
-using Windows.UI.Notifications;
 using Windows.UI.ViewManagement;
-using static CompanionDisplayWinUI.MediaPlayerWidget;
 using CoreAudio;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Enumeration;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -44,121 +30,51 @@ namespace CompanionDisplayWinUI
         public TimeWidget()
         {
             this.InitializeComponent();
+            timeThread = new Thread(ManageTimeEvents);
         }
-        public bool CleanUp = false;
-        private string DateStr = "", TimeStr = "", SongTitleCache = "";
-        private void UpdateUI()
+        private string DateStr = "", TimeStr = "";
+        private bool isVisible = false;
+        public bool configChanged = true;
+        Thread timeThread;
+        private void SongUpdated()
         {
-            try
+            DispatcherQueue.TryEnqueue(() =>
             {
-                if(DateStr != DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy"))
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        FullDate.Text = DateOnly.FromDateTime(DateTime.Now).ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
-                        Date.Text = FullDate.Text;
-                    });
-                    DateStr = DateOnly.FromDateTime(DateTime.Now).ToString("dd/MM/yyyy");
-                }
-                if(TimeStr != TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm"))
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        Time.Text = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
-                        TimeLeft.Text = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
-                    });
-                    TimeStr = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
-                }
                 try
                 {
-                    if ((Globals.SongName != SongTitleCache && Globals.IsSpotify) || (!Globals.IsSpotify && Globals.songInfo.Title != SongTitleCache))
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            try
-                            {
-                                if (Globals.IsSpotify)
-                                {
-                                    SongTitle.Text = Globals.SongName;
-                                    Album.Source = new BitmapImage(new Uri(Globals.SongBackground));
-                                    Album2.Source = new BitmapImage(new Uri(Globals.SongBackground));
-                                }
-                                else
-                                {
-                                    SongTitle.Text = Globals.songInfo.Title;
-                                    Album.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
-                                    Album2.Source = Album.Source;
-                                }
-                                SongTitleCache = Globals.SongName;
-                            }
-                            catch
-                            {
-                                SongTitle.Text = "No media playing";
-                                SongTitleCache = "";
-                            }
-                        });
-                    }
+                    SongTitle.Text = Media.SongName;
+                    Media.GetCover(DispatcherQueue, Album);
+                    Media.GetCover(DispatcherQueue, Album2);
                 }
-                catch
-                {
-                }
-                try
-                {
-                    if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused)
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            PlayPause.Content = "\uf5b0";
-                        });
-                    }
-                    else
-                    {
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            PlayPause.Content = "\uf8ae";
-                        });
-                    }
-                }
-                catch
-                {
-                }
-
-            }
-            catch
-            {
-
-            }
-            if (CleanUp == false)
-            {
-                Thread.Sleep(1000);
-                Thread thread = new(UpdateUI);
-                thread.Start();
-            }
+                catch { }
+            });
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            CleanUp = true;
-        }
-        private bool FTU = true;
-        public async Task<bool> IsBluetoothOn()
-        {
-            await Radio.RequestAccessAsync();
-            var radios = await Radio.GetRadiosAsync();
-            foreach (var radio in radios)
+            if (isVisible)
             {
-                if (radio.Kind == RadioKind.Bluetooth && radio.State == RadioState.On)
+                try
                 {
-                    return true;
+                    isVisible = false;
+                    radio1.StateChanged -= UpdateWiFi;
+                    radio2.StateChanged -= UpdateBT;
+                    mDevice.AudioEndpointVolume.OnVolumeNotification -= ChangeVol;
+                    Media.CallInfoUpdate -= SongUpdated;
+                    Globals.currentSession.PlaybackInfoChanged -= PlayPauseUpdated;
                 }
+                catch { }
             }
-            return false;
+        }
+        public bool IsBluetoothOn()
+        {
+            return (radio2.State == RadioState.On);
         }
         private Radio radio1, radio2;
         private async void BTToggle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
             {
-                if (BTToggle.IsChecked == true)
+                if (BTToggle.IsChecked.Value)
                 {
                     await radio2.SetStateAsync(RadioState.On);
                 }
@@ -167,18 +83,14 @@ namespace CompanionDisplayWinUI
                     await radio2.SetStateAsync(RadioState.Off);
                 }
             }
-            catch
-            {
-
-            }
-            
+            catch { }
         }
 
         private async void WiFiToggle_Tapped(object sender, TappedRoutedEventArgs e)
         {
             try
             {
-                if (WiFiToggle.IsChecked == true)
+                if (WiFiToggle.IsChecked.Value)
                 {
                     await radio1.SetStateAsync(RadioState.On);
                 }
@@ -189,12 +101,10 @@ namespace CompanionDisplayWinUI
             }
             catch { }
         }
-
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void LoadLayout()
         {
             try
             {
-                CleanUp = false;
                 string config = File.ReadAllText(Globals.TimeConfigFile);
                 if (config != "")
                 {
@@ -209,10 +119,7 @@ namespace CompanionDisplayWinUI
                     Date.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(255, (byte)RDate, (byte)GDate, (byte)BDate));
                 }
             }
-            catch
-            {
-
-            }
+            catch { }
             try
             {
                 string config2 = File.ReadAllText(Globals.TimeConfigFileQS);
@@ -236,80 +143,88 @@ namespace CompanionDisplayWinUI
                 }
             }
             catch { }
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (!isVisible)
+            {
+                isVisible = true;
+                if (configChanged)
+                {
+                    LoadLayout();
+                    LoadToggles();
+                    configChanged = false;
+                }
+                try
+                {
+                    Media.CallInfoUpdate += SongUpdated;
+                    Globals.currentSession.PlaybackInfoChanged += PlayPauseUpdated;
+                    mDevice.AudioEndpointVolume.OnVolumeNotification += ChangeVol;
+                    radio1.StateChanged += UpdateWiFi;
+                    radio2.StateChanged += UpdateBT;
+                }
+                catch { }
+                try
+                {
+                    timeThread.Start();
+                }
+                catch { }
+                SongUpdated();
+                PlayPauseUpdated(null, null);
+            }
+        }
+
+        private void PlayPauseUpdated(GlobalSystemMediaTransportControlsSession sender, PlaybackInfoChangedEventArgs args)
+        {
             try
             {
-                if (FTU)
+                if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused)
                 {
-                    FTU = false;
-                    await Radio.RequestAccessAsync();
-                    var radios = await Radio.GetRadiosAsync();
-                    foreach (var radio in radios)
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (radio.Kind == RadioKind.WiFi)
-                        {
-                            WiFiToggle.IsEnabled = true;
-                            WiFiToggle.IsHitTestVisible = true;
-                            radio1 = radio;
-                            radio1.StateChanged -= UpdateWiFi;
-                            radio1.StateChanged += UpdateWiFi;
-                            if (radio.State == RadioState.On)
-                            {
-                                WiFiToggle.IsChecked = true;
-                            }
-                        }
-                        if (radio.Kind == RadioKind.Bluetooth)
-                        {
-                            BTToggle.IsEnabled = true;
-                            BTToggle.IsHitTestVisible = true;
-                            radio2 = radio;
-                            radio2.StateChanged -= UpdateBT;
-                            radio2.StateChanged += UpdateBT;
-                            if (radio.State == RadioState.On)
-                            {
-                                BTToggle.IsChecked = true;
-                            }
-                        }
-                        uiSettings = new Windows.UI.ViewManagement.UISettings();
-                        var color = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background);
-                        uiSettings.ColorValuesChanged += UpdateDarkMode;
-                        if(color.R == 0)
-                        {
-                            DarkModeToggle.IsChecked = true;
-                        }
-                        MMDeviceEnumerator DevEnum = new();
-                        mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
-                        mDevice.AudioEndpointVolume.OnVolumeNotification += ChangeVol;
-                        MuteToggle.IsChecked = mDevice.AudioEndpointVolume.Mute;
-                    }
-                    using (Process process = new()
+                        PlayPause.Content = "\uf5b0";
+                    });
+                }
+                else
+                {
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        StartInfo = new()
-                        {
-                            FileName = "powershell.exe",
-                            Arguments = $"-Command \"(Get-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\RadioManagement\\SystemRadioState\").'(default)'",
-                            CreateNoWindow = true,
-                            UseShellExecute = false,
-                            RedirectStandardOutput = true,
-                        }
-                    })
-                    {
-                        process.Start();
-                        process.WaitForExit();
-                        if (process.StandardOutput.ReadToEnd().Contains('1'))
-                        {
-                             AirPlaneToggle.IsChecked = true;
-                        }
-                    }
-                    UpdateBL();
+                        PlayPause.Content = "\uf8ae";
+                    });
                 }
             }
-            catch
-            {
-
-            }
-            Thread thread0 = new(UpdateUI);
-            thread0.Start();
+            catch { }
         }
+
+        private void ManageTimeEvents()
+        {
+            while (isVisible)
+            {
+                string currentTime = DateTime.Now.ToString("HH:mm");
+                string currentDate = DateOnly.FromDateTime(DateTime.Now).ToString("dddd, dd MMMM yyyy", CultureInfo.CurrentCulture);
+                if (currentDate != DateStr)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        DateStr = currentDate;
+                        Date.Text = currentDate;
+                        FullDate.Text = currentDate;
+                    });
+                }
+                if (currentTime != TimeStr)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        TimeStr = currentTime;
+                        Time.Text = currentTime;
+                        TimeLeft.Text = currentTime;
+                    });
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
         private async void UpdateBL()
         {
             try
@@ -367,7 +282,49 @@ namespace CompanionDisplayWinUI
 
             }
         }
+        private async void LoadToggles()
+        {
+            try
+            {
+                uiSettings = new Windows.UI.ViewManagement.UISettings();
+                var color = uiSettings.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background);
+                uiSettings.ColorValuesChanged += UpdateDarkMode;
+                DarkModeToggle.IsChecked = color.R == 0;
+                MMDeviceEnumerator DevEnum = new();
+                mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+                mDevice.AudioEndpointVolume.OnVolumeNotification += ChangeVol;
+                MuteToggle.IsChecked = mDevice.AudioEndpointVolume.Mute;
+                await Radio.RequestAccessAsync();
+                var radios = await Radio.GetRadiosAsync();
+                foreach (var radio in radios)
+                {
+                    if (radio.Kind == RadioKind.WiFi)
+                    {
+                        WiFiToggle.IsEnabled = true;
+                        WiFiToggle.IsHitTestVisible = true;
+                        radio1 = radio;
+                        radio1.StateChanged -= UpdateWiFi;
+                        radio1.StateChanged += UpdateWiFi;
+                        WiFiToggle.IsChecked = (radio.State == RadioState.On);
+                    }
+                    if (radio.Kind == RadioKind.Bluetooth)
+                    {
+                        BTToggle.IsEnabled = true;
+                        BTToggle.IsHitTestVisible = true;
+                        radio2 = radio;
+                        radio2.StateChanged -= UpdateBT;
+                        radio2.StateChanged += UpdateBT;
+                        BTToggle.IsChecked = (radio.State == RadioState.On);
+                    }
+                }
+                GetAirplaneMode();
+                UpdateBL();
+            }
+            catch
+            {
 
+            }
+        }
         private void BLRefresh(BluetoothDevice sender, object args)
         {
             foreach(BluetoothDevice bluetoothDevice in bluetoothDevices)
@@ -381,15 +338,14 @@ namespace CompanionDisplayWinUI
             sender.ConnectionStatusChanged -= BLRefresh;
             UpdateBL();
         }
-        private List<BluetoothDevice> bluetoothDevices = new List<BluetoothDevice>();
-        private List<BluetoothLEDevice> bluetoothDevicesLE = new List<BluetoothLEDevice>();
+        private List<BluetoothDevice> bluetoothDevices = [];
+        private List<BluetoothLEDevice> bluetoothDevicesLE = [];
         private void BLERefresh(BluetoothLEDevice sender, object args)
         {
             sender.ConnectionStatusChanged -= BLERefresh;
             UpdateBL();
         }
 
-        private DeviceWatcher deviceWatcher;
         private void ChangeVol(AudioVolumeNotificationData data)
         {
             DispatcherQueue.TryEnqueue(() =>
@@ -403,50 +359,19 @@ namespace CompanionDisplayWinUI
 
         private void DarkModeToggle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if(DarkModeToggle.IsChecked == true)
+            if(DarkModeToggle.IsChecked.Value)
             {
-                using (Process process = new()
-                {
-                    StartInfo = new()
-                    {
-                        FileName = "powershell.exe",
-                        Arguments = $"-Command \"New-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme -Value 0 -Type Dword -Force",
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                    }
-                })
-                {
-                    process.Start();
-                }
+                CMDOperations.PerformPowershellCommand($"-Command \"New-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme -Value 0 -Type Dword -Force");
             }
             else
             {
-                using(Process process = new()
-                {
-                    StartInfo = new()
-                    {
-                        FileName = "powershell.exe",
-                        Arguments = $"-Command \"Remove-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme\"",
-                        CreateNoWindow = true,
-                        UseShellExecute = false,
-                    }
-                })
-                {
-                    process.Start();
-                }
+                CMDOperations.PerformPowershellCommand($"-Command \"Remove-ItemProperty -Path HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize -Name AppsUseLightTheme\"");
             }
         }
 
         private void MuteToggle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if(MuteToggle.IsChecked == true)
-            {
-                mDevice.AudioEndpointVolume.Mute = true;
-            }
-            else
-            {
-                mDevice.AudioEndpointVolume.Mute = false;
-            }
+            mDevice.AudioEndpointVolume.Mute = MuteToggle.IsChecked.Value;
         }
 
         private async void HyperlinkButton_Tapped(object sender, TappedRoutedEventArgs e)
@@ -455,9 +380,7 @@ namespace CompanionDisplayWinUI
             {
                 await Globals.sessionManager.GetCurrentSession().TrySkipNextAsync();
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private async void PlayPause_Tapped(object sender, TappedRoutedEventArgs e)
@@ -466,54 +389,35 @@ namespace CompanionDisplayWinUI
             {
                 await Globals.sessionManager.GetCurrentSession().TryTogglePlayPauseAsync();
             }
-            catch
+            catch { }
+        }
+
+        private async void Shutdown_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            ContentDialog dialog = new()
             {
-            }
-        }
-
-        private void AirPlaneToggle_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-
-        private void Button_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
-        }
-
-        private async void shutdown_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            ContentDialog dialog = new ContentDialog();
-
-            // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            dialog.Title = (sender as Button).Name;
-            dialog.PrimaryButtonText = (sender as Button).Name;
-            dialog.CloseButtonText = "Cancel";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = "Do you want to " + (sender as Button).Name + " your PC?";
-            dialog.Tag = (sender as Button).Tag;
+                XamlRoot = this.XamlRoot,
+                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style,
+                Title = AppStrings.GetActionString((sender as Button).Name),
+                PrimaryButtonText = AppStrings.GetActionString((sender as Button).Name),
+                CloseButtonText = AppStrings.cancelString,
+                DefaultButton = ContentDialogButton.Primary,
+                Content = AppStrings.doYouWanna + AppStrings.GetActionString((sender as Button).Name) + AppStrings.yourPC,
+                Tag = (sender as Button).Tag
+            };
             var result = await dialog.ShowAsync();
             if(result == ContentDialogResult.Primary)
             {
-                using (Process cmd = new())
-                {
-                    cmd.StartInfo.FileName = "cmd.exe";
-                    cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                    cmd.StartInfo.CreateNoWindow = true;
-                    cmd.StartInfo.Arguments = "/C " + (sender as Button).Tag;
-                    cmd.Start();
-                }
+                CMDOperations.PerformCMDCommand((string)(sender as Button).Tag);
             }
         }
 
         private void Edit_Checked(object sender, RoutedEventArgs e)
         {
             Edit.Content = "\uf13e";
-            foreach(Grid grid in TogglesView.Items)
+            foreach (Grid grid in TogglesView.Items.Cast<Grid>())
             {
-                foreach (Control childControl in grid.Children)
+                foreach (Control childControl in grid.Children.Cast<Control>())
                 {
                     childControl.IsHitTestVisible = false;
                 }
@@ -524,9 +428,9 @@ namespace CompanionDisplayWinUI
         {
             Edit.Content = "\ue70f";
             int index = 0;
-            foreach (Grid grid in TogglesView.Items)
+            foreach (Grid grid in TogglesView.Items.Cast<Grid>())
             {
-                foreach (Control childControl in grid.Children)
+                foreach (Control childControl in grid.Children.Cast<Control>())
                 {
                     childControl.IsHitTestVisible = true;
                 }
@@ -546,116 +450,38 @@ namespace CompanionDisplayWinUI
             File.AppendAllText(Globals.TimeConfigFileQS, LockGrid.Tag + "\n");
             File.AppendAllText(Globals.TimeConfigFileQS, LogoffGrid.Tag + "\n");
         }
+        private void GetAirplaneMode()
+        {
+            bool output = CMDOperations.GetPowershellLog($"-Command \"(Get-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\RadioManagement\\SystemRadioState\").'(default)'").Contains('1');
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                AirPlaneToggle.IsChecked = output;
+            });
+        }
 
         private void UpdateDarkMode(UISettings sender, object args)
         {
-            if(sender.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).R == 0)
+            DispatcherQueue.TryEnqueue(() =>
             {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    DarkModeToggle.IsChecked = true;
-                });
-            }
-            else
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    DarkModeToggle.IsChecked = false;
-                });
-            }
+                DarkModeToggle.IsChecked = sender.GetColorValue(Windows.UI.ViewManagement.UIColorType.Background).R == 0;
+            });
         }
 
         private void UpdateBT(Radio sender, object args)
         {
-            if (sender.State == RadioState.On)
+            DispatcherQueue.TryEnqueue(() =>
             {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    BTToggle.IsChecked = true;
-                });
-            }
-            else
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    BTToggle.IsChecked = false;
-                });
-            }
-            using (Process process = new()
-            {
-                StartInfo = new()
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"(Get-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\RadioManagement\\SystemRadioState\").'(default)'",
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                }
-            })
-            {
-                process.Start();
-                process.WaitForExit();
-                if (process.StandardOutput.ReadToEnd().Contains('1'))
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        AirPlaneToggle.IsChecked = true;
-                    });
-                }
-                else
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        AirPlaneToggle.IsChecked = false;
-                    });
-                }
-            }
+                BTToggle.IsChecked = sender.State == RadioState.On;
+            });
+            GetAirplaneMode();
         }
         private void UpdateWiFi(Radio sender, object args)
         {
-            if(sender.State == RadioState.On)
+            DispatcherQueue.TryEnqueue(() =>
             {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    WiFiToggle.IsChecked = true;
-                });
-            }
-            else
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    WiFiToggle.IsChecked = false;
-                });
-            }
-            using (Process process = new()
-            {
-                StartInfo = new()
-                {
-                    FileName = "powershell.exe",
-                    Arguments = $"-Command \"(Get-ItemProperty -Path \"HKLM:\\System\\CurrentControlSet\\Control\\RadioManagement\\SystemRadioState\").'(default)'",
-                    CreateNoWindow = true,
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                }
-            })
-            {
-                process.Start();
-                process.WaitForExit();
-                if (process.StandardOutput.ReadToEnd().Contains('1'))
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        AirPlaneToggle.IsChecked = true;
-                    });
-                }
-                else
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        AirPlaneToggle.IsChecked = false;
-                    });
-                }
-            }
+                WiFiToggle.IsChecked = sender.State == RadioState.On;
+            });
+            GetAirplaneMode();
         }
     }
 }

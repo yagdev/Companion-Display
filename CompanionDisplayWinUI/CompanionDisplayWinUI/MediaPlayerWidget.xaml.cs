@@ -1,27 +1,16 @@
-using EmbedIO.Sessions;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using CoreAudio;
-using Windows.Media;
 using Windows.System;
 using System.Runtime.InteropServices;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,7 +22,6 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class MediaPlayerWidget : Page
     {
-        string AlbumCoverCache, SongTitleCache;
         public double VolumeCur;
         public MediaPlayerWidget()
         {
@@ -48,40 +36,34 @@ namespace CompanionDisplayWinUI
                 {
                     return null;
                 }
-                using (IRandomAccessStreamWithContentType imageStream = Thumbnail.OpenReadAsync().GetAwaiter().GetResult())
-                using (DataReader reader = new(imageStream))
-                using (var stream = new InMemoryRandomAccessStream())
-                using (var writer = new DataWriter(stream))
-                {
-                    byte[] fileBytes = new byte[imageStream.Size];
-                    reader.LoadAsync((uint)imageStream.Size).GetAwaiter().GetResult();
-                    reader.ReadBytes(fileBytes);
-                    BitmapImage image = new();
-                    writer.WriteBytes(fileBytes);
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    writer.StoreAsync();
-                    writer.FlushAsync();
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    writer.DetachStream();
-                    stream.Seek(0);
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    image.SetSourceAsync(stream);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                    return image;
-                }
+                using IRandomAccessStreamWithContentType imageStream = Thumbnail.OpenReadAsync().GetAwaiter().GetResult();
+                using DataReader reader = new(imageStream);
+                using var stream = new InMemoryRandomAccessStream();
+                using var writer = new DataWriter(stream);
+                byte[] fileBytes = new byte[imageStream.Size];
+                reader.LoadAsync((uint)imageStream.Size).GetAwaiter().GetResult();
+                reader.ReadBytes(fileBytes);
+                BitmapImage image = new();
+                writer.WriteBytes(fileBytes);
+                _ = writer.StoreAsync();
+                _ = writer.FlushAsync();
+                writer.DetachStream();
+                stream.Seek(0);
+                _ = image.SetSourceAsync(stream);
+                return image;
             }
         }
-        private async void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
+        private void PlayPauseBtn_Click(object sender, RoutedEventArgs e)
         {
             PressKey(sender, null);
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             PressKey(sender, null);
         }
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             PressKey(sender, null);
         }
@@ -96,10 +78,8 @@ namespace CompanionDisplayWinUI
             else
                 keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
         }
-        private bool Updating = false;
         private void PressKey(object sender, RoutedEventArgs e)
         {
-            Windows.UI.Core.CoreVirtualKeyStates numkey = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.NumberKeyLock);
             try
             {
                 PressKey((VirtualKey)int.Parse(((HyperlinkButton)sender).Tag.ToString()), up: false);
@@ -122,15 +102,29 @@ namespace CompanionDisplayWinUI
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             CleanUp = true;
+            Globals.sleepTimer.CallUpdate -= UpdateIcon;
+            Media.CallInfoUpdate -= UpdateUI;
+            Media.CallTimingUpdate -= TimingUpdate;
+            Media.CallLyricUpdate -= LyricsUpdate;
         }
+
+        private void UpdateIcon()
+        {
+            if (Globals.sleepTimer.isEnabled)
+            {
+                SleepTimer.Content = "\uf0ce";
+            }
+            else
+            {
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    SleepTimer.Content = "\ue708";
+                });
+            }
+        }
+
         private void StartUI()
         {
-            if (Globals.StartedPlayer == false)
-            {
-                Globals.StartedPlayer = true;
-                PlayerSpotify mediaPlayerWidget = new();
-                mediaPlayerWidget.Page_Loaded();
-            }
             MMDeviceEnumerator DevEnum = new();
             mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
             mDevice.AudioEndpointVolume.OnVolumeNotification += ChangeVol;
@@ -139,8 +133,11 @@ namespace CompanionDisplayWinUI
             {
                 VolumeBar.Value = VolumeCur;
             });
-            Thread thread0 = new(UpdateUI);
-            thread0.Start();
+            Media.CallInfoUpdate += UpdateUI;
+            Media.CallTimingUpdate += TimingUpdate;
+            Media.CallLyricUpdate += LyricsUpdate;
+            UpdateUI();
+            TimingUpdate();
         }
         private bool IsManipulative = false;
         private void ChangeVol(AudioVolumeNotificationData data)
@@ -168,8 +165,13 @@ namespace CompanionDisplayWinUI
             CleanUp = false;
             MMDeviceEnumerator DevEnum = new();
             mDevice = DevEnum.GetDefaultAudioEndpoint(EDataFlow.eRender, ERole.eMultimedia);
+            Globals.sleepTimer.CallUpdate += UpdateIcon;
+            Media.CallInfoUpdate += UpdateUI;
+            Media.CallTimingUpdate += TimingUpdate;
+            Media.CallLyricUpdate += LyricsUpdate;
             Thread thread0 = new(StartUI);
             thread0.Start();
+            UpdateIcon();
         }
         private async void Grid_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
@@ -218,7 +220,10 @@ namespace CompanionDisplayWinUI
                 IsDragging = false;
             }
         }
-        private string LastTitle = "-", LastDetail = "-", LastLyric = "-", LastTime = "-", LastEnd = "-", LastAlbum = "-";
+        private void SleepTimer_Click(object sender, RoutedEventArgs e)
+        {
+            Media.OpenSleepDialogue(this.XamlRoot);
+        }
 
         private void HyperlinkButton_Tapped_1(object sender, RoutedEventArgs e)
         {
@@ -247,7 +252,7 @@ namespace CompanionDisplayWinUI
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
             OpenWindow.IsEnabled = false;
-            LyricsView m_window = new LyricsView();
+            LyricsView m_window = new();
             m_window.Closed += (s, e) =>
             {
                 OpenWindow.IsEnabled = true;
@@ -265,171 +270,62 @@ namespace CompanionDisplayWinUI
             IsManipulative = false;
         }
 
-        private bool LastSpotifyCheck = false;
-        private async void UpdateUI()
+        private void UpdateUI()
         {
-            try
+            DispatcherQueue.TryEnqueue(() =>
             {
-                if(LastTitle != Globals.SongName)
-                {
-                    LastTitle = Globals.SongName;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        SongTitle.Text = Globals.SongName;
-                    });
-                }
-                if (LastAlbum != Globals.AlbumName)
-                {
-                    LastAlbum = Globals.AlbumName;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        AlbumName.Text = Globals.AlbumName;
-                    });
-                }
-                if (LastDetail != Globals.SongDetails)
-                {
-                    LastDetail = Globals.SongDetails;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        SongInfo.Text = Globals.SongDetails;
-                    });
-                }
-                if (LastLyric != Globals.SongLyrics)
-                {
-                    LastLyric = Globals.SongLyrics;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        SongLyrics.Text = Globals.SongLyrics;
-                    });
-                }
-                if (LastTime != Globals.SongTime)
-                {
-                    LastTime = Globals.SongTime;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        CurrentTime.Text = Globals.SongTime;
-                        if (IsDragging == false)
-                        {
-                            try
-                            {
-                                SongProgressBar.Value = Globals.SongProgress;
-                            }
-                            catch
-                            {
-                                SongProgressBar.Value = 0;
-                            }
-                        }
-                    });
-                }
-                if (LastEnd != Globals.SongEnd)
-                {
-                    LastEnd = Globals.SongEnd;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        EndTime.Text = Globals.SongEnd;
-                    });
-                }
-                if(LastSpotifyCheck != Globals.IsSpotify)
-                {
-                    LastSpotifyCheck = Globals.IsSpotify;
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        if (Globals.IsSpotify)
-                        {
-                            SpotifyLogo.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            SpotifyLogo.Visibility = Visibility.Collapsed;
-                        }
-                    });
-                }
-            }
-            catch
+                SongTitle.Text = Media.SongName;
+                AlbumName.Text = Media.AlbumName;
+                SongInfo.Text = Media.SongDetails;
+                Media.GetCover(DispatcherQueue, AlbumCoverImg);
+                AlbumCoverImg.Opacity = 0.2;
+            });
+        }
+        private void TimingUpdate()
+        {
+            DispatcherQueue.TryEnqueue(() =>
             {
-            }
-            if (Globals.SongBackground != AlbumCoverCache || !Globals.IsSpotify)
-            {
-                if (Globals.IsSpotify == true)
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        try
-                        {
-                            AlbumCoverImg.Opacity = 0.2;
-                            AlbumCoverImg.Source = new BitmapImage(new Uri(Globals.SongBackground));
-                            AlbumCoverCache = Globals.SongBackground;
-                        }
-                        catch
-                        {
-                        }
-                    });
-                }
-                else
+                CurrentTime.Text = Media.SongTime;
+                EndTime.Text = Media.SongEnd;
+                if (!IsDragging)
                 {
                     try
                     {
-                        if (Globals.SongName != SongTitleCache)
-                        {
-                            DispatcherQueue.TryEnqueue(() =>
-                            {
-                                try
-                                {
-                                    AlbumCoverImg.Opacity = 0.2;
-                                    AlbumCoverImg.Source = (ImageSource)Helper.GetThumbnail(Globals.songInfo.Thumbnail);
-                                    AlbumCoverCache = "";
-                                    SongTitleCache = Globals.songInfo.Title;
-                                }
-                                catch
-                                {
-                                    SongTitle.Text = "-"; 
-                                    SongInfo.Text = "-";
-                                    SongLyrics.Text = "-";
-                                    AlbumName.Text = "-";
-                                    EndTime.Text = "--:--";
-                                    CurrentTime.Text = "--:--";
-                                    SongTitleCache = "-";
-                                    LastDetail = "-";
-                                    LastTitle = "-";
-                                    LastLyric = "-";
-                                    LastTime = "-";
-                                    LastEnd = "-";
-                                    LastAlbum = "-";
-                                }
-                            });
-                        }
+                        SongProgressBar.Value = Media.SongProgress;
                     }
                     catch
                     {
+                        SongProgressBar.Value = 0;
                     }
                 }
-            }
-            try
-            {
-                if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing)
+                try
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing)
                     {
-                        PlayPauseBtn.Content = "\uf8ae";
-                    });
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            PlayPauseBtn.Content = "\uf8ae";
+                        });
+                    }
+                    else
+                    {
+                        DispatcherQueue.TryEnqueue(() =>
+                        {
+                            PlayPauseBtn.Content = "\uf5b0";
+                        });
+                    }
                 }
-                else
+                catch
                 {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        PlayPauseBtn.Content = "\uf5b0";
-                    });
                 }
-            }
-            catch
+            });
+        }
+        private void LyricsUpdate()
+        {
+            DispatcherQueue.TryEnqueue(() =>
             {
-            }
-            if(!CleanUp)
-            {
-                Thread.Sleep(1000);
-                Thread thread0 = new(UpdateUI);
-                thread0.Start();
-            }
+                SongLyrics.Text = Media.SongLyrics;
+            });
         }
     }
 }

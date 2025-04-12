@@ -1,24 +1,13 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage.Streams;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -35,7 +24,7 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private string Name;
+        private new string Name;
         private bool FTU = true;
         private void UpdateUI()
         {
@@ -58,110 +47,37 @@ $Message
 ";
             try
             {
-                using (PowerShell powerShell = PowerShell.Create())
+                using PowerShell powerShell = PowerShell.Create();
+                powerShell.AddScript(script);
+                Collection<PSObject> results = powerShell.Invoke();
+                foreach (var result in results)
                 {
-                    powerShell.AddScript(script);
-                    Collection<PSObject> results = powerShell.Invoke();
-                    foreach (var result in results)
+                    string battIcon = Battery.GetBatteryIcon(int.Parse(result.ToString()[..^1]));
+                    DispatcherQueue.TryEnqueue(() =>
                     {
-                        int DevBattery = int.Parse(result.ToString().Replace("%", ""));
-                        string DevBatteryIcon = "%";
-                        switch (DevBattery)
-                        {
-                            case >= 0 and < 10:
-                                DevBatteryIcon = "\ue850";
-                                break;
-                            case >= 10 and < 20:
-                                DevBatteryIcon = "\ue851";
-                                break;
-                            case >= 20 and < 30:
-                                DevBatteryIcon = "\ue852";
-                                break;
-                            case >= 30 and < 40:
-                                DevBatteryIcon = "\ue853";
-                                break;
-                            case >= 40 and < 50:
-                                DevBatteryIcon = "\ue854";
-                                break;
-                            case >= 50 and < 60:
-                                DevBatteryIcon = "\ue855";
-                                break;
-                            case >= 60 and < 70:
-                                DevBatteryIcon = "\ue856";
-                                break;
-                            case >= 70 and < 80:
-                                DevBatteryIcon = "\ue857";
-                                break;
-                            case >= 80 and < 90:
-                                DevBatteryIcon = "\ue858";
-                                break;
-                            case >= 90 and < 100:
-                                DevBatteryIcon = "\ue859";
-                                break;
-                            case 100:
-                                DevBatteryIcon = "\ue83f";
-                                break;
-                        }
-                        DispatcherQueue.TryEnqueue(() =>
-                        {
-                            Percentage.Text = result.ToString();
-                            BattIcon.Text = DevBatteryIcon;
-                        });
-                    }
+                        Percentage.Text = result.ToString();
+                        BattIcon.Text = battIcon;
+                    });
                 }
             }
-            catch(Exception ex)
-            {
-            }
+            catch { }
             Thread.Sleep(10000);
             Thread thread = new(UpdateUI);
             thread.Start();
         }
         private void PercentageChanged(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
-            var reader = DataReader.FromBuffer(args.CharacteristicValue);
+            ReadBTLEBatt(args.CharacteristicValue);
+        }
+        private void ReadBTLEBatt(IBuffer Value)
+        {
+            var reader = DataReader.FromBuffer(Value);
             string percentage = reader.ReadByte().ToString();
             int DevBattery = int.Parse(percentage);
-            string DevBatteryIcon = "%";
-            switch (DevBattery)
-            {
-                case >= 0 and < 10:
-                    DevBatteryIcon = "\ue850";
-                    break;
-                case >= 10 and < 20:
-                    DevBatteryIcon = "\ue851";
-                    break;
-                case >= 20 and < 30:
-                    DevBatteryIcon = "\ue852";
-                    break;
-                case >= 30 and < 40:
-                    DevBatteryIcon = "\ue853";
-                    break;
-                case >= 40 and < 50:
-                    DevBatteryIcon = "\ue854";
-                    break;
-                case >= 50 and < 60:
-                    DevBatteryIcon = "\ue855";
-                    break;
-                case >= 60 and < 70:
-                    DevBatteryIcon = "\ue856";
-                    break;
-                case >= 70 and < 80:
-                    DevBatteryIcon = "\ue857";
-                    break;
-                case >= 80 and < 90:
-                    DevBatteryIcon = "\ue858";
-                    break;
-                case >= 90 and < 100:
-                    DevBatteryIcon = "\ue859";
-                    break;
-                case 100:
-                    DevBatteryIcon = "\ue83f";
-                    break;
-            }
+            string battIcon = Battery.GetBatteryIcon(int.Parse(percentage));
             DispatcherQueue.TryEnqueue(() =>
             {
-                BattIcon.Text = DevBatteryIcon;
+                BattIcon.Text = battIcon;
                 Percentage.Text = percentage + "%";
             });
         }
@@ -179,59 +95,15 @@ $Message
                     {
                         device = (this.Parent as Frame).Tag as BluetoothLEDevice;
                         DevName.Text = device.Name;
-                        var batteryService = device.GetGattServicesForUuidAsync(GattServiceUuids.Battery).GetResults();
-                        var service = batteryService.Services.FirstOrDefault();
-                        // Get the Battery Level Characteristic
-                        var characteristics = await service.GetCharacteristicsForUuidAsync(GattCharacteristicUuids.BatteryLevel);
-                        batteryLevelCharacteristic = characteristics.Characteristics.FirstOrDefault();
-                        // Read the Battery Level
+                        GattDeviceServicesResult batteryService = await device.GetGattServicesForUuidAsync(GattServiceUuids.Battery);
+                        GattCharacteristicsResult service = await batteryService.Services.FirstOrDefault().GetCharacteristicsForUuidAsync(GattCharacteristicUuids.BatteryLevel);
+                        batteryLevelCharacteristic = service.Characteristics.FirstOrDefault();
                         var result = await batteryLevelCharacteristic.ReadValueAsync();
                         batteryLevelCharacteristic.ValueChanged -= PercentageChanged;
                         batteryLevelCharacteristic.ValueChanged += PercentageChanged;
                         if (result.Status == GattCommunicationStatus.Success)
                         {
-                            var reader = DataReader.FromBuffer(result.Value);
-                            string percentage = reader.ReadByte().ToString();
-                            Percentage.Text = percentage + "%";
-                            int DevBattery = int.Parse(percentage);
-                            string DevBatteryIcon = "%";
-                            switch (DevBattery)
-                            {
-                                case >= 0 and < 10:
-                                    DevBatteryIcon = "\ue850";
-                                    break;
-                                case >= 10 and < 20:
-                                    DevBatteryIcon = "\ue851";
-                                    break;
-                                case >= 20 and < 30:
-                                    DevBatteryIcon = "\ue852";
-                                    break;
-                                case >= 30 and < 40:
-                                    DevBatteryIcon = "\ue853";
-                                    break;
-                                case >= 40 and < 50:
-                                    DevBatteryIcon = "\ue854";
-                                    break;
-                                case >= 50 and < 60:
-                                    DevBatteryIcon = "\ue855";
-                                    break;
-                                case >= 60 and < 70:
-                                    DevBatteryIcon = "\ue856";
-                                    break;
-                                case >= 70 and < 80:
-                                    DevBatteryIcon = "\ue857";
-                                    break;
-                                case >= 80 and < 90:
-                                    DevBatteryIcon = "\ue858";
-                                    break;
-                                case >= 90 and < 100:
-                                    DevBatteryIcon = "\ue859";
-                                    break;
-                                case 100:
-                                    DevBatteryIcon = "\ue83f";
-                                    break;
-                            }
-                            BattIcon.Text = DevBatteryIcon;
+                            ReadBTLEBatt(result.Value);
                         }
                         else
                         {

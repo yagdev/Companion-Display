@@ -13,18 +13,17 @@
         <Grid>
             <TextBlock Text="Photo Gallery Settings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
             <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,105">
-                <TextBox Name="DirectoryTextBox" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Directory / File" Padding="12"/>
-                <Button Height="45" Width="480" Content="Select File" Click="Button_Click_2"/>
-                <Button Height="45" Width="480" Content="Select Folder" Click="Button_Click_3"/>
+                <TextBox Name="DirectoryTextBox" Height="45" Width="480" VerticalAlignment="Top" x:Uid="DirectoryPlaceholder" Padding="12"/>
+                <Button Height="45" Width="480" x:Uid="SelectFileBtn" Click="Button_Click_2"/>
+                <Button Height="45" Width="480" x:Uid="SelectFolderBtn" Click="Button_Click_3"/>
                 <Grid HorizontalAlignment="Stretch" Width="490">
-                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Fill="{ThemeResource SystemBaseLowColor}" Opacity="0.3"/>
-                    <TextBlock HorizontalAlignment="Left" Text="Smart Flip" Margin="10,0" VerticalAlignment="Center"/>
+                    <TextBlock HorizontalAlignment="Left" x:Uid="SmartFlip" Margin="10,0" VerticalAlignment="Center"/>
                     <ToggleSwitch Name="SmartFlipToggle" HorizontalAlignment="Right" VerticalAlignment="Center" OffContent="" OnContent="" IsOn="False" Toggled="SmartFlipToggle_Toggled" Margin="0,0,-90,0"/>
                 </Grid>
             </GridView>
             <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Cancel" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Save" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                <Button Height="45" Width="480" VerticalAlignment="Top" x:Uid="CancelBtn" FontSize="16" CornerRadius="8" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                <Button Height="45" Width="480" VerticalAlignment="Top" x:Uid="SaveBtn" FontSize="16" CornerRadius="8" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
             </StackPanel>
 
         </Grid>

@@ -9,7 +9,7 @@
     mc:Ignorable="d" Height="300" Width="500" Loaded="Page_Loaded" Unloaded="Page_Unloaded" Tag="CustWidgets">
 
     <Grid>
-        <TextBlock Name="NoDevices" Text="No image.&#x0a;Right click and press edit to add an image." FontSize="40" TextWrapping="Wrap" HorizontalTextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,0,50,0" Opacity="0.5" IsHitTestVisible="False" Visibility="Visible"/>
+        <TextBlock Name="NoDevices" x:Uid="NoImages" FontSize="40" TextWrapping="Wrap" HorizontalTextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="50,0,50,0" Opacity="0.5" IsHitTestVisible="False" Visibility="Visible"/>
         <FlipView Name="FlipViewImages"  Width="500" Height="300" SelectionChanged="FlipViewImages_SelectionChanged" Background="Transparent"/>
     </Grid>
 </Page>

@@ -11,18 +11,16 @@
     <Grid>
         
         <Grid>
-            <TextBlock Text="Media Player Settings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
+            <TextBlock x:Uid="MediaPlayerSettings" Width="480" Height="30" FontSize="20" Margin="10" VerticalAlignment="Top"/>
             <GridView SelectionMode="None" CanDrag="False" Margin="10,45,10,105">
-                <TextBox Name="SPDC" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="SP_DC" Padding="12"/>
-                <TextBox Name="CID" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Client ID" Padding="12"/>
-                <TextBox Name="CS" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Client Secret" Padding="12"/>
-                <TextBox Name="CID2" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Fallback Client ID" Padding="12"/>
-                <TextBox Name="CS2" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Fallback Client Secret" Padding="12"/>
-                <TextBox Name="DiscordAppID" Height="45" Width="480" VerticalAlignment="Top" PlaceholderText="Discord Application ID" Padding="12"/>
+                <TextBox Name="CID" Height="45" Width="480" VerticalAlignment="Top" x:Uid="SpotifyClientID" Padding="12"/>
+                <TextBox Name="CS" Height="45" Width="480" VerticalAlignment="Top" x:Uid="ClientSecret" Padding="12"/>
+                <TextBox Name="CID2" Height="45" Width="480" VerticalAlignment="Top" x:Uid="SpotifyClientID2" Padding="12"/>
+                <TextBox Name="CS2" Height="45" Width="480" VerticalAlignment="Top" x:Uid="ClientSecret2" Padding="12"/>
             </GridView>
             <StackPanel Padding="10" VerticalAlignment="Bottom" Spacing="2">
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Cancel" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
-                <Button Height="45" Width="480" VerticalAlignment="Top" Content="Save" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
+                <Button Height="45" Width="480" VerticalAlignment="Top" x:Uid="CancelBtn" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click"/>
+                <Button Height="45" Width="480" VerticalAlignment="Top" x:Uid="SaveBtn" FontSize="16" Style="{StaticResource AccentButtonStyle}" Click="Button_Click_1"/>
             </StackPanel>
             
         </Grid>

@@ -27,11 +27,14 @@
             <HyperlinkButton x:Name="PlayPauseBtn" Tag="179" Content="&#xf8ae;" FontFamily="Segoe Fluent Icons" FontSize="36" Grid.Column="2" Margin="1,0,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="60" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
             <HyperlinkButton Content="&#xf8ac;" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="25" Margin="1,0,1,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="60" Click="Button_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
             <HyperlinkButton Content="&#xe8a7;" x:Name="OpenWindow" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="16" Margin="50,0,0,0" Width="50" Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="HyperlinkButton_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
+            <HyperlinkButton Content="&#xe708;" x:Name="SleepTimer" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="16" Margin="-50,0,0,0" Width="50" Grid.Column="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="SleepTimer_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
         </Grid>
-        <TextBlock x:Name="SongTitle" Text="-" Margin="10,10,10,0" FontSize="48" Height="69" VerticalAlignment="Top" Padding="0,0,0,0"/>
-        <TextBlock x:Name="SongInfo" Text="-" Margin="10,68,10,0" FontSize="32" Height="45" VerticalAlignment="Top" Padding="0,0,0,0"/>
-        <TextBlock x:Name="AlbumName" Text="-" Margin="10,108,10,0" FontSize="32" Height="45" VerticalAlignment="Top" Padding="0,0,0,0"/>
-        <TextBlock Text="-" x:Name="SongLyrics" Margin="10,150,10,0" FontSize="24" VerticalAlignment="Top"/>
+        <StackPanel  VerticalAlignment="Top" Margin="10,10,10,0">
+            <TextBlock x:Name="SongTitle" Text="-" FontSize="40" VerticalAlignment="Top" Padding="0,0,0,0"/>
+            <TextBlock x:Name="SongInfo" Text="-" FontSize="26" VerticalAlignment="Top" Padding="0,0,0,0"/>
+            <TextBlock x:Name="AlbumName" Text="-" FontSize="26" VerticalAlignment="Top" Padding="0,0,0,0"/>
+            <TextBlock Text="" x:Name="SongLyrics" FontSize="24" VerticalAlignment="Top" TextWrapping="WrapWholeWords"/>
+        </StackPanel>
         <Image x:Name="Album" Margin="10,10,0,0" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114" Opacity="0.2"/>
         <Grid Margin="10,20,10,60" Grid.Row="1" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost" VerticalAlignment="Bottom">
             <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
@@ -42,8 +45,6 @@
         <Grid Margin="0,0,10,30" VerticalAlignment="Bottom" Height="36" HorizontalAlignment="Right" Grid.Row="1">
             <TextBlock x:Name="EndTime" Text="--:--" FontSize="18"  VerticalAlignment="Center"/>
         </Grid>
-        
-        <Image x:Name="SpotifyLogo" Margin="0,20,65,30" Source="https://upload.wikimedia.org/wikipedia/commons/8/84/Spotify_icon.svg" HorizontalAlignment="Right" Width="20" Height="20" VerticalAlignment="Bottom" Grid.Row="1"/>
         <Slider x:Name="VolumeBar" Margin="50,0,50,83" Maximum="100" SmallChange="1" VerticalContentAlignment="Bottom" VerticalAlignment="Bottom" Grid.Row="0" Grid.RowSpan="2" ValueChanged="VolumeBar_ValueChanged" ManipulationCompleted="VolumeBar_ManipulationCompleted" ManipulationStarting="VolumeBar_ManipulationStarting" ManipulationMode="All"/>
         <RepeatButton Content="&#xE993;" FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource TextFillColorPrimary}" FontSize="20" RenderTransformOrigin="0.5,0.5" Padding="5,0,0,0" HorizontalAlignment="Left" Width="50" Height="34" VerticalAlignment="Bottom" Margin="0,0,0,82" Grid.Row="1" Click="HyperlinkButton_Tapped" Background="Transparent" BorderBrush="Transparent"/>
         <RepeatButton Content="&#xE994;" FontFamily="Segoe Fluent Icons" Foreground="{ThemeResource TextFillColorPrimary}" FontSize="20" Margin="0,0,0,82" RenderTransformOrigin="0.5,0.5" Padding="2,0,0,0" HorizontalAlignment="Right" Width="50" Height="34" VerticalAlignment="Bottom" Grid.Row="1" Click="HyperlinkButton_Tapped_1" Background="Transparent" BorderBrush="Transparent"/>

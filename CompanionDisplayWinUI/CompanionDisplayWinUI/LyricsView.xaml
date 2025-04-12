@@ -6,9 +6,10 @@
     xmlns:local="using:CompanionDisplayWinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Lyrics View"
     mc:Ignorable="d" Closed="Window_Closed">
 
-    <Grid Loaded="Grid_Loaded">
+    <Grid Loaded="Grid_Loaded" Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="100"/>
@@ -16,13 +17,13 @@
         <Image Name="BackgroundImage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Visibility="Visible" ImageOpened="BackgroundImage_ImageOpened" Grid.RowSpan="3" Opacity="0.8"/>
         <Rectangle Name="ImageOptionalBlur" Fill="{ThemeResource CustomAcrylicInAppLuminosity2}" Grid.RowSpan="3" Visibility="Visible"/>
         <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20,0,20,-8" Grid.Row="0" Grid.RowSpan="1">
-            <StackPanel x:Name="LyricsList" Margin="0,32,0,0">
+            <StackPanel x:Name="LyricsList" Margin="0,30,0,0">
             </StackPanel>
         </ScrollViewer>
 
         <Rectangle Margin="20,-35,20,20" Fill="{ThemeResource CustomAcrylicInAppLuminosity3}" Grid.RowSpan="3" Grid.Row="1" Visibility="Visible" RadiusX="8" RadiusY="8"/>
         <Grid Margin="85,40,85,0" Grid.Row="2" PointerCaptureLost="Grid_PointerCaptureLost" PointerReleased="Grid_PointerCaptureLost" VerticalAlignment="Top">
-            <Slider Name="SongProgressBar" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
+            <Slider Name="SongProgressBar" TabIndex="6" IsEnabled="True" VerticalAlignment="Center"  ManipulationMode="All" ManipulationStarted="SongProgressBar_ManipulationStarted" IsThumbToolTipEnabled="False" ManipulationCompleted="Grid_ManipulationCompleted" Tapped="SongProgressBar_Tapped"/>
         </Grid>
         <Grid Margin="40,36,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Row="2" Height="36">
             <TextBlock x:Name="CurrentTime" Text="--:--" FontSize="16"  VerticalAlignment="Center" />
@@ -31,10 +32,11 @@
             <TextBlock x:Name="EndTime" Text="--:--" FontSize="16"  VerticalAlignment="Center"/>
         </Grid>
         <StackPanel Margin="0,-90,30,0" FlowDirection="RightToLeft" Orientation="Horizontal" Grid.Row="1">
-            <HyperlinkButton Content="&#xf8ad;" FontFamily="Segoe Fluent Icons" Tag="176" FontSize="15" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}" Height="50"/>
-            <HyperlinkButton x:Name="PlayPauseBtn" Tag="179" Content="&#xf8ae;" FontFamily="Segoe Fluent Icons" FontSize="25" Grid.Column="2" Margin="1,0,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
-            <HyperlinkButton Content="&#xf8ac;" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="15" Margin="1,0,1,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
-            <ToggleButton Width="50" Height="50" Grid.Row="2" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" FontFamily="Segoe Fluent Icons" Content="&#xece7;" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
+            <HyperlinkButton TabIndex="5" Content="&#xf8ad;" FontFamily="Segoe Fluent Icons" Tag="176" FontSize="15" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}" Height="50"/>
+            <HyperlinkButton TabIndex="4" x:Name="PlayPauseBtn" Tag="179" Content="&#xf8ae;" FontFamily="Segoe Fluent Icons" FontSize="25" Grid.Column="2" Margin="1,0,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
+            <HyperlinkButton TabIndex="3" Content="&#xf8ac;" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="15" Margin="1,0,1,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="PlayPauseBtn_Click" Foreground="{ThemeResource SystemBaseHighColor}"/>
+            <HyperlinkButton TabIndex="2" Content="&#xe708;" FontFamily="Segoe Fluent Icons" Tag="177" FontSize="15" Margin="1,0,1,0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="50" Click="SleepTimer_Click" Foreground="{ThemeResource SystemBaseHighColor}" Name="SleepTimer"/>
+            <ToggleButton TabIndex="1" Height="50" Grid.Row="2" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0" FontFamily="Segoe Fluent Icons" Content="&#xece7;" Checked="ToggleButton_Checked" Unchecked="ToggleButton_Unchecked"/>
 
         </StackPanel>
         <Grid VerticalAlignment="Top" Grid.Row="2" Margin="35,-20,210,0">

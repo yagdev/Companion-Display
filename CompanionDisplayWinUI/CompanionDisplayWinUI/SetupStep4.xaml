@@ -12,14 +12,14 @@
         <Grid Height="300">
             <StackPanel Spacing="5" VerticalAlignment="Center">
                 <TextBlock Text="&#xe73e;" FontSize="72" HorizontalAlignment="Center" FontFamily="Segoe Fluent Icons" Height="100" Margin="0,-10,0,0"/>
-                <TextBlock Text="You're all set!" FontSize="24" HorizontalAlignment="Center"/>
-                <TextBlock Text="To customize Companion Display Further, go to Settings" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
+                <TextBlock x:Uid="SetupComplete" FontSize="24" HorizontalAlignment="Center"/>
+                <TextBlock x:Uid="DoneTooltip" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
             </StackPanel>
         </Grid>
         <Grid Height="300">
             <StackPanel Spacing="5" VerticalAlignment="Center">
-                <Button Content="Back" HorizontalAlignment="Center" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
-                <Button Content="Finish" HorizontalAlignment="Center" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped_1" CornerRadius="8"/>
+                <Button x:Uid="BackBtn" HorizontalAlignment="Center" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
+                <Button x:Uid="FinishBtn" HorizontalAlignment="Center" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped_1" CornerRadius="8"/>
             </StackPanel>
         </Grid>
     </GridView>

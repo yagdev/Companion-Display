@@ -38,22 +38,22 @@
                             <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe74f;" x:Name="MuteToggle" Tapped="MuteToggle_Tapped"/>
                         </Grid>
                         <Grid Name="AirPlaneToggleGrid" Tag="4">
-                            <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe709;" x:Name="AirPlaneToggle" Tapped="AirPlaneToggle_Tapped" IsHitTestVisible="False"/>
+                            <ToggleButton Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe709;" x:Name="AirPlaneToggle" IsHitTestVisible="False"/>
                         </Grid>
                         <Grid Name="ShutdownGrid" Tag="5">
-                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe7e8;" x:Name="Shutdown" Tag="shutdown -s -t 0" Tapped="shutdown_Tapped"/>
+                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe7e8;" x:Name="Shutdown" Tag="shutdown -s -t 0" Tapped="Shutdown_Tapped"/>
                         </Grid>
                         <Grid Name="RestartGrid" Tag="6">
-                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe777;" x:Name="Restart" Tag="shutdown -r -t 0" Tapped="shutdown_Tapped"/>
+                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe777;" x:Name="Restart" Tag="shutdown -r -t 0" Tapped="Shutdown_Tapped"/>
                         </Grid>
                         <Grid Name="SuspendGrid" Tag="7">
-                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe708;" x:Name="Suspend" Tag="%windir%\System32\rundll32.exe powrprof.dll,SetSuspendState 0,1,0" Tapped="shutdown_Tapped"/>
+                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe708;" x:Name="Suspend" Tag="%windir%\System32\rundll32.exe powrprof.dll,SetSuspendState 0,1,0" Tapped="Shutdown_Tapped"/>
                         </Grid>
                         <Grid Name="LockGrid" Tag="8">
-                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe785;" x:Name="Lock" Tag="Rundll32.exe user32.dll,LockWorkStation" Tapped="shutdown_Tapped"/>
+                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xe785;" x:Name="Lock" Tag="Rundll32.exe user32.dll,LockWorkStation" Tapped="Shutdown_Tapped"/>
                         </Grid>
                         <Grid Name="LogoffGrid" Tag="9">
-                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xf3b1;" x:Name="Logoff" Tag="%windir%\System32\shutdown.exe -l" Tapped="shutdown_Tapped"/>
+                            <Button Width="94" Height="50" FontFamily="Segoe Fluent Icons" Content="&#xf3b1;" x:Name="Logoff" Tag="%windir%\System32\shutdown.exe -l" Tapped="Shutdown_Tapped"/>
                         </Grid>
                     </GridView>
                 </Grid>

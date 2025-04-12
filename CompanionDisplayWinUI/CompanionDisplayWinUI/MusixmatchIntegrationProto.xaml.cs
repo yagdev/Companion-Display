@@ -1,66 +1,11 @@
-using CoreAudio;
-using HidSharp.Utility;
-using Microsoft.UI.Xaml;
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Shapes;
-using Microsoft.Web.WebView2.Core;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using SpotifyAPI.Web;
-using Swan.Formatters;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.DirectoryServices.ActiveDirectory;
-using System.Drawing;
-using System.Drawing.Text;
-using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Management;
-using System.Management.Automation;
-using System.Net;
 using System.Net.Http;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
-using System.Text.Json.Nodes;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
-using Windows.Devices.Bluetooth;
-using Windows.Devices.Bluetooth.GenericAttributeProfile;
-using Windows.Devices.Bluetooth.Rfcomm;
-using Windows.Devices.Enumeration;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.Media.Protection.PlayReady;
-using Windows.Networking.Sockets;
-using Windows.Security.Cryptography;
-using Windows.Storage.Streams;
-using Windows.System;
-using Windows.UI.Text;
-using Windows.UI.WebUI;
-using OBSWebsocketDotNet;
-using OBSWebsocketDotNet.Types;
-using OBSWebsocketDotNet.Types.Events;
-using static CompanionDisplayWinUI.MediaPlayerWidget;
-using System.Net.Sockets;
-using Microsoft.UI.Xaml.Media.Animation;
-using WinFormsHelper;
+using System;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -78,10 +23,10 @@ namespace CompanionDisplayWinUI
         {
             this.InitializeComponent();
         }
-        private void Button_Tapped_1(object sender, TappedRoutedEventArgs e)
+
+        private void Button_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            Class1 class1 = new();
-            Result.Text = class1.isAdmin().ToString();
+            
         }
     }
 }

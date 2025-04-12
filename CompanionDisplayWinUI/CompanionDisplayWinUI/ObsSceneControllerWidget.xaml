@@ -13,8 +13,8 @@
         <Grid Visibility="Collapsed" HorizontalAlignment="Stretch" x:Name="OBSError" VerticalAlignment="Stretch">
             <Rectangle Fill="{ThemeResource CustomAcrylicInAppLuminosity}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
-                <TextBlock Text="OBS is not connected." HorizontalAlignment="Center" FontSize="36" Opacity="0.5"/>
-                <Button x:Name="ReconnectBtn" Content="Try to reconnect" HorizontalAlignment="Center" Tapped="Button_Tapped"/>
+                <TextBlock x:Uid="OBSDisconnected" HorizontalAlignment="Center" FontSize="36" Opacity="0.5"/>
+                <Button x:Name="ReconnectBtn" x:Uid="ReconnectOBS1" HorizontalAlignment="Center" Tapped="Button_Tapped"/>
             </StackPanel>
         </Grid>
     </Grid>

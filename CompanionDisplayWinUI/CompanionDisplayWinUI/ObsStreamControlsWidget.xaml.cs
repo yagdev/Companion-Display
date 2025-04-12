@@ -1,21 +1,12 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CompanionDisplayWinUI.ClassImplementations;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using OBSWebsocketDotNet.Communication;
 using OBSWebsocketDotNet.Types.Events;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -30,21 +21,21 @@ namespace CompanionDisplayWinUI
         public ObsStreamControlsWidget()
         {
             this.InitializeComponent();
-            Globals.obsControls.obs.Disconnected += disconnectEvent;
-            Globals.obsControls.obs.Connected += connectedEvent;
+            Globals.obsControls.obs.Disconnected += DisconnectEvent;
+            Globals.obsControls.obs.Connected += ConnectedEvent;
         }
 
-        private void connectedEvent(object sender, EventArgs e)
+        private void ConnectedEvent(object sender, EventArgs e)
         {
-            revertLayout();
+            RevertLayout();
         }
 
-        private void disconnectEvent(object sender, ObsDisconnectionInfo e)
+        private void DisconnectEvent(object sender, ObsDisconnectionInfo e)
         {
-            Globals.obsControls.obs.StreamStateChanged -= updateStreamChecker;
-            Globals.obsControls.obs.RecordStateChanged -= updateRecordChecker;
-            Globals.obsControls.obs.ReplayBufferStateChanged -= updateBufferChecker;
-            Globals.obsControls.obs.VirtualcamStateChanged -= camChecker;
+            Globals.obsControls.obs.StreamStateChanged -= UpdateStreamChecker;
+            Globals.obsControls.obs.RecordStateChanged -= UpdateRecordChecker;
+            Globals.obsControls.obs.ReplayBufferStateChanged -= UpdateBufferChecker;
+            Globals.obsControls.obs.VirtualcamStateChanged -= CamChecker;
             DispatcherQueue.TryEnqueue(() =>
             {
                 OBSError.Visibility = Visibility.Visible;
@@ -57,10 +48,10 @@ namespace CompanionDisplayWinUI
             {
                 try
                 {
-                    Globals.obsControls.obs.StreamStateChanged += updateStreamChecker;
-                    Globals.obsControls.obs.RecordStateChanged += updateRecordChecker;
-                    Globals.obsControls.obs.ReplayBufferStateChanged += updateBufferChecker;
-                    Globals.obsControls.obs.VirtualcamStateChanged += camChecker;
+                    Globals.obsControls.obs.StreamStateChanged += UpdateStreamChecker;
+                    Globals.obsControls.obs.RecordStateChanged += UpdateRecordChecker;
+                    Globals.obsControls.obs.ReplayBufferStateChanged += UpdateBufferChecker;
+                    Globals.obsControls.obs.VirtualcamStateChanged += CamChecker;
                     RecordButton.IsChecked = Globals.obsControls.obs.GetRecordStatus().IsRecording || Globals.obsControls.obs.GetRecordStatus().IsRecordingPaused;
                     PauseButton.IsChecked = Globals.obsControls.obs.GetRecordStatus().IsRecordingPaused;
                     PauseButton.IsEnabled = RecordButton.IsChecked.Value;
@@ -79,7 +70,7 @@ namespace CompanionDisplayWinUI
             }
         }
 
-        private void camChecker(object sender, VirtualcamStateChangedEventArgs e)
+        private void CamChecker(object sender, VirtualcamStateChangedEventArgs e)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -87,7 +78,7 @@ namespace CompanionDisplayWinUI
             });
         }
 
-        private void updateBufferChecker(object sender, ReplayBufferStateChangedEventArgs e)
+        private void UpdateBufferChecker(object sender, ReplayBufferStateChangedEventArgs e)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -96,7 +87,7 @@ namespace CompanionDisplayWinUI
             });
         }
 
-        private void updateRecordChecker(object sender, RecordStateChangedEventArgs e)
+        private void UpdateRecordChecker(object sender, RecordStateChangedEventArgs e)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -108,12 +99,12 @@ namespace CompanionDisplayWinUI
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Globals.obsControls.obs.StreamStateChanged -= updateStreamChecker;
-            Globals.obsControls.obs.RecordStateChanged -= updateRecordChecker;
-            Globals.obsControls.obs.ReplayBufferStateChanged -= updateBufferChecker;
-            Globals.obsControls.obs.VirtualcamStateChanged -= camChecker;
+            Globals.obsControls.obs.StreamStateChanged -= UpdateStreamChecker;
+            Globals.obsControls.obs.RecordStateChanged -= UpdateRecordChecker;
+            Globals.obsControls.obs.ReplayBufferStateChanged -= UpdateBufferChecker;
+            Globals.obsControls.obs.VirtualcamStateChanged -= CamChecker;
         }
-        private void actionSelector(ToggleButton sender, bool start)
+        private static void ActionSelector(ToggleButton sender, bool start)
         {
             try
             {
@@ -147,7 +138,7 @@ namespace CompanionDisplayWinUI
             }
             
         }
-        private void updateStreamChecker(object sender, StreamStateChangedEventArgs e)
+        private void UpdateStreamChecker(object sender, StreamStateChangedEventArgs e)
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -157,41 +148,43 @@ namespace CompanionDisplayWinUI
 
         private async void StreamButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
-            dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
-            string tof = "Stop ";
+            ContentDialog dialog = new()
+            {
+                XamlRoot = this.XamlRoot,
+                Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style
+            };
+            string tof = AppStrings.stop;
             if ((sender as ToggleButton).IsChecked.Value)
             {
-                tof = "Start ";
+                tof = AppStrings.start;
             }
-            dialog.Title = "Do you want to " + tof + (sender as ToggleButton).Tag + "?";
+            dialog.Title = AppStrings.doYouWanna + tof + (sender as ToggleButton).Tag + "?";
             dialog.PrimaryButtonText = tof + (sender as ToggleButton).Tag.ToString();
-            dialog.CloseButtonText = "Cancel";
+            dialog.CloseButtonText = AppStrings.cancelString;
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = "Confirming will perform this action in OBS.";
+            dialog.Content = AppStrings.confirmOBS;
             dialog.Tag = (sender as ToggleButton).Tag;
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                actionSelector(sender as ToggleButton, (sender as ToggleButton).IsChecked.Value);
+                ActionSelector(sender as ToggleButton, (sender as ToggleButton).IsChecked.Value);
             }
             (sender as ToggleButton).IsChecked = !(sender as ToggleButton).IsChecked;
         }
 
         private void ToggleButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Globals.obsControls.pauseToggle();
+            Globals.obsControls.PauseToggle();
         }
 
         private void CameraButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Globals.obsControls.cameraToggle();
+            Globals.obsControls.CameraToggle();
         }
 
         private void MicButton_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Globals.obsControls.micToggle();
+            Globals.obsControls.MicToggle();
             MicButton.IsChecked = Globals.obsControls.micMute;
         }
 
@@ -199,12 +192,12 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                Globals.obsControls.bufferToggle();
+                Globals.obsControls.BufferToggle();
             }
             catch
             {
                 ToggleBuffer.IsChecked = false;
-                System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+                System.Timers.Timer timer = new(3000) { Enabled = true };
                 ToggleBuffer.Content = "";
                 timer.Elapsed += (sender, args) =>
                 {
@@ -221,9 +214,9 @@ namespace CompanionDisplayWinUI
         {
             try
             {
-                Globals.obsControls.bufferSave();
+                Globals.obsControls.BufferSave();
                 
-                System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+                System.Timers.Timer timer = new(3000) { Enabled = true };
                 BufferSave.Content = "";
                 timer.Elapsed += (sender, args) =>
                 {
@@ -236,7 +229,7 @@ namespace CompanionDisplayWinUI
             }
             catch
             {
-                System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+                System.Timers.Timer timer = new(3000) { Enabled = true };
                 BufferSave.Content = "";
                 timer.Elapsed += (sender, args) =>
                 {
@@ -252,9 +245,9 @@ namespace CompanionDisplayWinUI
 
         private void Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Thread thread = new(Globals.obsControls.manualConnectReq);
+            Thread thread = new(Globals.obsControls.ManualConnectReq);
             thread.Start();
-            System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+            System.Timers.Timer timer = new(3000) { Enabled = true };
             (sender as Button).IsEnabled = false;
             timer.Elapsed += (sender, args) =>
             {
@@ -263,14 +256,14 @@ namespace CompanionDisplayWinUI
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         ReconnectBtn.IsEnabled = true;
-                        ReconnectBtn.Content = "Connection failed, try again.";
+                        ReconnectBtn.Content = AppStrings.obsConnectionFailed;
                         timer.Dispose();
                     });
                 }
             };
         }
 
-        private void revertLayout()
+        private void RevertLayout()
         {
             DispatcherQueue.TryEnqueue(() =>
             {

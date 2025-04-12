@@ -12,16 +12,16 @@
         <Grid Height="400" Width="540">
             <StackPanel Spacing="5" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock Text="&#xe93e;" FontSize="72" HorizontalAlignment="Center" FontFamily="Segoe Fluent Icons" Height="100" Margin="0,-10,0,0"/>
-                <TextBlock Text="Setup streamer integrations" FontSize="24" HorizontalAlignment="Center"/>
-                <TextBlock Text="Get in-app synchronized lyrics and a matching Discord presence" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
+                <TextBlock x:Uid="StreamerIntegrationsSetup" FontSize="24" HorizontalAlignment="Center"/>
+                <TextBlock x:Uid="StreamerIntegrationDialogue" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
             </StackPanel>
         </Grid>
         <Grid Padding="0,0,0,0">
             <StackPanel Spacing="5" VerticalAlignment="Center">
-                <TextBox PlaceholderText="Insert WebSocket Server IP (ws://IP:Port) (leave blank for default)" Width="535" x:Name="obsIP" CornerRadius="8"/>
-                <TextBox PlaceholderText="Insert OBS password" Width="535" x:Name="obsPass" CornerRadius="8"/>
+                <TextBox x:Uid="OBSIPPlaceholder" Width="535" x:Name="obsIP" CornerRadius="8"/>
+                <TextBox x:Uid="OBSPasswordPlaceholder" Width="535" x:Name="obsPass" CornerRadius="8"/>
                 <StackPanel Spacing="5">
-                    <TextBlock Text="Use the browser below to log in or log out of Twitch:" FontSize="18"/>
+                    <TextBlock x:Uid="BrowserTwitchSetup" FontSize="18"/>
                     <Grid CornerRadius="8" Height="190" HorizontalAlignment="Center" Width="250">
                         <WebView2 Name="TwitchBrowser" Width="500" Height="400" Source="https://www.twitch.tv/login" CoreWebView2Initialized="TwitchBrowser_CoreWebView2Initialized">
                             <WebView2.RenderTransform>
@@ -32,10 +32,10 @@
                 </StackPanel>
                 <StackPanel Spacing="5" Margin="0,20,0,0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="Back" HorizontalAlignment="Center" Height="50" Width="265" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
-                        <Button Content="Next" HorizontalAlignment="Center" Height="50" Width="265" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped_1" CornerRadius="8"/>
+                        <Button x:Uid="BackBtn" HorizontalAlignment="Center" Height="50" Width="265" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
+                        <Button x:Uid="NextBtn" HorizontalAlignment="Center" Height="50" Width="265" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped_1" CornerRadius="8"/>
                     </StackPanel>
-                    <HyperlinkButton Content="Skip" HorizontalAlignment="Center" Width="250" Foreground="{ThemeResource TextFillColorPrimary}" Opacity="0.8" Tapped="HyperlinkButton_Tapped" CornerRadius="8"/>
+                    <HyperlinkButton x:Uid="SkipBtn" HorizontalAlignment="Center" Width="250" Foreground="{ThemeResource TextFillColorPrimary}" Opacity="0.8" Tapped="HyperlinkButton_Tapped" CornerRadius="8"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

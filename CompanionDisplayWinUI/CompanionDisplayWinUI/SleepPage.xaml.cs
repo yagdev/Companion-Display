@@ -1,25 +1,10 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
-using Microsoft.UI.Xaml.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using static CompanionDisplayWinUI.MediaPlayerWidget;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Header;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Windows.Media.Control;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -33,12 +18,6 @@ namespace CompanionDisplayWinUI
     {
         public SleepPage()
         {
-            if (!Globals.StartedPlayer)
-            {
-                Globals.StartedPlayer = true;
-                PlayerSpotify playerSpotify = new PlayerSpotify();
-                playerSpotify.Page_Loaded();
-            }
             this.InitializeComponent();
         }
         private string DateStr, TimeStr;
@@ -48,7 +27,6 @@ namespace CompanionDisplayWinUI
         {
             CleanUp = true;
         }
-        private Frame parent;
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             if (Globals.OverrideColor)
@@ -91,7 +69,6 @@ namespace CompanionDisplayWinUI
         {
             (((this.Parent) as Frame).Parent as NavigationView).IsPaneOpen = true;
         }
-        private string LastTitle, LastAlbum, LastDetail, LastLyric;
         private void UpdateUI()
         {
             try
@@ -109,7 +86,7 @@ namespace CompanionDisplayWinUI
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         Time.Text = TimeOnly.FromDateTime(DateTime.Now).ToString("HH:mm");
-                        Random rnd = new Random();
+                        Random rnd = new();
                         StackUnderflow.Padding = new Thickness(0 + (rnd.Next(-30, 30)), 0 + (rnd.Next(-30, 30)), 0, 0);
                         Oppenheimer.Padding = new Thickness(0 + (rnd.Next(-5, 5)), 0 + (rnd.Next(-5, 5)), 0, 0);
                     });
@@ -121,15 +98,15 @@ namespace CompanionDisplayWinUI
                     {
                         if(Globals.playbackInfo != null && Globals.playbackInfo.PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing || Globals.IsSpotify)
                         {
-                            SongTitle.Text = Globals.SongName + " · " + Globals.SongDetails;
+                            SongTitle.Text = Media.SongName + " · " + Media.SongDetails;
                             SongTitle.Visibility = Visibility.Visible;
-                            if (Globals.SongLyrics == "")
+                            if (Media.SongLyrics == "")
                             {
                                 Lyrics.Visibility = Visibility.Collapsed;
                             }
                             else
                             {
-                                Lyrics.Text = Globals.SongLyrics;
+                                Lyrics.Text = Media.SongLyrics;
                                 Lyrics.Visibility = Visibility.Visible;
                             }
                         }
@@ -147,7 +124,7 @@ namespace CompanionDisplayWinUI
                 });
                 try
                 {
-                    if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused && Globals.IsSpotify == false && Globals.SongName != "")
+                    if (Globals.sessionManager.GetCurrentSession().GetPlaybackInfo().PlaybackStatus == GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused && Globals.IsSpotify == false && Media.SongName != "")
                     {
                         DispatcherQueue.TryEnqueue(() =>
                         {

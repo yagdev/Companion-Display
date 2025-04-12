@@ -1,22 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using OBSWebsocketDotNet.Types;
 using OBSWebsocketDotNet.Communication;
 using System.Threading;
+using CompanionDisplayWinUI.ClassImplementations;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -31,14 +20,14 @@ namespace CompanionDisplayWinUI
         public OBSStreamInfoWidget()
         {
             this.InitializeComponent();
-            Globals.obsControls.obs.Disconnected += disconnectEvent;
-            Globals.obsControls.obs.Connected += connectedEvent;
+            Globals.obsControls.obs.Disconnected += DisconnectEvent;
+            Globals.obsControls.obs.Connected += ConnectedEvent;
         }
-        private void connectedEvent(object sender, EventArgs e)
+        private void ConnectedEvent(object sender, EventArgs e)
         {
-            revertLayout();
+            RevertLayout();
         }
-        private void revertLayout()
+        private void RevertLayout()
         {
             DispatcherQueue.TryEnqueue(() =>
             {
@@ -46,9 +35,9 @@ namespace CompanionDisplayWinUI
                 Page_Loaded(null, null);
             });
         }
-        private void disconnectEvent(object sender, ObsDisconnectionInfo e)
+        private void DisconnectEvent(object sender, ObsDisconnectionInfo e)
         {
-            Globals.obsControls.callUpdateStats -= callUpdate;
+            Globals.obsControls.CallUpdateStats -= CallUpdate;
             DispatcherQueue.TryEnqueue(() =>
             {
                 OBSError.Visibility = Visibility.Visible;
@@ -61,7 +50,7 @@ namespace CompanionDisplayWinUI
                 UpdateOBSStats();
                 UpdateRecordingStats();
                 UpdateStreamStats();
-                Globals.obsControls.callUpdateStats += callUpdate;
+                Globals.obsControls.CallUpdateStats += CallUpdate;
             }
             else
             {
@@ -69,7 +58,7 @@ namespace CompanionDisplayWinUI
             }
         }
 
-        private void callUpdate()
+        private void CallUpdate()
         {
             UpdateOBSStats();
             UpdateRecordingStats();
@@ -130,8 +119,8 @@ namespace CompanionDisplayWinUI
             {
                 try
                 {
-                    RecordingStatus.Text = $"{(data.IsRecording ? "True" : "False")}";
-                    PausedStatus.Text = $"{(data.IsRecordingPaused ? "True" : "False")}";
+                    RecordingStatus.Text = $"{(data.IsRecording ? AppStrings.trueString : AppStrings.falseString)}";
+                    PausedStatus.Text = $"{(data.IsRecordingPaused ? AppStrings.trueString : AppStrings.falseString)}";
                     TimeCodeRecording.Text = $"{data.RecordTimecode}";
                     RecordingDuration.Text = $"{data.RecordingDuration} ms";
                     RecordingSize.Text = $"{data.RecordingBytes:F2} bytes";
@@ -144,14 +133,14 @@ namespace CompanionDisplayWinUI
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            Globals.obsControls.callUpdateStats -= callUpdate;
+            Globals.obsControls.CallUpdateStats -= CallUpdate;
         }
 
         private void Button_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            Thread thread = new(Globals.obsControls.manualConnectReq);
+            Thread thread = new(Globals.obsControls.ManualConnectReq);
             thread.Start();
-            System.Timers.Timer timer = new System.Timers.Timer(3000) { Enabled = true };
+            System.Timers.Timer timer = new(3000) { Enabled = true };
             (sender as Button).IsEnabled = false;
             timer.Elapsed += (sender, args) =>
             {
@@ -160,7 +149,7 @@ namespace CompanionDisplayWinUI
                     DispatcherQueue.TryEnqueue(() =>
                     {
                         ReconnectBtn.IsEnabled = true;
-                        ReconnectBtn.Content = "Connection failed, try again.";
+                        ReconnectBtn.Content = AppStrings.obsConnectionFailed;
                         timer.Dispose();
                     });
                 }

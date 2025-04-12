@@ -11,7 +11,7 @@
     <Grid>
         <ScrollView Padding="10" VerticalScrollBarVisibility="Hidden" HorizontalScrollMode="Disabled">
             <StackPanel Spacing="2" >
-                <DropDownButton Name="CurrentDevice" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" Content="Select Audio Device">
+                <DropDownButton Name="CurrentDevice" HorizontalContentAlignment="Left" HorizontalAlignment="Stretch" x:Uid="SelectAudioDevice">
                     <DropDownButton.Flyout>
                         <MenuFlyout x:Name="ListOfDevices" Placement="Bottom">
                         </MenuFlyout>

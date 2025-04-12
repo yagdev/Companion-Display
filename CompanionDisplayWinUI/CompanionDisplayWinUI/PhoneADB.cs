@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Devices.Power;
+﻿using CompanionDisplayWinUI.ClassImplementations;
+using System;
 
 namespace CompanionDisplayWinUI
 {
@@ -14,79 +7,36 @@ namespace CompanionDisplayWinUI
     {
         public static double GetDeviceBrightness(string ID)
         {
-            using (Process process = new()
+            try
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    FileName = "CMD.exe",
-                    CreateNoWindow = true
-                }
-            })
+                return(Double.Parse(CMDOperations.GetCMDLog("runtimes\\adb.exe -s " + ID + " shell settings get system screen_brightness")));
+            }
+            catch
             {
-                process.StartInfo.Arguments = "/C runtimes\\adb.exe -s " + ID + " shell settings get system screen_brightness";
-                process.Start();
-                process.WaitForExit();
-                double brightness;
-                try
-                {
-                    brightness = Double.Parse(process.StandardOutput.ReadToEnd());
-                }
-                catch
-                {
-                    //File.AppendAllText("ErrorLog.crlh", ex.Message);
-                    brightness = 0;
-                }
-                return brightness;
+                return 0;
             }
         }
         public static string GetDeviceName(string ID)
         {
-            using (Process process = new()
+            try
             {
-                StartInfo = new ProcessStartInfo
-                {
-                    UseShellExecute = false,
-                    RedirectStandardOutput = true,
-                    FileName = "CMD.exe",
-                    CreateNoWindow = true
-                }
-            })
+                return CMDOperations.GetCMDLog("runtimes\\adb.exe -s " + ID + " shell getprop ro.product.model");
+            }
+            catch
             {
-                process.StartInfo.Arguments = "/C runtimes\\adb.exe -s " + ID + " shell getprop ro.product.model";
-                process.Start();
-                process.WaitForExit();
-                return process.StandardOutput.ReadToEnd();
+                return AppStrings.adbPhoneNameError;
             }
         }
         public static int GetDeviceBattery(string ID)
         {
-            int level0 = 0;
             try
             {
-                using (Process process = new()
-                {
-                    StartInfo = new ProcessStartInfo
-                    {
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        FileName = "CMD.exe",
-                        CreateNoWindow = true
-                    }
-                })
-                {
-                    process.StartInfo.Arguments = "/C runtimes\\adb.exe -s " + ID + " shell dumpsys battery | findstr level";
-                    process.Start();
-                    process.WaitForExit();
-                    string output = process.StandardOutput.ReadToEnd().Remove(0, 9);
-                    level0 = int.Parse(output);
-                }
+                return int.Parse(CMDOperations.GetCMDLog("runtimes\\adb.exe -s " + ID + " shell dumpsys battery | findstr level").Replace(CMDOperations.GetCMDLog("runtimes\\adb.exe -s " + ID + " shell dumpsys battery | findstr Capacity"), "")[9..]);
             }
             catch
             {
+                return 0;
             }
-            return level0;
         }
     }
 }

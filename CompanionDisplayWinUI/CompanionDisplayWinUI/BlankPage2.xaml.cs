@@ -1,23 +1,11 @@
+using CompanionDisplayWinUI.ClassImplementations;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Imaging;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Web.WebView2.Core;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading;
-using System.Web;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.System;
-using Windows.UI.WebUI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,16 +20,12 @@ namespace CompanionDisplayWinUI
         public Frame frame;
         public BlankPage2(Uri link, NavigationView controlFS)
         {
-            this.InitializeComponent();
-            this.NavigationCacheMode = NavigationCacheMode.Required;
-            if (this.Tag as string == "Unload")
-            {
-                WebView.Close();
-            }
             linkLoad = link;
             nv = controlFS;
+            this.InitializeComponent();
+            this.NavigationCacheMode = NavigationCacheMode.Required;
         }
-        private NavigationView nv;
+        private readonly NavigationView nv;
         public Uri linkLoad;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -60,49 +44,17 @@ namespace CompanionDisplayWinUI
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            if (WebView.Source != new Uri("edge://downloads/all"))
-            {
-                WebView.Source = new Uri("edge://downloads/all");
-            }
-            else
-            {
-                WebView.GoBack();
-            }
+            BrowserClass.NavigateSpecialUrl(WebView, "downloads/all");
         }
         private void Button_Click_4(object sender, RoutedEventArgs e)
         {
-            if (WebView.Source != new Uri("edge://history/all"))
-            {
-                WebView.Source = new Uri("edge://history/all");
-            }
-            else
-            {
-                WebView.GoBack();
-            }
+            BrowserClass.NavigateSpecialUrl(WebView, "history/all");
         }
         private void AddressBar_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == VirtualKey.Enter)
             {
-                if (AddressBar.Text.Length > 3 && AddressBar.Text.Remove(0, 1).Contains("://"))
-                {
-                    WebView.Source = new Uri(AddressBar.Text);
-                }
-                else if (AddressBar.Text.Length > 3 && AddressBar.Text.Remove(0, 1).Contains('.') && AddressBar.Text.Remove(AddressBar.Text.Length - 2, 2).Contains('.') && AddressBar.Text.Contains(' ') == false)
-                {
-                    try
-                    {
-                        WebView.Source = new System.Uri("https://" + AddressBar.Text);
-                    }
-                    catch
-                    {
-                        WebView.Source = new System.Uri(Globals.SearchEngine + "/search?q=" + HttpUtility.UrlEncode(AddressBar.Text));
-                    }
-                }
-                else
-                {
-                    WebView.Source = new Uri(Globals.SearchEngine + "/search?q=" + HttpUtility.UrlEncode(AddressBar.Text));
-                }
+                WebView.Source = BrowserClass.ParseLink(AddressBar.Text);
                 WebView.Focus(FocusState.Programmatic);
             }
         }
@@ -113,7 +65,7 @@ namespace CompanionDisplayWinUI
             set
             {
                 fullScreen = value;
-                if (fullScreen == true)
+                if (fullScreen)
                 {
                     nv.IsPaneVisible = false;
                     MainGrid.Margin = new Thickness(-1);
@@ -124,13 +76,12 @@ namespace CompanionDisplayWinUI
                     nv.IsPaneVisible = true;
                     nv.IsPaneOpen = false;
                     MainGrid.Margin = new Thickness(0);
-                    WebView.Margin = new Thickness(0, 0, 0, 0);
+                    WebView.Margin = MainGrid.Margin;
                 }
             }
         }
         private void WebView_NavigationCompleted(WebView2 sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs args)
         {
-            
             try
             {
                 frame = this.Parent as Frame;
@@ -156,13 +107,12 @@ namespace CompanionDisplayWinUI
             }
             catch { }
         }
-
+        public void CloseTab()
+        {
+            WebView.Close();
+        }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            if(this.Tag as string == "Unload")
-            {
-                WebView.Close();
-            }
             try
             {
                 frame.Margin = new Thickness(0, 45, 0, 0);
@@ -172,23 +122,11 @@ namespace CompanionDisplayWinUI
 
             }
         }
-        private async void Page_Loaded(object sender, RoutedEventArgs e)
+        private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             AddressBar.Focus(FocusState.Programmatic);
         }
         private bool FTU = true;
-        public void ClearBrowser()
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                WebView.Close();
-            });
-            
-        }
-        private void CoreWebView2_NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
-        {
-            e.NewWindow = WebView.CoreWebView2;
-        }
         private void Page_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             DispatcherQueue.TryEnqueue(() =>
@@ -206,42 +144,38 @@ namespace CompanionDisplayWinUI
             AddressBar.SelectAll();
         }
 
-        private void WebView_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-        }
-
         private async void WebView_Loaded(object sender, RoutedEventArgs e)
         {
             if (FTU)
             {
-                var environmentOptions = new CoreWebView2EnvironmentOptions();
-                environmentOptions.AreBrowserExtensionsEnabled = true;
-                CoreWebView2Environment environment = await CoreWebView2Environment.CreateWithOptionsAsync("", "", environmentOptions);
-                await WebView.EnsureCoreWebView2Async(environment);
-                WebView.CoreWebView2.Profile.AddBrowserExtensionAsync(Path.GetFullPath("Assets\\1.59.0_0"));
+                Uri uri = null;
                 if (linkLoad != null)
                 {
-                    WebView.Source = linkLoad;
+                    uri = linkLoad;
                 }
                 else
                 {
-                    if (Globals.NewTabBehavior == 1)
+                    if (Globals.NewTabBehavior != 1)
                     {
-                        WebView.Source = new Uri("about:blank");
-                    }
-                    else
-                    {
-                        WebView.Source = Globals.SearchEngine;
+                        uri = Globals.SearchEngine;
                     }
                 }
-                WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+                await BrowserClass.CreateWebviewProperly(WebView, uri);
                 FTU = false;
             }
         }
-
+        private void CoreWebView2_NewWindowRequested(object sender, CoreWebView2NewWindowRequestedEventArgs e)
+        {
+            e.NewWindow = WebView.CoreWebView2;
+        }
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
             WebView.Reload();
+        }
+
+        private void WebView_CoreWebView2Initialized(WebView2 sender, CoreWebView2InitializedEventArgs args)
+        {
+            WebView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
         }
     }
 }

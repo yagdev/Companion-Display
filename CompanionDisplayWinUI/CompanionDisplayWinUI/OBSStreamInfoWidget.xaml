@@ -11,101 +11,101 @@ mc:Ignorable="d" Tag="OBSWidgets" Width="500" Height="300" CanDrag="False" Loade
     <Grid>
         <FlipView Background="Transparent">
             <Grid>
-                <TextBlock Text="OBS Stats" FontSize="36" Margin="10"/>
+                <TextBlock x:Uid="OBSStats" FontSize="36" Margin="10"/>
                 <ScrollViewer Margin="15,55,15,0">
                     <StackPanel>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Frames Rendered" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSFramesRendered" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSRendered"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Missed" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSMissedFrames" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSMissed"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Output Total" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSOutputTotal" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSOutputTotal"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Average Render Time" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSAvgRender" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSAvgRenderTime"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Framerate" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSFPS" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSFramerate"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="OBS CPU Usage" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSCPUUsage" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSCPUUsage"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="OBS RAM Usage" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSRAMUsage" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="OBSRAMUsage"/>
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
             <Grid>
-                <TextBlock Text="Stream Info" FontSize="36" Margin="10"/>
+                <TextBlock x:Uid="OBSStreamInfo" FontSize="36" Margin="10"/>
                 <ScrollViewer Margin="10,55,10,0">
                     <StackPanel>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Streaming" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSStreaming" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamingStatus"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Reconnecting" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSReconnecting" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="ReconnectingStats"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Time Code" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSTimeCode" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamTimeCode"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Duration" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSDuration" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamDuration"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Congestion" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSCongestion" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamCongestion"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Total Frames" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSTotalFrames" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamingTotalFrames"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Skipped Frames" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSSkippedFrames" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="SkippedFramesStreaming"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Uploaded Bytes" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSUploadedBytes" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="StreamingUploadedBytes"/>
                         </Grid>
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
             <Grid>
-                <TextBlock Text="Recording Info" FontSize="36" Margin="10"/>
+                <TextBlock x:Uid="OBSRecordingInfo" FontSize="36" Margin="10"/>
                 <ScrollViewer Margin="10,55,10,0">
                     <StackPanel>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Recording" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSRecording" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="RecordingStatus"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Paused" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSPaused" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="PausedStatus"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Time Code" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSTimeCode" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="TimeCodeRecording"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Duration" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSDuration" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="RecordingDuration"/>
                         </Grid>
                         <Grid Height="35">
-                            <TextBlock VerticalAlignment="Center" Text="Recording Size" FontSize="20"/>
+                            <TextBlock VerticalAlignment="Center" x:Uid="OBSRecordingSize" FontSize="20"/>
                             <TextBlock VerticalAlignment="Center" Text="-" HorizontalAlignment="Right" FontSize="20" x:Name="RecordingSize"/>
                         </Grid>
                     </StackPanel>
@@ -115,8 +115,8 @@ mc:Ignorable="d" Tag="OBSWidgets" Width="500" Height="300" CanDrag="False" Loade
         <Grid Visibility="Collapsed" HorizontalAlignment="Stretch" x:Name="OBSError" VerticalAlignment="Stretch">
             <Rectangle Fill="{ThemeResource CustomAcrylicInAppLuminosity}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10">
-                <TextBlock Text="OBS is not connected." HorizontalAlignment="Center" FontSize="36" Opacity="0.5"/>
-                <Button x:Name="ReconnectBtn" Content="Try to reconnect" HorizontalAlignment="Center" Tapped="Button_Tapped"/>
+                <TextBlock x:Uid="OBSDisconnected" HorizontalAlignment="Center" FontSize="36" Opacity="0.5"/>
+                <Button x:Name="ReconnectBtn" x:Uid="ReconnectOBS1" HorizontalAlignment="Center" Tapped="Button_Tapped"/>
             </StackPanel>
         </Grid>
     </Grid>

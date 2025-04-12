@@ -6,20 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <GridView VerticalAlignment="Center" HorizontalAlignment="Center" SelectionMode="None">
-        <Grid Height="300">
-            <StackPanel Spacing="5" VerticalAlignment="Center">
-                <Image Name="AppIconImg" Source="https://i.imgur.com/EXoHTmI.png" Height="100" Margin="0,-10,0,0"/>
-                <TextBlock Text="Welcome to Companion Display" FontSize="24" HorizontalAlignment="Center"/>
-                <TextBlock Text="Get started using Companion Display" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
-            </StackPanel>
+    <Grid>
+        <GridView VerticalAlignment="Center" HorizontalAlignment="Center" SelectionMode="None">
+            <Grid Height="300">
+                <StackPanel Spacing="5" VerticalAlignment="Center">
+                    <Image Name="AppIconImg" Source="https://i.imgur.com/EXoHTmI.png" Height="100" Margin="0,-10,0,0"/>
+                    <TextBlock x:Uid="CompanionDisplayWelcome" FontSize="24" HorizontalAlignment="Center"/>
+                    <TextBlock x:Uid="GetStarted" FontSize="18" HorizontalAlignment="Center" Opacity="0.8"/>
+                </StackPanel>
+            </Grid>
+            <Grid Height="300">
+                <StackPanel Spacing="5" VerticalAlignment="Center">
+                    <Button HorizontalAlignment="Center" x:Uid="GetStartedSetup" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
+                    <HyperlinkButton x:Uid="SkipSetup" HorizontalAlignment="Center" Width="250" Foreground="{ThemeResource TextFillColorPrimary}" Opacity="0.8" Tapped="HyperlinkButton_Tapped" CornerRadius="8"/>
+                    <HyperlinkButton x:Uid="RestoreBackupSetup" HorizontalAlignment="Center" Width="250" Foreground="{ThemeResource TextFillColorPrimary}" Opacity="0.8" Tapped="HyperlinkButton_Tapped_1" CornerRadius="8"/>
+                    <TextBlock x:Uid="SetupLater" Opacity="0.6" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </GridView>
+        <Grid Name="BackupGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Visibility="Collapsed">
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource CustomAcrylicInAppLuminosity}"/>
+            <TextBlock x:Uid="BackupTransferBanner" Opacity="0.8" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
-        <Grid Height="300">
-            <StackPanel Spacing="5" VerticalAlignment="Center">
-                <Button Content="Get Started" HorizontalAlignment="Center" Height="50" Width="250" Background="{ThemeResource AccentAAFillColorDefaultBrush}" Tapped="Button_Tapped" CornerRadius="8"/>
-                <HyperlinkButton Content="Skip Setup" HorizontalAlignment="Center" Width="250" Foreground="{ThemeResource TextFillColorPrimary}" Opacity="0.8" Tapped="HyperlinkButton_Tapped" CornerRadius="8"/>
-                <TextBlock Text="Setup is also available in Settings" Opacity="0.6" HorizontalAlignment="Center"/>
-            </StackPanel>
-        </Grid>
-    </GridView>
+    </Grid>
 </Page>
