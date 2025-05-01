@@ -306,6 +306,7 @@ namespace CompanionDisplayWinUI
             Media.CallInfoUpdate -= ChangeSong;
             Media.CallTimingUpdate -= ChangeTime;
             Media.CallLyricUpdate -= ChangeActiveLyric;
+            LyricsList.Children.Clear();
         }
         private void UpdateIcon()
         {

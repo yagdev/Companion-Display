@@ -30,11 +30,11 @@ namespace CompanionDisplayWinUI
         public TimeWidget()
         {
             this.InitializeComponent();
-            timeThread = new Thread(ManageTimeEvents);
         }
         private string DateStr = "", TimeStr = "";
         private bool isVisible = false;
         public bool configChanged = true;
+        private int loadCountPerUnload = 0;
         Thread timeThread;
         private void SongUpdated()
         {
@@ -51,7 +51,7 @@ namespace CompanionDisplayWinUI
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (isVisible)
+            if (isVisible && loadCountPerUnload == 1)
             {
                 try
                 {
@@ -63,6 +63,7 @@ namespace CompanionDisplayWinUI
                     Globals.currentSession.PlaybackInfoChanged -= PlayPauseUpdated;
                 }
                 catch { }
+                loadCountPerUnload = 0;
             }
         }
         public bool IsBluetoothOn()
@@ -147,6 +148,7 @@ namespace CompanionDisplayWinUI
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            loadCountPerUnload++;
             if (!isVisible)
             {
                 isVisible = true;
@@ -172,6 +174,11 @@ namespace CompanionDisplayWinUI
                 catch { }
                 SongUpdated();
                 PlayPauseUpdated(null, null);
+            }
+            if (timeThread == null || !(timeThread.ThreadState == ThreadState.Running))
+            {
+                timeThread = new Thread(ManageTimeEvents);
+                timeThread.Start();
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CompanionDisplayWinUI.ClassImplementations;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using System;
@@ -17,19 +18,6 @@ namespace CompanionDisplayWinUI
     /// </summary>
     public sealed partial class NumPadWidget : Page
     {
-        [LibraryImport("user32.dll")]
-        private static partial short GetKeyState(int keyCode);
-        [LibraryImport("user32.dll", SetLastError = true)]
-        static partial void keybd_event(byte bVk, byte bScan, uint dwFlags, UIntPtr dwExtraInfo);
-        public static void PressKey(VirtualKey key, bool up)
-        {
-            const int KEYEVENTF_EXTENDEDKEY = 0x1;
-            const int KEYEVENTF_KEYUP = 0x2;
-            if (up)
-                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY | KEYEVENTF_KEYUP, (UIntPtr)0);
-            else
-                keybd_event((byte)key, 0x45, KEYEVENTF_EXTENDEDKEY, (UIntPtr)0);
-        }
         public NumPadWidget()
         {
             this.InitializeComponent();
@@ -94,19 +82,19 @@ namespace CompanionDisplayWinUI
             {
                 if (numkey != Windows.UI.Core.CoreVirtualKeyStates.Locked)
                 {
-                    PressKey((VirtualKey)int.Parse(((RepeatButton)sender).DataContext.ToString()), up: false);
-                    PressKey((VirtualKey)int.Parse(((RepeatButton)sender).DataContext.ToString()), up: true);
+                    KeyPressAPI.PressKey((VirtualKey)int.Parse(((RepeatButton)sender).DataContext.ToString()), up: false);
+                    KeyPressAPI.PressKey((VirtualKey)int.Parse(((RepeatButton)sender).DataContext.ToString()), up: true);
                 }
                 else
                 {
-                    PressKey((VirtualKey)int.Parse(((RepeatButton)sender).Tag.ToString()), up: false);
-                    PressKey((VirtualKey)int.Parse(((RepeatButton)sender).Tag.ToString()), up: true);
+                    KeyPressAPI.PressKey((VirtualKey)int.Parse(((RepeatButton)sender).Tag.ToString()), up: false);
+                    KeyPressAPI.PressKey((VirtualKey)int.Parse(((RepeatButton)sender).Tag.ToString()), up: true);
                 }
             }
             catch
             {
-                PressKey((VirtualKey)int.Parse(((ToggleButton)sender).Tag.ToString()), up: false);
-                PressKey((VirtualKey)int.Parse(((ToggleButton)sender).Tag.ToString()), up: true);
+                KeyPressAPI.PressKey((VirtualKey)int.Parse(((ToggleButton)sender).Tag.ToString()), up: false);
+                KeyPressAPI.PressKey((VirtualKey)int.Parse(((ToggleButton)sender).Tag.ToString()), up: true);
             }
         }
         private void Page_Unloaded(object sender, RoutedEventArgs e)

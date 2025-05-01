@@ -18,9 +18,24 @@
     <Page Update="AccentOverride.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="AcrobatProShortcutsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <None Update="App.xaml">
       <SubType>Designer</SubType>
     </None>
+    <Page Update="LightroomShortcutsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="InDesignShortcutsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IllustratorShortcutsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PremiereShortcutsWidget.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="SetupStep0.xaml">
       <SubType>Designer</SubType>
     </Page>

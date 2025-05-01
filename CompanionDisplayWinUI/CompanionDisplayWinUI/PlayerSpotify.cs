@@ -67,6 +67,7 @@ namespace CompanionDisplayWinUI
         private void ActuallyDoShit()
         {
             System.Runtime.GCSettings.LargeObjectHeapCompactionMode = System.Runtime.GCLargeObjectHeapCompactionMode.CompactOnce;
+            GC.Collect();
             ClientSpotifyLyrics();
             if (!Globals.IsSpotify)
             {
@@ -294,7 +295,7 @@ namespace CompanionDisplayWinUI
                     Toki = TokiO;
                 }
             }
-            if (cache == true && Globals.IsSpotify == false)
+            if (cache && !Globals.IsSpotify)
             {
                 SongIDCache = "";
                 Media.SetLyrics(0, "");

@@ -20,6 +20,7 @@
                     <NavigationViewItem Icon="Clock" x:Uid="Sensors" Name="SensorWidgets"/>
                     <NavigationViewItem Icon="Setting" x:Uid="Controls" Name="ControlWidgets"/>
                     <NavigationViewItem Icon="Play" Content="Twitch" Name="TwitchWidgets"/>
+                    <NavigationViewItem Icon="Edit" Content="Adobe" Name="AdobeWidgets"/>
                     <NavigationViewItem Icon="XboxOneConsole" Content="OBS" Name="OBSWidgets"/>
                 </NavigationView.MenuItems>
                 <ScrollViewer HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -30,6 +31,7 @@
                         <GridView x:Name="ControlWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
                         <GridView x:Name="TwitchWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
                         <GridView x:Name="OBSWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
+                        <GridView x:Name="AdobeWidgetsGridView" SelectionMode="None" HorizontalAlignment="Center" CanDragItems="False" CanReorderItems="False" AllowDrop="False" IsItemClickEnabled="True" ItemClick="BasicGridView_ItemClick" Visibility="Collapsed"/>
                     </StackPanel>
                 </ScrollViewer>
             </NavigationView>
